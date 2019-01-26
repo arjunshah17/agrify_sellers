@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Agrify seller</string>
+    <string name="sign_in_cancelled">Somthing is wrong</string>
+    <string name="no_internet_connection">internet is not connected</string>
+    <string name="store">Store</string>
+    <string name="wiselist">wiselist</string>
+    <string name="chat">Chat</string>
+    <string name="notification">Notification</string>
+    <string name="about">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_edit_profile">editProfile</string>
+    <string name="title_activity_intro_slider">introSlider</string>
+    <string name="contact_no">contact no</string>
+    <string name="email">email</string>
+    <string name="email_hint">Email</string>
+    <string name="phone_hint">Phone Number</string>
+    <string name="username">Name</string>
+    <string name="saveProfile">save</string>
+    <string name="header_filters">filter</string>
+    <string name="value_any_category">category</string>
+    <string name="apply">appy</string>
+    <string name="cancel">cancel</string>
+
+
+    <string-array name="categories">
+
+
+        <item>friuts</item>
+        <item>vegetables</item>
+        <item>seeds</item>
+        <item>flowers</item>
+        <item>grains</item>
+        <item>pulses</item>
+        <item>cereals</item>
+        <item>dairy products</item>
+
+    </string-array>
+    <string-array name="sort_by">
+        <item>name</item>
+        <item>price</item>
+    </string-array>
+
+
+    <string name="shr_product_category">Best food for your family</string>
+    <string name="shr_product_description">
+        Choose fun, exciting, and unique gifts food that your family love.</string>
+
+</resources>
+

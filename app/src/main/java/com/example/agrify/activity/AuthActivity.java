@@ -1,11 +1,12 @@
-package com.example.agrifysellers;
+package com.example.agrify.activity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.agrify.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +26,7 @@ public class AuthActivity extends AppCompatActivity {
         else {
 
             startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
 
     }
@@ -36,7 +38,7 @@ public class AuthActivity extends AppCompatActivity {
                         .setAvailableProviders(Arrays.asList(
                                 new AuthUI.IdpConfig.GoogleBuilder().build(),
                                 new AuthUI.IdpConfig.EmailBuilder().build()
-                             )).setIsSmartLockEnabled(false).setTheme(R.style.AppTheme)
+                        )).setIsSmartLockEnabled(false).setTheme(R.style.AppTheme_Launcher)
                         .build(),
                 RC_SIGN_IN);
     }
@@ -47,6 +49,7 @@ public class AuthActivity extends AppCompatActivity {
         // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
         if (requestCode == RC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
+
 
             // Successfully signed in
             if (resultCode == RESULT_OK) {

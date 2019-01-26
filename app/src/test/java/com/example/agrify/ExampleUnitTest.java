@@ -1,4 +1,4 @@
-package com.example.agrifysellers;
+package com.example.agrify;
 
 import org.junit.Test;
 

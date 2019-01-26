@@ -1,6 +1,5 @@
 package com.example.agrify.activity.fragments;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,9 +24,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class profileFragment extends Fragment {
 
     User user;
@@ -85,7 +81,7 @@ public class profileFragment extends Fragment {
     private void loadData() {
         user = new User();
 
-        firebaseFirestore.collection("Users").document(firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("Sellers").document(firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 user.setName(firebaseUser.getDisplayName());
@@ -128,5 +124,6 @@ public class profileFragment extends Fragment {
     }
 
 }
+
 
 

@@ -18,6 +18,8 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.agrify.R;
+import com.example.agrify.activity.GlideApp;
+import com.example.agrify.activity.MainActivity;
 import com.example.agrify.activity.model.User;
 import com.example.agrify.databinding.ActivityEditProfileBinding;
 import com.google.android.gms.tasks.Continuation;
@@ -40,7 +42,6 @@ import java.io.File;
 import java.io.IOException;
 
 import id.zelory.compressor.Compressor;
-
 
 public class editProfile extends AppCompatActivity {
     private static final int SELECTED_PIC = 1;
@@ -188,7 +189,7 @@ public class editProfile extends AppCompatActivity {
     }
 
     private void loadData() {
-        firebaseFirestore.collection("Users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("Sellers").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 user.setName(firebaseUser.getDisplayName());
@@ -254,7 +255,7 @@ public class editProfile extends AppCompatActivity {
 
     private void storeFirestoreData(User user) {
 
-        firebaseFirestore.collection("Users").document(user_id).set(user.toUserMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        firebaseFirestore.collection("Sellers").document(user_id).set(user.toUserMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()) {

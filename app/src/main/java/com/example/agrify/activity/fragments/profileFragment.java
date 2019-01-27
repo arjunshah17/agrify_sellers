@@ -35,7 +35,6 @@ public class profileFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
 
     private FirebaseUser firebaseUser;
-
     public profileFragment() {
         // Required empty public constructor
     }

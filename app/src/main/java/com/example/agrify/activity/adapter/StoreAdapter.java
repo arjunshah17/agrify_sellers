@@ -15,14 +15,13 @@ import com.google.firebase.firestore.Query;
 
 public class StoreAdapter extends FirestoreAdapter<StoreHolder> {
     Activity activity;
+    private OnStoreSelectedListener mListener;
 
     public StoreAdapter(Query query, OnStoreSelectedListener listener, Activity activity) {
         super(query);
         mListener = listener;
         this.activity = activity;
     }
-
-    private OnStoreSelectedListener mListener;
 
     @Override
     public void onBindViewHolder(@NonNull StoreHolder holder, int position) {

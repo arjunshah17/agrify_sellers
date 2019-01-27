@@ -16,13 +16,16 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agrify.R;
 import com.example.agrify.activity.AuthActivity;
+import com.example.agrify.activity.ProductActivity;
 import com.example.agrify.activity.StoreDetailActivity;
 import com.example.agrify.activity.adapter.StoreAdapter;
 import com.example.agrify.activity.listener.NavigationIconClickListener;
@@ -41,12 +44,12 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
     private static final String TAG = "MainActivity";
     private static final int LIMIT = 50;
     private static String[] CATEGORES_NAMES;
-    public String selectedCategory = "all";
     FragmentStoreBinding bind;
+    public String selectedCategory = "all";
     FirebaseAuth firebaseAuth;
     private FirebaseFirestore mFirestore;
-    NavigationIconClickListener navigationIconClickListener;
     private Query mQuery;
+    NavigationIconClickListener navigationIconClickListener;
     private StoreAdapter mAdapter;
     public StoreFragment() {
         // Required empty public constructor
@@ -87,7 +90,24 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
                 navigationIconClickListener.closeMenu();
             }
         });
-
+        bind.storeRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    bind.fabButton.collapse(true);
+                } else {
+                    bind.fabButton.expand(true);
+                }
+            }
+        });
+        bind.fabButton.toggle(true);
+        bind.fabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ProductActivity.class));
+            }
+        });
 
         return bind.getRoot();
     }

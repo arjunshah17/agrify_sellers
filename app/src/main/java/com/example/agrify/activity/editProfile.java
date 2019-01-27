@@ -18,8 +18,6 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.agrify.R;
-import com.example.agrify.activity.GlideApp;
-import com.example.agrify.activity.MainActivity;
 import com.example.agrify.activity.model.User;
 import com.example.agrify.databinding.ActivityEditProfileBinding;
 import com.google.android.gms.tasks.Continuation;
@@ -42,6 +40,7 @@ import java.io.File;
 import java.io.IOException;
 
 import id.zelory.compressor.Compressor;
+
 
 public class editProfile extends AppCompatActivity {
     private static final int SELECTED_PIC = 1;

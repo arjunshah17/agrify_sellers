@@ -17,10 +17,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     StoreFragment store;
     profileFragment profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Use the MenuItem given by this library and not the default one.
+        //First parameter is the title of the menu item and then the second parameter is the image which will be the background of the menu item.
+
         ActivityMainBinding bind = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
         store = new StoreFragment();
         profile = new profileFragment();
         loadFragment(store);      //default load Store fragment

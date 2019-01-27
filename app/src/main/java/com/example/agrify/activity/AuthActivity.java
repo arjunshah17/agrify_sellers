@@ -1,10 +1,10 @@
 package com.example.agrify.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.agrify.R;
 import com.firebase.ui.auth.AuthUI;

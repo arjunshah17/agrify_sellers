@@ -3,13 +3,12 @@ package com.example.agrify.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.agrify.activity.fragments.sliderFirst;
-import com.example.agrify.activity.fragments.sliderSecond;
-import com.github.paolorotolo.appintro.AppIntro2;
-
 import androidx.fragment.app.Fragment;
 
 import com.example.agrify.R;
+import com.example.agrify.activity.fragments.sliderFirst;
+import com.example.agrify.activity.fragments.sliderSecond;
+import com.github.paolorotolo.appintro.AppIntro2;
 
 public class introSlider extends AppIntro2 {
 

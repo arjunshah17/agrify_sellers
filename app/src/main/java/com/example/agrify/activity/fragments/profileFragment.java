@@ -1,5 +1,6 @@
 package com.example.agrify.activity.fragments;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,6 +25,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * A simple {@link Fragment} subclass.
+ */
 public class profileFragment extends Fragment {
 
     User user;
@@ -31,6 +35,7 @@ public class profileFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
 
     private FirebaseUser firebaseUser;
+
     public profileFragment() {
         // Required empty public constructor
     }
@@ -63,9 +68,6 @@ public class profileFragment extends Fragment {
                 });
             }
         });
-
-
-
 
 
         bind.EditButton.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +126,5 @@ public class profileFragment extends Fragment {
     }
 
 }
-
 
 

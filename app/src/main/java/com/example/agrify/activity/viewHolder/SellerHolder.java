@@ -18,12 +18,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 public class SellerHolder extends RecyclerView.ViewHolder {
 
     ItemSellerBinding binding;
-
     public SellerHolder(@NonNull ItemSellerBinding item) {
         super(item.getRoot());
         binding = item;
     }
-
     public void bind(final DocumentSnapshot snapshot, final Activity activity) {
 
         Seller seller = snapshot.toObject(Seller.class);

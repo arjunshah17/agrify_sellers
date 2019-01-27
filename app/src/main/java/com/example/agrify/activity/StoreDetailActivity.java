@@ -21,15 +21,17 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
 public class StoreDetailActivity extends AppCompatActivity implements EventListener<DocumentSnapshot> {
-    public static final String KEY_STORE_ID = "key_store_id";
     private static final String TAG = "StoreDetail";
-    ActivityStoreDetailBinding bind;
-    Query sellerQuery;
-    SellerAdapter mAdapter;
+
+    public static final String KEY_STORE_ID = "key_store_id";
+
+
     private FirebaseFirestore mFirestore;
     private DocumentReference mStoreRef;
     private ListenerRegistration mStoreRegistration;
-
+    ActivityStoreDetailBinding bind;
+    Query sellerQuery;
+    SellerAdapter mAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,6 @@ public class StoreDetailActivity extends AppCompatActivity implements EventListe
         mAdapter.startListening();
         mStoreRegistration = mStoreRef.addSnapshotListener(this);
     }
-
     @Override
     public void onEvent(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
         if (e != null) {

@@ -28,7 +28,7 @@
 
     <string-array name="categories_names">
 
-        <item>all</item>
+
         <item>fruits</item>
         <item>vegetables</item>
         <item>seeds</item>

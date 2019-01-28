@@ -7,7 +7,7 @@
 
         <variable
             name="seller"
-            type="com.example.agrify.activity.model.Seller" />
+            type="com.example.agrifysellers.activity.model.Seller" />
     </data>
 
     <LinearLayout

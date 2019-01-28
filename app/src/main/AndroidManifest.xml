@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.example.agrify">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.agrifysellers">
 
     <dist:module dist:instant="true" />
 
@@ -16,28 +17,26 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ProductActivity"></activity>
+        <activity android:name="com.example.agrifysellers.activity.ProductActivity"></activity>
         <activity
-            android:name=".activity.StoreDetailActivity"
+            android:name="com.example.agrifysellers.activity.StoreDetailActivity"
             android:label="store detail" />
         <activity
-            android:name=".activity.editProfile"
+            android:name="com.example.agrifysellers.activity.editProfile"
             android:label="@string/title_activity_edit_profile" />
+
         <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/AppTheme.Actionbar" />
-        <activity
-            android:name=".activity.introSlider"
+            android:name="com.example.agrifysellers.activity.introSlider"
             android:label="@string/title_activity_intro_slider" />
         <activity
-            android:name=".activity.MainActivity$editProfile"
+            android:name="com.example.agrifysellers.activity.MainActivity$editProfile"
             android:label="@string/title_activity_edit_profile"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.example.agrifysellers.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.AuthActivity"
+            android:name="com.example.agrifysellers.activity.AuthActivity"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,6 +44,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
     </application>
 
 </manifest>

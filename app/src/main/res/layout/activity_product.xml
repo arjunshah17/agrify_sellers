@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ds="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="store"
-            type="com.example.agrify.activity.model.Store" />
+            type="com.example.agrifysellers.activity.model.Store" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+<ProgressBar
+    android:id="@+id/loader_progressBar"
+    android:layout_width="wrap_content"
+    android:visibility="gone"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loader_layout">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -67,6 +77,7 @@
                     android:padding="@dimen/activity_vertical_margin"
                     android:spinnerMode="dialog" />
 
+
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
@@ -83,7 +94,12 @@
                         android:text="@{store.name}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
+<ImageView
+    android:id="@+id/product_imageView"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:src="@drawable/ic_add_a_photo_black_24dp"
+    />
 
                 <com.google.android.material.textfield.TextInputEditText
 
@@ -109,6 +125,6 @@
 
             </LinearLayout>
         </ScrollView>
-
+    </RelativeLayout>
     </RelativeLayout>
 </layout>

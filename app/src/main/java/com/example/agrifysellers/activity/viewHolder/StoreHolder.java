@@ -33,10 +33,11 @@ public class StoreHolder extends RecyclerView.ViewHolder {
         binding.setStore(store);
 
         // Load image
-        GlideApp.with(activity)
-                .load(store.getProductImageUrl())
-                .into(binding.productImage);
-
+        if(activity!=null) {
+            GlideApp.with(activity)
+                    .load(store.getProductImageUrl())
+                    .into(binding.productImage);
+        }
         // Click listener
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

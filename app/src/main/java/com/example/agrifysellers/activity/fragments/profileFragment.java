@@ -94,8 +94,9 @@ public class profileFragment extends Fragment {
 
                     }
                     if (firebaseUser.getPhotoUrl() != null) {
-                        GlideApp.with(getActivity()).load(firebaseUser.getPhotoUrl()).placeholder(R.drawable.add_photo).into(bind.userProfilePhoto);
-                    }
+                        if(getActivity()!=null) {
+                            GlideApp.with(getActivity()).load(firebaseUser.getPhotoUrl()).placeholder(R.drawable.add_photo).into(bind.userProfilePhoto);
+                        }  }
 
                     bind.setUser(user);
 

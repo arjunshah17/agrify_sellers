@@ -59,6 +59,7 @@ dependencies {
     implementation 'com.github.imtuann:FloatingActionButtonExpandable:1.1.2'
     implementation 'com.github.GrenderG:Toasty:1.4.0'
     implementation 'com.github.gabrielbb:cutout:0.1.2'
+    implementation 'com.github.varunest:sparkbutton:1.0.6'
 
 
 

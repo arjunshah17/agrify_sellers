@@ -1,8 +1,10 @@
 package com.example.agrifysellers.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -22,7 +24,6 @@ import com.google.firebase.firestore.Query;
 
 public class StoreDetailActivity extends AppCompatActivity implements EventListener<DocumentSnapshot> {
     private static final String TAG = "StoreDetail";
-
     public static final String KEY_STORE_ID = "key_store_id";
 
 
@@ -32,12 +33,16 @@ public class StoreDetailActivity extends AppCompatActivity implements EventListe
     ActivityStoreDetailBinding bind;
     Query sellerQuery;
     SellerAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bind = DataBindingUtil.setContentView(this, R.layout.activity_store_detail);
         bind.productDes.setMovementMethod(new ScrollingMovementMethod());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
+            bind.acitvityDetailLayout.setBackground(this.getDrawable(R.drawable.store_item_background));//set curve background
+        }
 
         String storeId = getIntent().getExtras().getString(KEY_STORE_ID);
         if (storeId == null) {
@@ -50,6 +55,13 @@ public class StoreDetailActivity extends AppCompatActivity implements EventListe
         mStoreRef = mFirestore.collection("store").document(storeId);
         getSellerList();
 
+
+        bind.appBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 
@@ -59,6 +71,7 @@ public class StoreDetailActivity extends AppCompatActivity implements EventListe
         mAdapter.startListening();
         mStoreRegistration = mStoreRef.addSnapshotListener(this);
     }
+
     @Override
     public void onEvent(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
         if (e != null) {
@@ -74,12 +87,14 @@ public class StoreDetailActivity extends AppCompatActivity implements EventListe
         GlideApp.with(this)
                 .load(store.getProductImageUrl())
                 .into(bind.productImageUrl);
-
+        bind.appBar.setTitle(store.getName());
+        stateLoading(false);
 
     }
 
 
     void getSellerList() {
+        stateLoading(true);
         sellerQuery = mStoreRef
                 .collection("sellerList")
                 .orderBy("name", Query.Direction.DESCENDING);
@@ -90,5 +105,14 @@ public class StoreDetailActivity extends AppCompatActivity implements EventListe
 
     }
 
+    private void stateLoading(boolean stateStatus) {
+        if (stateStatus) {
+            bind.acitvityDetailLayout.setVisibility(View.GONE);
+            bind.progressLoading.setVisibility(View.VISIBLE);
+        } else {
+            bind.acitvityDetailLayout.setVisibility(View.VISIBLE);
+            bind.progressLoading.setVisibility(View.GONE);
+        }
+    }
 
 }

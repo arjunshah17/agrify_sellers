@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -74,7 +76,7 @@ Boolean isChanged=false;
         }
         store = new Store();
         firebaseAuth = FirebaseAuth.getInstance();
-
+        this.setSupportActionBar(binding.appBar);
 
         firebaseUser = firebaseAuth.getCurrentUser();
         user_id = firebaseAuth.getCurrentUser().getUid();
@@ -91,32 +93,7 @@ Boolean isChanged=false;
             }
         });
 
-        binding.saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-              DocumentReference defRef  =firebaseFirestore.collection("store").document(binding.productName.getText().toString().toLowerCase());
-               defRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                Toasty.error(ProductActivity.this,"data already exists",Toasty.LENGTH_LONG).show();
-                            } else {
-                                uploadData();
-                            }
-                        } else {
-                            Log.d(TAG, "get failed with ", task.getException());
-                        }
-                    }
-                });
-
-
-            }
-
-
-        });
 
         binding.productImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,6 +184,10 @@ dataLoading(true);
 
 
         }
+        else
+        {
+            Toasty.info(ProductActivity.this,"upload image",Toasty.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -253,6 +234,36 @@ dataLoading(true);
 
             }
         }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.product_activitytoolbar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //add the function to perform here
+        DocumentReference defRef  =firebaseFirestore.collection("store").document(binding.productName.getText().toString().toLowerCase());
+        defRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Toasty.error(ProductActivity.this,"data already exists",Toasty.LENGTH_LONG).show();
+                    } else {
+                        uploadData();
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+        return (true);
+
+    }
 
     }
 

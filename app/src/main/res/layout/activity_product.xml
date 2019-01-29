@@ -105,23 +105,15 @@
 
                     android:id="@+id/productdes_textview"
                     android:layout_width="match_parent"
-                    android:layout_height="213dp"
-                    android:hint="enter description"
-                    android:inputType="textLongMessage"
-                    android:nestedScrollingEnabled="true"
-
-                    android:scrollbars="vertical"
-                    android:text="" />
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/save_button"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="60dp"
-                    android:text="@string/profile_menu_save"
-                    app:cornerRadius="25dp" />
+                    android:hint="enter description"
+                    android:inputType="textMultiLine"
+                    android:minLines="6"
+                    android:gravity="top|left"
+                    />
+
+
+
 
             </LinearLayout>
         </ScrollView>

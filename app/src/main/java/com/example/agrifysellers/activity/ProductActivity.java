@@ -23,6 +23,7 @@ import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.model.Store;
 import com.example.agrifysellers.databinding.ActivityProductBinding;
 
+import com.github.gabrielbb.cutout.CutOut;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -94,7 +95,7 @@ Boolean isChanged=false;
             @Override
             public void onClick(View v) {
 
-              DocumentReference defRef  =firebaseFirestore.collection("store").document(binding.productName.getText().toString());
+              DocumentReference defRef  =firebaseFirestore.collection("store").document(binding.productName.getText().toString().toLowerCase());
                defRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -157,30 +158,15 @@ Boolean isChanged=false;
         if (isChanged ) {
 dataLoading(true);
 
-            File newImageFile = new File(mainImageURI.getPath());
-            try {
-
-                compressedImageFile = new Compressor(ProductActivity.this)
-                        .setMaxHeight(125)
-                        .setMaxWidth(125)                                             //compressing image
-                        .setQuality(100)
-                        .compressToBitmap(newImageFile);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);   //converting into bitmap
-            byte[] thumbData = baos.toByteArray();
+
+
 
             final StorageReference ref = storageReference.child("storeProductImage").child(store.getName() + ".jpg");
-            UploadTask image_path = ref.putBytes(thumbData);                                                         //uploading image
+            UploadTask image_path = (UploadTask) ref.putFile(mainImageURI);//uploaded image in cloud
 
-            Task<Uri> urlTask = image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                //getting image reference
-
+            Task<Uri> urlTask=image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if (!task.isSuccessful()) {
@@ -193,7 +179,8 @@ dataLoading(true);
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
+                    if(task.isSuccessful())
+                    {
                         Uri downloadUri = task.getResult();
                         store.setProductImageUrl(downloadUri.toString());
                         store.setCategory(binding.catSpinner.getSelectedItem().toString());
@@ -212,16 +199,11 @@ dataLoading(true);
                                 }
                             }
                         });
-
-
-                    } else {
-                        // Handle failures
-                        Toast.makeText(ProductActivity.this, "error on uploading image", Toast.LENGTH_LONG).show();
-
-                        // ...
                     }
                 }
             });
+
+
 
 
         }
@@ -230,38 +212,34 @@ dataLoading(true);
 
 
     private void BringImagePicker() {
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setAspectRatio(1, 1)
-                .start(ProductActivity.this);
+        CutOut.activity().start(this);   //open cv image library
     }
 
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == CutOut.CUTOUT_ACTIVITY_REQUEST_CODE) {
 
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    mainImageURI = CutOut.getUri(data);
+                    Log.i("onactresultresult", "mainurl:" + mainImageURI.toString());
 
-                mainImageURI = result.getUri();
-                Log.i("onactresultresult", "mainurl:" + mainImageURI.toString());
+                    binding.productImageView.setImageURI(mainImageURI);
 
-              binding.productImageView.setImageURI(mainImageURI);
+                    isChanged = true;
 
-                isChanged = true;
 
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-
-                Exception error = result.getError();
-                Toast.makeText(ProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-
+                    break;
+                case CutOut.CUTOUT_ACTIVITY_RESULT_ERROR_CODE:
+                    Exception ex = CutOut.getError(data);
+                    break;
+                default:
+               Toasty.info(ProductActivity.this,"user cancel image",Toasty.LENGTH_SHORT).show();
             }
         }
-
-        }
+    }
         void dataLoading(boolean state)
         {
             if (state)

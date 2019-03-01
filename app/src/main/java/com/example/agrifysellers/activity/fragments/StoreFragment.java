@@ -8,34 +8,43 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agrifysellers.R;
-import com.example.agrifysellers.activity.AuthActivity;
-import com.example.agrifysellers.activity.ProductActivity;
 import com.example.agrifysellers.activity.StoreDetailActivity;
 import com.example.agrifysellers.activity.adapter.StoreAdapter;
+import com.example.agrifysellers.activity.auth.LoginActivity;
 import com.example.agrifysellers.activity.listener.NavigationIconClickListener;
+import com.example.agrifysellers.activity.productActivity;
 import com.example.agrifysellers.databinding.FragmentStoreBinding;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import es.dmoral.toasty.Toasty;
+import spencerstudios.com.bungeelib.Bungee;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,11 +54,11 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
     private static final int LIMIT = 50;
     private static String[] CATEGORES_NAMES;
     FragmentStoreBinding bind;
-    public String selectedCategory = "all";
-    FirebaseAuth firebaseAuth;
+    private String selectedCategory = "all";
+    private FirebaseAuth firebaseAuth;
     private FirebaseFirestore mFirestore;
     private Query mQuery;
-    NavigationIconClickListener navigationIconClickListener;
+    private NavigationIconClickListener navigationIconClickListener;
     private StoreAdapter mAdapter;
     public StoreFragment() {
         // Required empty public constructor
@@ -79,6 +88,7 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
 
 
         setUpToolbar();
+
         initFirestore();
         initRecyclerView();
         initListView();
@@ -104,11 +114,12 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
                 }
             }
         });
+
         bind.fabButton.toggle(true);
         bind.fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), ProductActivity.class));
+                startActivity(new Intent(getActivity(), productActivity.class));
             }
         });
 
@@ -122,7 +133,7 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String text = ((TextView) view).getText().toString();
-                Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show();
+                Toasty.info(getActivity(), text, Toast.LENGTH_LONG).show();
                 navigationIconClickListener.closeMenu();
                 loadStoreProducts(text);
 
@@ -131,6 +142,8 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
     }
 
     void loadStoreProducts(String text) {
+
+        productLoadingState(true);
         if (text.equals("all")) {
             mQuery = mFirestore.collection("store").orderBy("name");
             selectedCategory = text;
@@ -157,17 +170,37 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
     }
 
     private void initRecyclerView() {
+
         if (mQuery == null) {
             Log.w(TAG, "No query, not initializing RecyclerView");
         }
 
         mAdapter = new StoreAdapter(mQuery, this, getActivity()) {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                super.onEvent(documentSnapshots, e);
+                productLoadingState(false);
+
+                if (getItemCount() == 0) {
+                    noProductFound(true);
+                } else {
+                    noProductFound(false);
+                }
+            }
 
             @Override
             protected void onDataChanged() {
                 // Show/hide content if the query returns empty.
+                if (getItemCount() == 0) {
+                    noProductFound(true);
+
+                } else {
+                    noProductFound(false);
+                }
 
             }
+
+
         };
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
@@ -177,15 +210,18 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
 
         bind.storeRecycleView.setAdapter(mAdapter);
 
-        //TODO call category listener here
+
     }
 
     @Override
-    public void onStoreSelected(DocumentSnapshot store) {
+    public void onStoreSelected(DocumentSnapshot store, View SharedView) {
         Intent intent = new Intent(getActivity(), StoreDetailActivity.class);
         intent.putExtra(StoreDetailActivity.KEY_STORE_ID, store.getId());
+        String transitionName = getString(R.string.store_product_transition);
 
-        startActivity(intent);
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), SharedView, transitionName);
+        startActivity(intent, transitionActivityOptions.toBundle());
+        Bungee.inAndOut(getActivity());
     }
 
     @Override
@@ -217,19 +253,89 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.shr_toolbar_menu, menu);
         super.onCreateOptionsMenu(menu, menuInflater);
+
+        final MenuItem search_item = menu.findItem(R.id.store_searchBar);
+        SearchView searchView = (SearchView) search_item.getActionView();
+        searchView.setFocusable(false);
+        searchView.setQueryHint("Search");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                Query queryName;
+                if (query != null) {
+                    queryName = mFirestore.collection("store").orderBy("name").startAt(query.toLowerCase()).endAt(query.toLowerCase() + "\uf8ff");
+                    mAdapter.setQuery(queryName);
+
+                }
+
+
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                mAdapter.setQuery(mQuery);
+                return false;
+            }
+        });
     }
 
     void signOut() {
         if (firebaseAuth.getCurrentUser() != null) {
-            AuthUI.getInstance().signOut(getActivity()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            AuthUI.getInstance().signOut(getActivity()).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
-                public void onSuccess(Void aVoid) {
-                    startActivity(new Intent(getActivity(), AuthActivity.class));
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toasty.info(getActivity(), "log out successfully", Toasty.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        Bungee.windmill(getActivity());
+                    } else {
+                        Toasty.error(getActivity(), task.getException().getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
+
+                    }
                 }
             });
 
         }
 
     }
+
+    void productLoadingState(boolean state) {
+        if (state) {
+            bind.storeRecycleView.setVisibility(View.GONE);
+            bind.shimmerRecyclerView.showShimmerAdapter();
+
+
+        } else {
+            bind.storeRecycleView.setVisibility(View.VISIBLE);
+            bind.shimmerRecyclerView.hideShimmerAdapter();
+            // TODO stop shrimmer effect
+
+        }
+    }
+
+    void noProductFound(boolean state) {
+        if (state) {
+            bind.storeRecycleView.setVisibility(View.GONE);
+
+
+            bind.animationView.playAnimation();
+            bind.animationLayout.setVisibility(View.VISIBLE);
+        } else {
+            bind.animationLayout.setVisibility(View.GONE);
+            bind.storeRecycleView.setVisibility(View.VISIBLE);
+            bind.animationView.cancelAnimation();
+        }
+    }
+
+
 
 }

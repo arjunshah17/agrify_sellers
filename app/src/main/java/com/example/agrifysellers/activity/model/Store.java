@@ -1,7 +1,9 @@
 package com.example.agrifysellers.activity.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import android.content.Context;
+
+import com.example.agrifysellers.R;
+
 
 public class Store {
     private String name, des, productImageUrl, category;
@@ -43,16 +45,16 @@ public Store(){}
         return category;
     }
 
+    public int getValFromCategory(Context context) {
+        String[] arr = context.getResources().getStringArray(R.array.categories_names);
+        for (int i = 0; i < arr.length; i++) {
+            if (category.equals(arr[i])) {
+                return i;
+            }
+        }
+        return 0;
+    }
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public Map<String, String> toStoreMap() {
-        Map<String, String> product = new HashMap<>();
-        product.put("name", name);
-        product.put("productImageUrl", productImageUrl);
-        product.put("category", category);
-        return product;
-
     }
 }

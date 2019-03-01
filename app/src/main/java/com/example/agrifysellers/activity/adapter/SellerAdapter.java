@@ -14,7 +14,6 @@ import com.google.firebase.firestore.Query;
 
 public class SellerAdapter extends FirestoreAdapter<SellerHolder> {
     Activity activity;
-
     public SellerAdapter(Query query, Activity activity) {
         super(query);
         this.activity = activity;

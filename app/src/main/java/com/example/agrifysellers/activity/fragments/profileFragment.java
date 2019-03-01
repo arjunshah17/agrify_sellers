@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -40,6 +41,7 @@ public class profileFragment extends Fragment {
     }
 
     private FragmentProfileBinding bind;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,7 +84,7 @@ public class profileFragment extends Fragment {
     private void loadData() {
         user = new User();
 
-        firebaseFirestore.collection("Sellers").document(firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("Users").document(firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 user.setName(firebaseUser.getDisplayName());
@@ -94,9 +96,10 @@ public class profileFragment extends Fragment {
 
                     }
                     if (firebaseUser.getPhotoUrl() != null) {
-                        if(getActivity()!=null) {
+                        if (getActivity() != null) {
                             GlideApp.with(getActivity()).load(firebaseUser.getPhotoUrl()).placeholder(R.drawable.add_photo).into(bind.userProfilePhoto);
-                        }  }
+                        }
+                    }
 
                     bind.setUser(user);
 

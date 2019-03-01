@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.model.User;
 import com.example.agrifysellers.databinding.ActivityEditProfileBinding;
@@ -41,11 +44,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+import es.dmoral.toasty.Toasty;
 import id.zelory.compressor.Compressor;
+
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
 
 public class editProfile extends AppCompatActivity {
-
+    private static final int SELECTED_PIC = 1;
 
     ActivityEditProfileBinding bind;
     User user;
@@ -57,7 +63,8 @@ public class editProfile extends AppCompatActivity {
     private boolean isChanged = false;
     private StorageReference storageReference;
     private Bitmap compressedImageFile;
-
+    Boolean isUserFirstTime = false;
+    AwesomeValidation validator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +74,19 @@ public class editProfile extends AppCompatActivity {
 
             bind.ProfileLayout.setBackground(this.getDrawable(R.drawable.store_item_background));//set curve background
         }
+        validator = new AwesomeValidation(BASIC);
+        initializeValidators();
         user = new User();
         firebaseAuth = FirebaseAuth.getInstance();
         this.setSupportActionBar(bind.appBar);
-
+        if (getIntent().getExtras() != null) {
+            String firstFirstTime = getIntent().getStringExtra("LoginActivity");
+            if (firstFirstTime.equals("sign_in_for_first_time")) {
+                isUserFirstTime = true;
+                bind.appBar.setNavigationIcon(null);
+                bind.appBar.setTitle("save profile");
+            }
+        }
         firebaseUser = firebaseAuth.getCurrentUser();
         user_id = firebaseAuth.getCurrentUser().getUid();
 
@@ -121,17 +137,16 @@ public class editProfile extends AppCompatActivity {
         bind.appBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stateLoading(true);
+
                 Intent intent = new Intent(editProfile.this, MainActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
     }
 
     private void loadData() {
-        firebaseFirestore.collection("Sellers").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("Users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 user.setName(firebaseUser.getDisplayName());
@@ -143,7 +158,7 @@ public class editProfile extends AppCompatActivity {
 
                     }
                     if (firebaseUser.getPhotoUrl() != null) {
-                        Toast.makeText(editProfile.this, firebaseUser.getPhotoUrl().toString(), Toast.LENGTH_LONG).show();
+
 
                         GlideApp.with(editProfile.this).load(firebaseUser.getPhotoUrl()).placeholder(R.drawable.add_photo).
                                 into(bind.userProfilePhoto);
@@ -151,8 +166,9 @@ public class editProfile extends AppCompatActivity {
                     bind.setUser(user);
 
                 } else {
-                    String error = task.getException().getMessage();
-                    Toast.makeText(editProfile.this, "(FIRESTORE Retrieve Error) : " + error, Toast.LENGTH_LONG).show();
+                    if (!isUserFirstTime) {
+                        Toasty.error(editProfile.this, task.getException().getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
+                    }
                 }
                 stateLoading(false);
             }
@@ -196,29 +212,25 @@ public class editProfile extends AppCompatActivity {
 
     private void storeFirestoreData(User user) {
 
-
-        firebaseFirestore.collection("Sellers").document(user_id).set(user.toUserMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        firebaseFirestore.collection("Users").document(user_id).set(user.toUserMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()) {
 
-                    Toast.makeText(editProfile.this, "The user Settings are updated.", Toast.LENGTH_LONG).show();
+                    Toasty.success(editProfile.this, "The user Settings are updated.", Toast.LENGTH_LONG).show();
                     Intent mainIntent = new Intent(editProfile.this, MainActivity.class);
                     startActivity(mainIntent);
                     finish();
 
                 } else {
 
-                    String error = task.getException().getMessage();
-                    Toast.makeText(editProfile.this, "(FIRESTORE Error) : " + error, Toast.LENGTH_LONG).show();
+
+                    Toasty.error(editProfile.this, task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
                 }
             }
         });
     }
-
-
-
 
 
     private void BringImagePicker() {
@@ -274,13 +286,16 @@ public class editProfile extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //add the function to perform here
-        saveProfile();
+        if (validator.validate()) {
+            saveProfile();
+        }
         return (true);
 
     }
 
 
     void saveProfile() {
+
         final User user = new User();
         user.setName(bind.name.getText().toString());
         user.setPhone(bind.phone.getText().toString());
@@ -349,6 +364,15 @@ public class editProfile extends AppCompatActivity {
 
 
         }
+
+
+    }
+
+    private void initializeValidators() {
+
+        validator.addValidation(this, bind.name.getId(), RegexTemplate.NOT_EMPTY, R.string.username_empty);
+        validator.addValidation(this, bind.phone.getId(), Patterns.PHONE, R.string.phone_error);
+
 
     }
 }

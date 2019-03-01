@@ -30,7 +30,7 @@ public class SellerHolder extends RecyclerView.ViewHolder {
         binding.setSeller(seller);
 
         // Load image
-        if(activity!=null) {
+        if (activity != null) {
             GlideApp.with(activity)
                     .load(seller.getProfilePhotoUrl())
                     .into(binding.profilePhoto);

@@ -10,4 +10,5 @@
     <color name="colorPlaceHolderBG">#e6e6e6</color>
     <color name="white">#FFFFFF</color>
     <color name="ripple_color">#e0f2f1</color>
+    <color name="borderBottomColor">#bfbfbf</color>
 </resources>

@@ -68,7 +68,8 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
             bind.productLinearLayout.setBackground(this.getDrawable(R.drawable.store_item_background));//set curve background
         }
 
-        bind.stepperForm.setup(this, cat, product, price).init();
+        bind.stepperForm.setup(this, cat, product, price).displayBottomNavigation(false)
+                .lastStepNextButtonText("start selling").init();
 
         product.productButton.setOnClickListener(new View.OnClickListener() {
             @Override

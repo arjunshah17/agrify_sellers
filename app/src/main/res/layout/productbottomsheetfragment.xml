@@ -23,6 +23,35 @@
                 android:layout_height="wrap_content"
                 app:defaultQueryHint="search product" />
 
+            <LinearLayout
+                android:id="@+id/animation_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animation_view"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="500dp"
+
+                    app:lottie_autoPlay="true"
+
+
+                    app:lottie_loop="true"
+
+                    app:lottie_rawRes="@raw/productempty" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="center_horizontal"
+                    android:text="no products found"
+                    android:textSize="24sp" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/storeRecycleView"

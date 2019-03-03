@@ -89,10 +89,11 @@ public class ProductbottomsheetFragment extends BottomSheetDialogFragment {
             protected void onDataChanged() {
                 // Show/hide content if the query returns empty.
                 if (getItemCount() == 0) {
+                    noProductFound(true);
 
 
                 } else {
-
+                    noProductFound(false);
                 }
 
             }
@@ -146,5 +147,18 @@ public class ProductbottomsheetFragment extends BottomSheetDialogFragment {
         }
     }
 
+    void noProductFound(boolean state) {
+        if (state) {
+            binding.storeRecycleView.setVisibility(View.GONE);
+
+
+            binding.animationView.playAnimation();
+            binding.animationLayout.setVisibility(View.VISIBLE);
+        } else {
+            binding.animationLayout.setVisibility(View.GONE);
+            binding.storeRecycleView.setVisibility(View.VISIBLE);
+            binding.animationView.cancelAnimation();
+        }
+    }
 
 }

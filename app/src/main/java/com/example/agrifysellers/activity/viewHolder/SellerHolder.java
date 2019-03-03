@@ -13,29 +13,45 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.agrifysellers.activity.GlideApp;
 import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.databinding.ItemSellerBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SellerHolder extends RecyclerView.ViewHolder {
-
+    public FirebaseFirestore db;
+    public FirebaseAuth auth;
+    Seller seller;
     ItemSellerBinding binding;
+    private String phoneNumber;
     public SellerHolder(@NonNull ItemSellerBinding item) {
         super(item.getRoot());
         binding = item;
+        seller = new Seller();
     }
     public void bind(final DocumentSnapshot snapshot, final Activity activity) {
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        DocumentReference reference = snapshot.getDocumentReference("userId");
+        reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                seller = documentSnapshot.toObject(Seller.class);
+                binding.setSeller(seller);
+                phoneNumber = seller.getPhone();
+                // Load image
+                if (activity != null) {
+                    GlideApp.with(activity)
+                            .load(seller.getProfilePhotoUrl())
+                            .into(binding.profilePhoto);
+                }
+            }
+        });
 
-        Seller seller = snapshot.toObject(Seller.class);
         Resources resources = itemView.getResources();
 
-        binding.setSeller(seller);
 
-        // Load image
-        if (activity != null) {
-            GlideApp.with(activity)
-                    .load(seller.getProfilePhotoUrl())
-                    .into(binding.profilePhoto);
-        }
-        final String phoneNumber = seller.getPhone();
         binding.phoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

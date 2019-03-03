@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="seller"
+            type="com.example.agrifysellers.activity.model.Seller" />
     </data>
 
     <RelativeLayout
@@ -64,48 +67,19 @@
 
                     >
 
-                    <Spinner
-                        android:id="@+id/cat_spinner"
-                        style="@style/AppTheme.Spinner"
+                    <ernestoyaquello.com.verticalstepperform.VerticalStepperFormView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/stepper_form"
+                        android:layout_height="match_parent"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/categories_names"
+                        android:text="sumbit"
+                        app:form_circle_background_color="@color/colorPrimary"
+                        app:form_confirmation_step_title_text="sumbit"
+                        app:form_next_button_background_color="@color/colorPrimary"
+                        app:form_next_button_pressed_background_color="@color/colorPrimaryDark" />
 
 
-                        android:padding="@dimen/activity_vertical_margin"
-                        android:spinnerMode="dialog" />
 
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:hint="enter product name"
-                        app:hintEnabled="true">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/productName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textEmailAddress" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageView
-                        android:id="@+id/product_imageView"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:src="@drawable/ic_add_a_photo_black_24dp" />
-
-
-                    <EditText
-                        android:id="@+id/productdes_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="enter details"
-
-                        />
 
 
                 </LinearLayout>

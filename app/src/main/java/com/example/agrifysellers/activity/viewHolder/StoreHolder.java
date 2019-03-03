@@ -1,9 +1,7 @@
 package com.example.agrifysellers.activity.viewHolder;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,65 +10,88 @@ import com.example.agrifysellers.activity.GlideApp;
 import com.example.agrifysellers.activity.adapter.StoreAdapter;
 import com.example.agrifysellers.activity.model.Store;
 import com.example.agrifysellers.databinding.ItemStoreProductBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.varunest.sparkbutton.SparkEventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
-import es.dmoral.toasty.Toasty;
+import javax.annotation.Nullable;
 
 
 public class StoreHolder extends RecyclerView.ViewHolder {
     public ItemStoreProductBinding binding;
     public FirebaseFirestore db;
     public FirebaseAuth auth;
-
+    Store store;
     public StoreHolder(@NonNull ItemStoreProductBinding item) {
         super(item.getRoot());
         binding = item;
+        store = new Store();
     }
 
 
     public void bind(final DocumentSnapshot snapshot,
-                     final StoreAdapter.OnStoreSelectedListener listener, final Activity activity) {
+                     final StoreAdapter.OnStoreSelectedListener listener, final Activity activity, String TAG) {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        final Store store = snapshot.toObject(Store.class);
-        Resources resources = itemView.getResources();
-
-        binding.setStore(store);
-
-        // Load image
-        if (activity != null) {
-            GlideApp.with(activity)
-                    .load(store.getProductImageUrl())
-                    .into(binding.productImage);
-        }
-        binding.wiseButton.setEventListener(new SparkEventListener() {
+        if (TAG.equals("StoreFragment")) {
+            store = snapshot.toObject(Store.class);
 
 
-            @Override
-            public void onEvent(ImageView button, boolean buttonState) {
-                if (buttonState) {
-                    Toasty.success(activity, store.getName() + " added to wishlist", Toasty.LENGTH_SHORT).show();
-                } else {
-                    Toasty.info(activity, store.getName() + " remove from wishlist", Toasty.LENGTH_SHORT).show();
+            binding.setStore(store);
+
+            // Load image
+            if (activity != null) {
+                GlideApp.with(activity)
+                        .load(store.getProductImageUrl())
+                        .into(binding.productImage);
+            }
+
+        } else {
+
+            DocumentReference docRef = db.collection("store").document(snapshot.getId());
+            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    store = documentSnapshot.toObject(Store.class);
+                    binding.setStore(store);
+                    if (activity != null) {
+                        GlideApp.with(activity)
+                                .load(store.getProductImageUrl())
+                                .into(binding.productImage);
+                    }
                 }
-            }
+            });
+            docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-            @Override
-            public void onEventAnimationEnd(ImageView button, boolean buttonState) {
+                    if (snapshot != null && snapshot.exists()) {
 
-            }
 
-            @Override
-            public void onEventAnimationStart(ImageView button, boolean buttonState) {
+                        store = documentSnapshot.toObject(Store.class);
+                        binding.setStore(store);
 
-            }
-        });
 
-        // Click listener
+                        // Load image
+                        if (store.getProductImageUrl() != null) {
+                            if (activity != null) {
+                                GlideApp.with(activity)
+                                        .load(store.getProductImageUrl())
+                                        .into(binding.productImage);
+                            }
+                        }
+                    }
+                }
+            });
+            // Click listener
 
+
+        }
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,8 +102,8 @@ public class StoreHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
+    }
 
     }
 
 
-}

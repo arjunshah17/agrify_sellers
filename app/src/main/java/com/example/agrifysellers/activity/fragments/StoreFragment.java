@@ -31,7 +31,7 @@ import com.example.agrifysellers.activity.StoreDetailActivity;
 import com.example.agrifysellers.activity.adapter.StoreAdapter;
 import com.example.agrifysellers.activity.auth.LoginActivity;
 import com.example.agrifysellers.activity.listener.NavigationIconClickListener;
-import com.example.agrifysellers.activity.productActivity;
+import com.example.agrifysellers.activity.productActivity.productActivity;
 import com.example.agrifysellers.databinding.FragmentStoreBinding;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,7 +50,7 @@ import spencerstudios.com.bungeelib.Bungee;
  * A simple {@link Fragment} subclass.
  */
 public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelectedListener {
-    private static final String TAG = "MainActivity";
+    private static String TAG = "StoreFragment";
     private static final int LIMIT = 50;
     private static String[] CATEGORES_NAMES;
     FragmentStoreBinding bind;
@@ -74,7 +74,7 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        CATEGORES_NAMES = getResources().getStringArray(R.array.categories_names);//add category from array
+        CATEGORES_NAMES = getResources().getStringArray(R.array.categories_names);//add Category from array
 
 
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_store, container, false);//inflaste layout
@@ -149,7 +149,7 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
             selectedCategory = text;
         } else {
             selectedCategory = text;
-            mQuery = mFirestore.collection("store").orderBy("name").whereEqualTo("category", text);
+            mQuery = mFirestore.collection("store").orderBy("name").whereEqualTo("Category", text);
         }
 
 
@@ -175,7 +175,7 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
             Log.w(TAG, "No query, not initializing RecyclerView");
         }
 
-        mAdapter = new StoreAdapter(mQuery, this, getActivity()) {
+        mAdapter = new StoreAdapter(mQuery, this, getActivity(), TAG) {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 super.onEvent(documentSnapshots, e);

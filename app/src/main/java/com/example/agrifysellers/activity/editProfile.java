@@ -146,14 +146,17 @@ public class editProfile extends AppCompatActivity {
     }
 
     private void loadData() {
-        firebaseFirestore.collection("Users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("Sellers").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                user.setName(firebaseUser.getDisplayName());
-                user.setEmail(firebaseUser.getEmail());
+
                 if (task.isSuccessful()) {
                     if (task.getResult().exists()) {
-                        user.setPhone(task.getResult().getString("phone"));
+
+                        user = task.getResult().toObject(User.class);
+                        user.setName(firebaseUser.getDisplayName());
+                        user.setEmail(firebaseUser.getEmail());
+                        user.setProfilePhotoUrl(firebaseUser.getPhotoUrl().toString());
 
 
                     }
@@ -212,7 +215,7 @@ public class editProfile extends AppCompatActivity {
 
     private void storeFirestoreData(User user) {
 
-        firebaseFirestore.collection("Users").document(user_id).set(user.toUserMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        firebaseFirestore.collection("Sellers").document(user_id).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()) {
@@ -296,7 +299,7 @@ public class editProfile extends AppCompatActivity {
 
     void saveProfile() {
 
-        final User user = new User();
+
         user.setName(bind.name.getText().toString());
         user.setPhone(bind.phone.getText().toString());
 

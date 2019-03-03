@@ -12,20 +12,18 @@ import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.viewHolder.StoreHolder;
 import com.example.agrifysellers.databinding.ItemStoreProductBinding;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.WriteBatch;
 
 public class StoreAdapter extends FirestoreAdapter<StoreHolder> {
     Activity activity;
+    String TAG;
 
-    WriteBatch batch;
-    FirebaseFirestore firebaseFirestore;
 
-    public StoreAdapter(Query query, OnStoreSelectedListener listener, Activity activity) {
+    public StoreAdapter(Query query, OnStoreSelectedListener listener, Activity activity, String TAG) {
         super(query);
         mListener = listener;
         this.activity = activity;
+        this.TAG = TAG;
     }
 
     private OnStoreSelectedListener mListener;
@@ -40,18 +38,17 @@ public class StoreAdapter extends FirestoreAdapter<StoreHolder> {
     public StoreHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
-        ItemStoreProductBinding itemStoreProductBinding = DataBindingUtil.
-                inflate(LayoutInflater.from(parent.getContext()), R.layout.item_store_product, parent, false);
+        ItemStoreProductBinding itemStoreProductBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_store_product, parent, false);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        batch = firebaseFirestore.batch();
+
+
         return new StoreHolder(itemStoreProductBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull StoreHolder holder, int position) {
 
-        holder.bind(getSnapshot(position), mListener, activity);
+        holder.bind(getSnapshot(position), mListener, activity, TAG);
     }
 
     public interface OnStoreSelectedListener {

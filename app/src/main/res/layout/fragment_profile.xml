@@ -168,7 +168,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:shimmer_demo_angle="20"
-
                 app:shimmer_demo_child_count="10"
                 app:shimmer_demo_grid_child_count="2"
                 app:shimmer_demo_layout="@layout/store_product_grid_loading"
@@ -187,20 +186,15 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     app:lottie_autoPlay="true"
-
-
                     app:lottie_loop="true"
-
                     app:lottie_rawRes="@raw/productempty" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_gravity="center_horizontal"
-                    android:text="no products found"
+                    android:text="@string/no_products_found"
                     android:textSize="24sp" />
             </LinearLayout>
 

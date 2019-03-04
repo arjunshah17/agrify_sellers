@@ -59,7 +59,8 @@ public class StoreHolder extends RecyclerView.ViewHolder {
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     store = documentSnapshot.toObject(Store.class);
                     binding.setStore(store);
-                    if (activity != null) {
+
+                    if (activity != null && store.getProductImageUrl()!=null) {
                         GlideApp.with(activity)
                                 .load(store.getProductImageUrl())
                                 .into(binding.productImage);

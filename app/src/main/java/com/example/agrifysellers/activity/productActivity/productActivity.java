@@ -18,6 +18,7 @@ import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.activity.model.Store;
 import com.example.agrifysellers.databinding.ActivityProductBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,7 +49,7 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
     WriteBatch batch;
     DocumentReference prodRef;
     String product_id;
-
+    Seller seller;
     @Override
 
 
@@ -59,7 +60,7 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
         Auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         batch = firebaseFirestore.batch();
-        userRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid());
+seller=new Seller();
 
     }
 
@@ -88,17 +89,19 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
             }
         });
     }
-    Seller seller;
+
     @Override
     public void onCompletedForm() {
-         seller = new Seller();
+
        DocumentReference ref= firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid());
        ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
            @Override
            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
                seller=task.getResult().toObject(Seller.class);
                seller.setPrice(price.getStepData());
+               userRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("productList").document(product_id);
                seller.setUserId(userRef);
                StoreData();
            }
@@ -109,25 +112,37 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
 
 
     }
+    int sellerCount;
     void StoreData()
-    {
+    {      stateLoading(true);
+
         prodRef = firebaseFirestore.collection("store").document(product_id).collection("sellerList").document(Auth.getCurrentUser().getUid());
         batch.set(prodRef, seller);
         final Map<String, DocumentReference> user_product_info = new HashMap<>();
         user_product_info.put("id", prodRef);
-        userRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("productList").document(product_id);
+
         batch.set(userRef, user_product_info);
-        stateLoading(true);
-        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+
+        DocumentReference storeProduct=firebaseFirestore.collection("store").document(product_id);
+        storeProduct.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                stateLoading(false);
-                if (task.isSuccessful()) {
-                    Toasty.success(getApplicationContext(), "product added", Toasty.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                }
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                sellerCount= documentSnapshot.getDouble("sellerCount").intValue();
+                sellerCount=sellerCount+1;
+                batch.update(storeProduct,"sellerCount",sellerCount);
+                batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        stateLoading(false);
+                        if (task.isSuccessful()) {
+                            Toasty.success(getApplicationContext(), "product added", Toasty.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }
+                    }
+                });
             }
         });
+
     }
 
     @Override

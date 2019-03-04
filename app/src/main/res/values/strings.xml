@@ -61,6 +61,7 @@
 
     //transaction names
     <string name="store_product_transition">store_product_transition</string>
+    <string name="no_products_found">no product found</string>
 
 </resources>
 

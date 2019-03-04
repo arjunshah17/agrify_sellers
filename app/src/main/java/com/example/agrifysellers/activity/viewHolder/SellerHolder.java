@@ -35,6 +35,7 @@ public class SellerHolder extends RecyclerView.ViewHolder {
 
                 seller = snapshot.toObject(Seller.class);
                 binding.setSeller(seller);
+                binding.price.setText("₹"  + String.valueOf(seller.getPrice()));
                 phoneNumber = seller.getPhone();
                 // Load image
                 if (activity != null) {

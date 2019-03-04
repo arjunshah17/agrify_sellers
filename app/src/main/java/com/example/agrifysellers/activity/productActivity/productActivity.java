@@ -1,6 +1,8 @@
 package com.example.agrifysellers.activity.productActivity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -17,12 +19,15 @@ import com.example.agrifysellers.activity.model.Store;
 import com.example.agrifysellers.databinding.ActivityProductBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.firestore.WriteBatch;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,12 +88,29 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
             }
         });
     }
-
+    Seller seller;
     @Override
     public void onCompletedForm() {
-        Seller seller = new Seller();
-        seller.setPrice(price.getStepData());
-        seller.setUserId(userRef);
+         seller = new Seller();
+       DocumentReference ref= firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid());
+       ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+           @Override
+           public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+               seller=task.getResult().toObject(Seller.class);
+               seller.setPrice(price.getStepData());
+               seller.setUserId(userRef);
+               StoreData();
+           }
+       });
+
+
+
+
+
+    }
+    void StoreData()
+    {
         prodRef = firebaseFirestore.collection("store").document(product_id).collection("sellerList").document(Auth.getCurrentUser().getUid());
         batch.set(prodRef, seller);
         final Map<String, DocumentReference> user_product_info = new HashMap<>();
@@ -106,8 +128,6 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
                 }
             }
         });
-
-
     }
 
     @Override

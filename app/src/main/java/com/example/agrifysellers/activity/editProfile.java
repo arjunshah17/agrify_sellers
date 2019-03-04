@@ -23,6 +23,7 @@ import androidx.databinding.DataBindingUtil;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.agrifysellers.R;
+import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.activity.model.User;
 import com.example.agrifysellers.databinding.ActivityEditProfileBinding;
 import com.google.android.gms.tasks.Continuation;
@@ -32,8 +33,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -55,6 +60,7 @@ public class editProfile extends AppCompatActivity {
 
     ActivityEditProfileBinding bind;
     User user;
+    WriteBatch batch;
     FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -92,6 +98,7 @@ public class editProfile extends AppCompatActivity {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+        batch=firebaseFirestore.batch();
         stateLoading(true);
         firebaseFirestore.disableNetwork().addOnCompleteListener(new OnCompleteListener<Void>() {//loading data from cache
             @Override
@@ -215,24 +222,46 @@ public class editProfile extends AppCompatActivity {
 
     private void storeFirestoreData(User user) {
 
-        firebaseFirestore.collection("Sellers").document(user_id).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task task) {
-                if (task.isSuccessful()) {
 
-                    Toasty.success(editProfile.this, "The user Settings are updated.", Toast.LENGTH_LONG).show();
-                    Intent mainIntent = new Intent(editProfile.this, MainActivity.class);
-                    startActivity(mainIntent);
-                    finish();
+      DocumentReference userProfile= firebaseFirestore.collection("Sellers").document(user_id);
+      batch.set(userProfile,user);
+      firebaseFirestore.collection("Sellers").document(firebaseUser.getUid()).collection("productList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+          @Override
+          public void onComplete(@NonNull Task<QuerySnapshot> task) {
+              if(task.isSuccessful())
+              {
 
-                } else {
+                  for (QueryDocumentSnapshot document : task.getResult()) {
+                  DocumentReference ref=document.getDocumentReference("id");
+                   Log.i("docRef",ref.toString());
+                      batch.update(ref,"name",user.getName());
+                      batch.update(ref,"name",user.getName());
+                      batch.update(ref,"phone",user.getPhone());
+                      batch.update(ref,"profilePhotoUrl",user.getProfilePhotoUrl());
+                  }
+                  batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+                      @Override
+                      public void onComplete(@NonNull Task<Void> task) {
+                          if(task.isSuccessful())
+                          {
+                              Toasty.success(editProfile.this, "The user Settings are updated.", Toast.LENGTH_LONG).show();
+                              Intent mainIntent = new Intent(editProfile.this, MainActivity.class);
+                              startActivity(mainIntent);
+                              finish();
+                          }
+                          else
+                          {
+                              Toasty.error(getApplicationContext(),task.getException().getLocalizedMessage(),Toasty.LENGTH_SHORT).show();
+                          }
+                      }
+                  });
+              }
+          }
+      });
 
 
-                    Toasty.error(editProfile.this, task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
-                }
-            }
-        });
+
     }
 
 

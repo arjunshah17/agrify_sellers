@@ -32,12 +32,8 @@ public class SellerHolder extends RecyclerView.ViewHolder {
     }
     public void bind(final DocumentSnapshot snapshot, final Activity activity) {
         auth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        DocumentReference reference = snapshot.getDocumentReference("userId");
-        reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                seller = documentSnapshot.toObject(Seller.class);
+
+                seller = snapshot.toObject(Seller.class);
                 binding.setSeller(seller);
                 phoneNumber = seller.getPhone();
                 // Load image
@@ -46,8 +42,7 @@ public class SellerHolder extends RecyclerView.ViewHolder {
                             .load(seller.getProfilePhotoUrl())
                             .into(binding.profilePhoto);
                 }
-            }
-        });
+
 
         Resources resources = itemView.getResources();
 

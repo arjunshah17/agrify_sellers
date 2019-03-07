@@ -62,6 +62,11 @@
     //transaction names
     <string name="store_product_transition">store_product_transition</string>
     <string name="no_products_found">no product found</string>
+    <string name="rating_bar_title">Rating</string>
+    <string name="productimageslider">ProductImageSlider</string>
+    <string name="productname">ProductName</string>
+    <string name="seller_location">Location</string>
+    <string name="buy_now">Buy Now</string>
 
 </resources>
 

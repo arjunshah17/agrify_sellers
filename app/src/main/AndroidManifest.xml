@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".activity.productActivity.productActivity"></activity>
+        <activity android:name=".activity.sellerProduct.SellerProductActivity"></activity>
+        <activity android:name=".activity.productActivity.productActivity" />
         <activity android:name=".activity.auth.authVerification" />
         <activity android:name=".activity.StoreDetailActivity" />
         <activity

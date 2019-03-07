@@ -48,14 +48,16 @@ public class SellerHolder extends RecyclerView.ViewHolder {
         Resources resources = itemView.getResources();
 
 
-        binding.phoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + phoneNumber));
-                v.getContext().startActivity(intent);
-            }
-        });
+//        binding.phoneButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Intent.ACTION_DIAL);
+//                intent.setData(Uri.parse("tel:" + phoneNumber));
+//                v.getContext().startActivity(intent);
+//            }
+//        });
+
+
     }
 
 

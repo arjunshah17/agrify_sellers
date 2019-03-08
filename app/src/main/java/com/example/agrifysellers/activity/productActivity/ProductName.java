@@ -8,12 +8,13 @@ import com.google.android.material.button.MaterialButton;
 
 import ernestoyaquello.com.verticalstepperform.Step;
 
-public class Product extends Step<String> {
+public class ProductName extends Step<String> {
     MaterialButton productButton;
     FragmentManager fragmentManager;
 
 
-    protected Product(String title, FragmentManager fragmentManager) {
+
+    protected ProductName(String title, FragmentManager fragmentManager) {
         super(title);
 
 
@@ -38,10 +39,10 @@ public class Product extends Step<String> {
     protected IsDataValid isStepDataValid(String stepData) {
         boolean isProdValid = true;
         String errorMessage;
-        if (stepData.equals("select product")) {
+        if (stepData.equals("select productName")) {
             isProdValid = false;
         }
-        errorMessage = !isProdValid ? "select correct Product" : "";
+        errorMessage = !isProdValid ? "select correct ProductName" : "";
 
 
         return new IsDataValid(isProdValid, errorMessage);
@@ -53,7 +54,7 @@ public class Product extends Step<String> {
         productButton = new MaterialButton(getContext());
 
 
-        productButton.setText("select product");
+        productButton.setText("select productName");
 
         return productButton;
 

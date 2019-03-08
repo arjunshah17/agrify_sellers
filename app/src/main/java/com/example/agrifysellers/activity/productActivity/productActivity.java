@@ -1,8 +1,6 @@
 package com.example.agrifysellers.activity.productActivity;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -20,15 +18,12 @@ import com.example.agrifysellers.databinding.ActivityProductBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.firestore.WriteBatch;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,12 +31,12 @@ import ernestoyaquello.com.verticalstepperform.listener.StepperFormListener;
 import es.dmoral.toasty.Toasty;
 
 public class productActivity extends AppCompatActivity implements StepperFormListener, ProductListAdapter.OnProductSelectedListener {
-    public Product product;
+    public ProductName productName;
     ActivityProductBinding bind;
     ProductListAdapter.OnProductSelectedListener listener;
     Category cat = new Category("select Category");
     ProductbottomsheetFragment productBottomSheetFragment;
-    Price price = new Price("enter price ");
+    ProductDetails productDetails = new ProductDetails("enter productDetails ");
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth Auth;
     DocumentReference documentReference;
@@ -65,7 +60,7 @@ seller=new Seller();
     }
 
     void INIT() {
-        product = new Product("select product", getSupportFragmentManager());
+        productName = new ProductName("select productName", getSupportFragmentManager());
         bind = DataBindingUtil.setContentView(this, R.layout.activity_product);
         listener = this;
         productBottomSheetFragment = new ProductbottomsheetFragment(listener);
@@ -74,10 +69,10 @@ seller=new Seller();
             bind.productLinearLayout.setBackground(this.getDrawable(R.drawable.store_item_background));//set curve background
         }
 
-        bind.stepperForm.setup(this, cat, product, price).displayBottomNavigation(false)
+        bind.stepperForm.setup(this, cat, productName, productDetails).displayBottomNavigation(false)
                 .lastStepNextButtonText("start selling").init();
 
-        product.productButton.setOnClickListener(new View.OnClickListener() {
+        productName.productButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -100,7 +95,11 @@ seller=new Seller();
            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                seller=task.getResult().toObject(Seller.class);
-               seller.setPrice(price.getStepData());
+               seller.setPrice(Float.valueOf(productDetails.binding.priceEditText.getText().toString().trim()));
+               seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
+               seller.setMaxQuantity(Integer.valueOf(productDetails.binding.maxQuantityEditText.getText().toString().trim()));
+               seller.setMinQuantity(Integer.valueOf(productDetails.binding.minQuantityEditText.getText().toString().trim()));
+seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
                userRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("productList").document(product_id);
                seller.setUserId(userRef);
                StoreData();
@@ -113,6 +112,7 @@ seller=new Seller();
 
     }
     int sellerCount;
+    Float Price;
     void StoreData()
     {      stateLoading(true);
 
@@ -129,13 +129,18 @@ seller=new Seller();
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 sellerCount= documentSnapshot.getDouble("sellerCount").intValue();
                 sellerCount=sellerCount+1;
+                Price=documentSnapshot.getDouble("price").floatValue();
+                if(seller.getPrice()<Price || Price==0)
+                {
+                    batch.update(storeProduct,"price",seller.getPrice());
+                }
                 batch.update(storeProduct,"sellerCount",sellerCount);
                 batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         stateLoading(false);
                         if (task.isSuccessful()) {
-                            Toasty.success(getApplicationContext(), "product added", Toasty.LENGTH_SHORT).show();
+                            Toasty.success(getApplicationContext(), "productName added", Toasty.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         }
                     }
@@ -150,52 +155,29 @@ seller=new Seller();
 
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putString("name", product.getStepData());
-        savedInstanceState.putString("category", cat.getStepData());
-        savedInstanceState.putFloat("price", price.getStepData());
 
-        // IMPORTANT: The call to the super method must be here at the end.
-        super.onSaveInstanceState(savedInstanceState);
-    }
 
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        if (savedInstanceState.containsKey("name")) {
-            String name = savedInstanceState.getString("name");
-            product.restoreStepData(name);
-        }
 
-        if (savedInstanceState.containsKey("category")) {
-            String category = savedInstanceState.getString("category");
-            cat.restoreStepData(category);
-        }
-
-        if (savedInstanceState.containsKey("price")) {
-            float pric = savedInstanceState.getFloat("price");
-            price.restoreStepData(pric);
-        }
-
-        // IMPORTANT: The call to the super method must be here at the end.
-        super.onRestoreInstanceState(savedInstanceState);
-    }
 
     @Override
     public void onProductSelected(DocumentSnapshot store) {
         Store mStore = store.toObject(Store.class);
         product_id = store.getId();
+productDetails.binding.priceTextField.setHint("enter product ₹ for per "+mStore.getUnit());
+productDetails.binding.stockTextField.setHint("how many "+mStore.getUnit()+" of "+mStore.getName()+" you want to sell ?");
+productDetails.binding.minQuantityTextField.setHint("set minimum quantity that user can buy");
+        productDetails.binding.maxQuantityTextField.setHint("set maximum quantity that user can buy(empty for ∞)");
         firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("productList").document(product_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    if (!task.getResult().exists()) {               //product is not there
+                    if (!task.getResult().exists()) {               //productName is not there
                         productBottomSheetFragment.dismiss();
-                        product.productButton.setText(mStore.getName());
+                        productName.productButton.setText(mStore.getName());
                     } else {
                         Toasty.error(getApplicationContext(), store.getString("name") + " already you are selling", Toasty.LENGTH_SHORT).show();
                     }
-                    product.markAsCompletedOrUncompleted(true);
+                    productName.markAsCompletedOrUncompleted(true);
                 }
             }
         });

@@ -42,7 +42,13 @@ public class StoreHolder extends RecyclerView.ViewHolder {
 
 
             binding.setStore(store);
-
+            if(store.getPrice()==0)
+            {
+                binding.price.setText("no seller is selling");
+            }
+            else {
+                binding.price.setText("start from ₹" + String.valueOf(store.getPrice()) + "/" + store.getUnit());
+            }
             // Load image
             if (activity != null) {
                 GlideApp.with(activity)
@@ -59,7 +65,13 @@ public class StoreHolder extends RecyclerView.ViewHolder {
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     store = documentSnapshot.toObject(Store.class);
                     binding.setStore(store);
-
+                    if(store.getPrice()==0)
+                    {
+                        binding.price.setText("no seller is selling");
+                    }
+                    else {
+                        binding.price.setText("start from ₹" + String.valueOf(store.getPrice()) + "/" + store.getUnit());
+                    }
                     if (activity != null && store.getProductImageUrl()!=null) {
                         GlideApp.with(activity)
                                 .load(store.getProductImageUrl())
@@ -76,7 +88,13 @@ public class StoreHolder extends RecyclerView.ViewHolder {
 
                         store = documentSnapshot.toObject(Store.class);
                         binding.setStore(store);
-
+                        if(store.getPrice()==0)
+                        {
+                            binding.price.setText("no seller is selling");
+                        }
+                        else {
+                            binding.price.setText("start from ₹" + String.valueOf(store.getPrice()) + "/" + store.getUnit());
+                        }
 
                         // Load image
                         if (store.getProductImageUrl() != null) {

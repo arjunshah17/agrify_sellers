@@ -16,9 +16,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
-
+android:background="@color/productGridBackgroundColor"
         app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
+        app:cardElevation="2dp"
         app:cardUseCompatPadding="true">
 
 

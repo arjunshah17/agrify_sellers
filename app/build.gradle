@@ -68,7 +68,7 @@ dependencies {
 
     implementation 'com.github.chinalwb:are:0.1.5'
     implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:2.1.1'
-
+    implementation 'com.zfdang.multiple-images-selector:multiple-images-selector:1.1.5'
 
 }
 apply plugin: 'com.google.gms.google-services'

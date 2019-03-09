@@ -49,12 +49,12 @@ ProductDetailsStepperBinding binding;
             binding.stockEditText.setError("stock cannot empty or zero");
             flag=false;
         }
-        if(minQuantity>stock)
+        if(TextUtils.isEmpty(binding.minQuantityEditText.getText().toString().trim()) || minQuantity>stock)
         {
             binding.minQuantityEditText.setError("minimum quantity must be less then stock");
             flag=false;
         }
-        if(maxQuantiy>=stock || maxQuantiy<minQuantity)
+        if(TextUtils.isEmpty(binding.maxQuantityEditText.getText().toString().trim()) || maxQuantiy>=stock || maxQuantiy<minQuantity)
         {
             binding.maxQuantityEditText.setError("maximum quantity must be less then stock or greater then then minimum quantity");
             flag=false;

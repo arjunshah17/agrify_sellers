@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agrifysellers.activity.GlideApp;
+import com.example.agrifysellers.activity.adapter.SellerAdapter;
 import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.databinding.ItemSellerBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,7 +31,7 @@ public class SellerHolder extends RecyclerView.ViewHolder {
         binding = item;
         seller = new Seller();
     }
-    public void bind(final DocumentSnapshot snapshot, final Activity activity) {
+    public void bind(final DocumentSnapshot snapshot, final Activity activity, SellerAdapter.OnSellerSelectedListener listener) {
         auth = FirebaseAuth.getInstance();
 
                 seller = snapshot.toObject(Seller.class);
@@ -56,6 +57,16 @@ public class SellerHolder extends RecyclerView.ViewHolder {
 //                v.getContext().startActivity(intent);
 //            }
 //        });
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    View SharedView = binding.userName;
+
+                    listener.onSellerSelected(snapshot, SharedView);
+                }
+            }
+        });
 
 
     }

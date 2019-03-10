@@ -253,7 +253,7 @@ productDetails.binding.minQuantityTextField.setHint("set minimum "+mStore.getUni
                   imageUrl.add(CutOut.getUri(data));
                   productImageAdapter.notifyDataSetChanged();
                   imageUploaded=true;
-             
+
                     // Save the image using the returned Uri here
                     break;
                 case CutOut.CUTOUT_ACTIVITY_RESULT_ERROR_CODE:
@@ -272,7 +272,7 @@ int count=0;
 for(Uri result:imageUrl)
 {
 count=count+1;
-    final StorageReference ref=storageRef.child(Auth.getCurrentUser().getUid()).child("store").child(productName.getStepData()+count);
+    final StorageReference ref=storageRef.child(Auth.getCurrentUser().getUid()).child("store").child(productName.getStepData()).child(productName.getStepData()+count);
     UploadTask image_path = (UploadTask) ref.putFile(result);//uploaded image in cloud
     Task<Uri> urlTask=image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
         @Override

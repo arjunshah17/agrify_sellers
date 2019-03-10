@@ -14,13 +14,16 @@ import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.sellerProduct.SellerProductActivity;
 import com.example.agrifysellers.activity.viewHolder.SellerHolder;
 import com.example.agrifysellers.databinding.ItemSellerBinding;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
 public class SellerAdapter extends FirestoreAdapter<SellerHolder> {
     Activity activity;
-    public SellerAdapter(Query query, Activity activity) {
+    private OnSellerSelectedListener mListener;
+    public SellerAdapter(Query query, Activity activity, OnSellerSelectedListener mListener) {
         super(query);
         this.activity = activity;
+        this.mListener=mListener;
 
     }
 
@@ -37,15 +40,13 @@ public class SellerAdapter extends FirestoreAdapter<SellerHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull SellerHolder holder, int position) {
-        holder.bind(getSnapshot(position), activity);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(holder.itemView.getContext(), "hi", Toast.LENGTH_LONG).show();
+        holder.bind(getSnapshot(position), activity,mListener);
 
-                Intent intent = new Intent(holder.itemView.getContext(), SellerProductActivity.class);
-                holder.itemView.getContext().startActivity(intent);
-            }
-        });
+
+    }
+    public interface OnSellerSelectedListener {
+
+        void onSellerSelected(DocumentSnapshot seller, View SharedView);
+
     }
 }

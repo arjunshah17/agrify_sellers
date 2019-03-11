@@ -8,14 +8,14 @@ public class Seller {
     private DocumentReference userId;
     private Timestamp timestamp;
     private float price;
-    private int stock,minQuantity,maxQuantity;
+    private int stock,minQuantity,maxQuantity,imageCount;
 
 
 
     public Seller() {
     }
 
-    public Seller(String name, String profilePhotoUrl, DocumentReference userId, Timestamp timestamp, float price, String phone,int stock,int minQuantity,int maxQuantity) {
+    public Seller(String name, String profilePhotoUrl, DocumentReference userId, Timestamp timestamp, float price, String phone,int stock,int minQuantity,int maxQuantity,int imageCount) {
         this.name = name;
         this.profilePhotoUrl = profilePhotoUrl;
         this.userId = userId;
@@ -25,10 +25,19 @@ public class Seller {
         this.stock=stock;
         this.minQuantity=minQuantity;
         this.maxQuantity=maxQuantity;
+        this.imageCount=imageCount;
     }
 
     public int getMaxQuantity() {
         return maxQuantity;
+    }
+
+    public int getImageCount() {
+        return imageCount;
+    }
+
+    public void setImageCount(int imageCount) {
+        this.imageCount = imageCount;
     }
 
     public void setMaxQuantity(int maxQuantity) {

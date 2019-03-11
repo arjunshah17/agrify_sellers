@@ -70,7 +70,7 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:background="@color/productGridBackgroundColor"
                 android:cropToPadding="true"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:transitionName="@string/store_product_transition" />
 
             <TextView

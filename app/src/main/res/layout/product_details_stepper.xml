@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
 
         <variable
@@ -64,11 +65,26 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/productImageButton"
+
+    <com.github.florent37.shapeofview.shapes.CutCornerView
+        android:id="@+id/clipCorner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="upload image"/>
+
+        app:shape_cutCorner_topLeftSize="15dp"
+        app:shape_cutCorner_topRightSize="15dp"
+        app:shape_cutCorner_bottomLeftSize="15dp"
+        app:shape_cutCorner_bottomRightSize="15dp"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/productImageButton"
+            style="@style/AppTheme.primaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="upload image"
+
+            />
+    </com.github.florent37.shapeofview.shapes.CutCornerView>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

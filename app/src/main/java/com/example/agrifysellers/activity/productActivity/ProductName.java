@@ -1,15 +1,20 @@
 package com.example.agrifysellers.activity.productActivity;
 
+import android.graphics.Color;
+import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.agrifysellers.R;
+import com.example.agrifysellers.databinding.ProductNameStepperBinding;
 import com.google.android.material.button.MaterialButton;
 
 import ernestoyaquello.com.verticalstepperform.Step;
 
 public class ProductName extends Step<String> {
-    MaterialButton productButton;
+   ProductNameStepperBinding binding;
     FragmentManager fragmentManager;
 
 
@@ -22,7 +27,7 @@ public class ProductName extends Step<String> {
 
     @Override
     public String getStepData() {
-        return productButton.getText().toString();
+        return binding.productName.getText().toString();
     }
 
     @Override
@@ -32,14 +37,14 @@ public class ProductName extends Step<String> {
 
     @Override
     public void restoreStepData(String data) {
-        productButton.setText(data);
+        binding.productName.setText(data);
     }
 
     @Override
     protected IsDataValid isStepDataValid(String stepData) {
         boolean isProdValid = true;
         String errorMessage;
-        if (stepData.equals("select productName")) {
+        if (stepData.equals("select product")) {
             isProdValid = false;
         }
         errorMessage = !isProdValid ? "select correct ProductName" : "";
@@ -51,12 +56,12 @@ public class ProductName extends Step<String> {
 
     @Override
     protected View createStepContentLayout() {
-        productButton = new MaterialButton(getContext());
 
 
-        productButton.setText("select productName");
+binding= DataBindingUtil.inflate(LayoutInflater.from(getContext()),R.layout.product_name_stepper,null,false);
 
-        return productButton;
+
+        return binding.getRoot();
 
     }
 

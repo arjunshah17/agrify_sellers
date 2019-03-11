@@ -73,10 +73,10 @@
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:text="sumbit"
-                        app:form_circle_background_color="@color/colorPrimary"
+                        app:form_circle_background_color="@color/buttonNormalColor"
                         app:form_confirmation_step_title_text="sumbit"
-                        app:form_next_button_background_color="@color/colorPrimary"
-                        app:form_next_button_pressed_background_color="@color/colorPrimaryDark" />
+                        app:form_next_button_background_color="@color/buttonNormalColor"
+                        app:form_next_button_pressed_background_color="@color/buttonNormalColor" />
 
 
 

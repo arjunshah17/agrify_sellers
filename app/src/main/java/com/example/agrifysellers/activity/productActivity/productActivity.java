@@ -61,7 +61,7 @@ private  ProductImageAdapter productImageAdapter;
     ProductListAdapter.OnProductSelectedListener listener;
     Category cat = new Category("select Category");
     ProductbottomsheetFragment productBottomSheetFragment;
-    ProductDetails productDetails = new ProductDetails("enter productDetails ");
+    ProductDetails productDetails = new ProductDetails("enter product details ");
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth Auth;
     DocumentReference documentReference;
@@ -85,7 +85,7 @@ seller=new Seller();
     }
 
     void INIT() {
-        productName = new ProductName("select productName", getSupportFragmentManager());
+        productName = new ProductName("select product name", getSupportFragmentManager());
         bind = DataBindingUtil.setContentView(this, R.layout.activity_product);
         listener = this;
         imageUrl=new ArrayList<Uri>();
@@ -99,7 +99,7 @@ seller=new Seller();
         bind.stepperForm.setup(this, cat, productName, productDetails).displayBottomNavigation(false)
                 .lastStepNextButtonText("start selling").init();
 
-        productName.productButton.setOnClickListener(new View.OnClickListener() {
+        productName.binding.productName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -136,11 +136,12 @@ seller=new Seller();
            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                seller=task.getResult().toObject(Seller.class);
+               seller.setImageCount(productImageAdapter.getItemCount());
                seller.setPrice(Float.valueOf(productDetails.binding.priceEditText.getText().toString().trim()));
                seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
                seller.setMaxQuantity(Integer.valueOf(productDetails.binding.maxQuantityEditText.getText().toString().trim()));
                seller.setMinQuantity(Integer.valueOf(productDetails.binding.minQuantityEditText.getText().toString().trim()));
-seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
+             seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
                userRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("productList").document(product_id);
                seller.setUserId(userRef);
                StoreData();
@@ -219,7 +220,7 @@ productDetails.binding.minQuantityTextField.setHint("set minimum "+mStore.getUni
                 if (task.isSuccessful()) {
                     if (!task.getResult().exists()) {               //productName is not there
                         productBottomSheetFragment.dismiss();
-                        productName.productButton.setText(mStore.getName());
+                        productName.binding.productName.setText(mStore.getName());
                     } else {
                         Toasty.error(getApplicationContext(), store.getString("name") + " already you are selling", Toasty.LENGTH_SHORT).show();
                     }
@@ -272,7 +273,7 @@ int count=0;
 for(Uri result:imageUrl)
 {
 count=count+1;
-    final StorageReference ref=storageRef.child(Auth.getCurrentUser().getUid()).child("store").child(productName.getStepData()).child(productName.getStepData()+count);
+    final StorageReference ref=storageRef.child("storeProductImage").child(productName.getStepData()).child(Auth.getCurrentUser().getUid()).child(productName.getStepData()).child(productName.getStepData()+count);
     UploadTask image_path = (UploadTask) ref.putFile(result);//uploaded image in cloud
     Task<Uri> urlTask=image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
         @Override

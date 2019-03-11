@@ -29,12 +29,13 @@ public class StoreHolder extends RecyclerView.ViewHolder {
     public StoreHolder(@NonNull ItemStoreProductBinding item) {
         super(item.getRoot());
         binding = item;
-        store = new Store();
+
     }
 
 
     public void bind(final DocumentSnapshot snapshot,
                      final StoreAdapter.OnStoreSelectedListener listener, final Activity activity, String TAG) {
+        store = new Store();
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         if (TAG.equals("StoreFragment")) {
@@ -56,7 +57,8 @@ public class StoreHolder extends RecyclerView.ViewHolder {
                         .into(binding.productImage);
             }
 
-        } else {
+        }
+        else {
 
             DocumentReference docRef = db.collection("store").document(snapshot.getId());
             docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

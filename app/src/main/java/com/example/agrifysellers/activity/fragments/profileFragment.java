@@ -138,7 +138,10 @@ public class profileFragment extends Fragment implements StoreAdapter.OnStoreSel
     }
 
     private void initFirestore() {
-        mQuery = firebaseFirestore.collection("Sellers").document(firebaseUser.getUid()).collection("productList");
+
+                mQuery = firebaseFirestore.collection("Sellers").document(firebaseUser.getUid()).collection("productList");
+
+
 
     }
 

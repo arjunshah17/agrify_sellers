@@ -25,7 +25,7 @@
             app:shape_roundRect_topRightRadius="10dp"
 android:background="@color/productGridBackgroundColor"
             app:shape_roundRect_borderColor="@android:color/white"
-            
+
             >
 
         <com.smarteist.autoimageslider.SliderLayout
@@ -68,15 +68,29 @@ android:background="@color/productGridBackgroundColor"
                 android:textStyle="bold" />
         </LinearLayout>
 
+
+
+            <!-- YOUR CONTENT -->
+
+        <com.github.florent37.shapeofview.shapes.CutCornerView
+            android:id="@+id/clipCorner"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+
+            app:shape_cutCorner_topLeftSize="20dp"
+            app:shape_cutCorner_topRightSize="20dp"
+            app:shape_cutCorner_bottomLeftSize="20dp"
+            app:shape_cutCorner_bottomRightSize="20dp"
+            >
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buyNowBtn"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            style="@style/AppTheme.primaryButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="@string/buy_now"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
 
+            android:textSize="20sp" />
+        </com.github.florent37.shapeofview.shapes.CutCornerView>
     </LinearLayout>
 
     <LinearLayout

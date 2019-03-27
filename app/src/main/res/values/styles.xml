@@ -27,6 +27,13 @@
         <item name="backgroundTint">@color/buttonNormalColor</item>
 
     </style>
+    <style name="AppTheme.outLineButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/buttonNormalColor</item>
+        <item name="android:strokeColor">@color/buttonNormalColor</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="rippleColor">@color/buttonNormalColor</item>
+
+    </style>
     <style name="AppTheme.Launcher" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/launch_screen</item>
         <!-- Optional, on Android 5+ you can modify the colorPrimaryDark color to match the windowBackground color for further branding-->

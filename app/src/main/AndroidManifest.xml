@@ -22,7 +22,7 @@
         tools:replace="android:appComponentFactory">
         <activity android:name=".activity.address.address"></activity>
         <activity android:name=".activity.sellerProduct.SellerProductActivity" />
-        <activity android:name=".activity.productActivity.productActivity" />
+        <activity android:name=".activity.products.productActivity" />
         <activity android:name=".activity.auth.authVerification" />
         <activity android:name=".activity.StoreDetailActivity" />
         <activity

@@ -1,4 +1,4 @@
-package com.example.agrifysellers.activity.productActivity;
+package com.example.agrifysellers.activity.products;
 
 import android.content.Context;
 import android.view.View;

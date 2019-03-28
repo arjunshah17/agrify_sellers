@@ -1,7 +1,6 @@
-package com.example.agrifysellers.activity.productActivity;
+package com.example.agrifysellers.activity.products;
 
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,7 +11,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.databinding.ProductDetailsStepperBinding;
-import com.google.android.material.textfield.TextInputEditText;
 
 import ernestoyaquello.com.verticalstepperform.Step;
 

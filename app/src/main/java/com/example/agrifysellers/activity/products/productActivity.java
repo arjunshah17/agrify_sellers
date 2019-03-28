@@ -1,10 +1,11 @@
-package com.example.agrifysellers.activity.productActivity;
+package com.example.agrifysellers.activity.products;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agrifysellers.R;
@@ -21,9 +21,7 @@ import com.example.agrifysellers.activity.adapter.ProductListAdapter;
 import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.activity.model.Store;
 import com.example.agrifysellers.databinding.ActivityProductBinding;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.github.gabrielbb.cutout.CutOut;
-import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,8 +30,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -45,11 +41,8 @@ import java.util.Map;
 
 import ernestoyaquello.com.verticalstepperform.listener.StepperFormListener;
 import es.dmoral.toasty.Toasty;
-import io.grpc.Context;
 
-import static android.widget.GridLayout.HORIZONTAL;
-
-public class productActivity extends AppCompatActivity implements StepperFormListener, ProductListAdapter.OnProductSelectedListener {
+public class productActivity extends AppCompatActivity implements StepperFormListener, ProductListAdapter.OnProductSelectedListener  {
     public ProductName productName;
     ActivityProductBinding bind;
     Boolean imageUploaded=false;
@@ -313,4 +306,12 @@ count=count+1;
 }
 
     }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+int count=item.getGroupId();
+
+        return true;
+    }
+
 }

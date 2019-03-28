@@ -12,9 +12,9 @@
 
     </item>
     <item
-        android:id="@+id/chatItem"
-        android:icon="@drawable/ic_chat_black_24dp"
-        android:title="@string/chat" />
+        android:id="@+id/productItem"
+        android:icon="@drawable/ic_order_24dp"
+        android:title="@string/products" />
     <item
         android:id="@+id/notificationItem"
         android:icon="@drawable/ic_notifications_black_24dp"

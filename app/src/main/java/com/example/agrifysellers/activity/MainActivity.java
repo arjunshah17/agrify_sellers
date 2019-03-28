@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.fragments.StoreFragment;
 import com.example.agrifysellers.activity.fragments.profileFragment;
+import com.example.agrifysellers.activity.products.productTab;
 import com.example.agrifysellers.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding bind;
     profileFragment profile;
     Fragment LoadedFragment;
+    productTab productTab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         store = new StoreFragment();
         profile = new profileFragment();
-
+       productTab=new productTab();
         //default load Store fragment
         LoadedFragment = store;
         loadFragment(store);
@@ -52,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
 
-                    case R.id.chatItem:
-
+                    case R.id.productItem:
+                       LoadedFragment=productTab;
                         break;
 
                     case R.id.notificationItem:

@@ -1,6 +1,7 @@
-package com.example.agrifysellers.activity.productActivity;
+package com.example.agrifysellers.activity.products;
 
 import android.net.Uri;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,11 @@ import java.util.ArrayList;
 public class ProductImageAdapter extends RecyclerView.Adapter<ProductImageAdapter.ViewHolder> {
     private ArrayList<Uri> urlList;
     ImageView productImage;
+
     ProductImageAdapter(ArrayList<Uri> urlList)
     {
         this.urlList=urlList;
+
     }
 
     @NonNull
@@ -37,14 +40,34 @@ productImage.setImageURI(uri);
 
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+
+
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             productImage=(ImageView) itemView.findViewById(R.id.product_imageView);
+
+                itemView.setOnCreateContextMenuListener(this);
+
+
+
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(getAdapterPosition(),1,1,"remove");
         }
     }
     @Override
     public int getItemCount() {
         return urlList.size();
     }
+
+    void removeImage(int pos)
+    {
+
+    }
+
 }

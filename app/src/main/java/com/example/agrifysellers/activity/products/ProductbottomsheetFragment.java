@@ -1,4 +1,4 @@
-package com.example.agrifysellers.activity.productActivity;
+package com.example.agrifysellers.activity.products;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

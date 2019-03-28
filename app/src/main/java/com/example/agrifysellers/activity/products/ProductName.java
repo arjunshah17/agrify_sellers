@@ -1,6 +1,5 @@
-package com.example.agrifysellers.activity.productActivity;
+package com.example.agrifysellers.activity.products;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -9,7 +8,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.databinding.ProductNameStepperBinding;
-import com.google.android.material.button.MaterialButton;
 
 import ernestoyaquello.com.verticalstepperform.Step;
 

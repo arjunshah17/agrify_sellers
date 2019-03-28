@@ -31,7 +31,7 @@ import com.example.agrifysellers.activity.StoreDetailActivity;
 import com.example.agrifysellers.activity.adapter.StoreAdapter;
 import com.example.agrifysellers.activity.auth.LoginActivity;
 import com.example.agrifysellers.activity.listener.NavigationIconClickListener;
-import com.example.agrifysellers.activity.productActivity.productActivity;
+import com.example.agrifysellers.activity.products.productActivity;
 import com.example.agrifysellers.databinding.FragmentStoreBinding;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;

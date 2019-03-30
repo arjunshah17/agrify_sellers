@@ -26,7 +26,7 @@
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingTop="100dp"
-            android:paddingBottom="100dp"></LinearLayout>
+            android:paddingBottom="100dp" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -103,84 +103,76 @@
                     android:paddingRight="20dp">
 
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_12"
+                        android:hint="@string/username"
+                        app:hintEnabled="true">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/dp_12"
-                            android:hint="@string/username"
-                            app:hintEnabled="true">
+                            android:inputType="textPersonName"
+                            android:text="@{user.name}" />
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/name"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:inputType="textPersonName"
-                                android:text="@{user.name}" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_12"
+                        android:hint="@string/phone_hint"
+                        app:hintEnabled="true">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/phone"
                             android:layout_width="match_parent"
-                            android:layout_marginBottom="@dimen/dp_12"
                             android:layout_height="wrap_content"
-                            android:hint="@string/phone_hint"
-                            app:hintEnabled="true">
+                            android:inputType="phone"
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/phone"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:inputType="phone"
+                            android:text="@{user.phone}" />
 
-                                android:text="@{user.phone}" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_12"
+                        android:hint="@string/email_hint"
+                        app:hintEnabled="true">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/email"
                             android:layout_width="match_parent"
-                            android:layout_marginBottom="@dimen/dp_12"
                             android:layout_height="wrap_content"
-                            android:hint="@string/email_hint"
-                            app:hintEnabled="true">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/email"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:clickable="false"
-                                android:editable="false"
-                                android:focusable="false"
-
-                                android:inputType="textEmailAddress"
-                                android:text="@{user.email}" />
+                            android:clickable="false"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:inputType="textEmailAddress"
+                            android:text="@{user.email}" />
 
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
 
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="match_parent"
-
-                        android:layout_marginBottom="@dimen/dp_12"
-                        style="@style/AppTheme.outLineButton"
-                        android:layout_height="wrap_content"
-
-                        android:text="manage address"
-
-                        android:id="@+id/address_button"
-                        />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/address_button"
+                            style="@style/AppTheme.outLineButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dp_12"
+                            android:text="manage address" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 

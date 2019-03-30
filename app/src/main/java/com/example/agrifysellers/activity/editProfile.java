@@ -3,6 +3,7 @@ package com.example.agrifysellers.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -26,6 +27,7 @@ import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.activity.model.User;
 import com.example.agrifysellers.databinding.ActivityEditProfileBinding;
+import com.example.agrifysellers.activity.address.addressActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -114,7 +116,13 @@ public class editProfile extends AppCompatActivity {
             }
         });
 
+        //Add Address Button
+        bind.addressButton.setOnClickListener(v -> {
 
+            Intent intent = new Intent(editProfile.this, addressActivity.class);
+            startActivity(intent);
+            Toast.makeText(editProfile.this, "Manage Address", Toast.LENGTH_LONG).show();
+        });
         bind.userProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

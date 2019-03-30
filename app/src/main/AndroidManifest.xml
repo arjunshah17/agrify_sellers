@@ -39,6 +39,7 @@
         <activity android:name=".activity.auth.LoginActivity" />
         <activity android:name=".activity.auth.PWresetActivity" />
         <activity android:name=".activity.auth.RegistrationActivity" />
+        <activity android:name=".activity.address.addressActivity"/>
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme.Launcher">
@@ -48,9 +49,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.zfdang.multiple_images_selector.ImagesSelectorActivity"
             android:configChanges="orientation|screenSize" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCvpN7qZPXwrahdKwx-XPYLuEm3vib9v7M"/>
     </application>
 
 </manifest>

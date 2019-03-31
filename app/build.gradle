@@ -73,8 +73,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-functions:16.3.0'
     implementation 'com.github.smarteist:autoimageslider:1.2.0'
     implementation 'com.ramotion.foldingcell:folding-cell:1.2.3'
-   implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
+    implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
     implementation 'com.google.android.gms:play-services-places:16.0.0'
+    implementation 'android.arch.paging:runtime:1.0.1'
 
 }
 apply plugin: 'com.google.gms.google-services'

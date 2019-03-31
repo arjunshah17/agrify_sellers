@@ -23,7 +23,7 @@ import androidx.databinding.DataBindingUtil;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.agrifysellers.R;
-import com.example.agrifysellers.activity.address.addressActivity;
+import com.example.agrifysellers.activity.address.addressListActivity;
 import com.example.agrifysellers.activity.model.User;
 import com.example.agrifysellers.databinding.ActivityEditProfileBinding;
 import com.google.android.gms.tasks.Continuation;
@@ -116,7 +116,7 @@ public class editProfile extends AppCompatActivity {
 
         bind.addressButton.setOnClickListener(v -> {
 
-            Intent intent = new Intent(editProfile.this, addressActivity.class);
+            Intent intent = new Intent(editProfile.this, addressListActivity.class);
             startActivity(intent);
             Toast.makeText(editProfile.this, "Manage Address", Toast.LENGTH_LONG).show();
         });

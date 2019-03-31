@@ -24,65 +24,39 @@
       See the License for the specific language governing permissions and
       limitations under the License.
       -->
-    <RelativeLayout
-
-        style="@style/Platform.MaterialComponents.Light"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:orientation="vertical"
-        android:visibility="visible">
-
-        <LinearLayout
-            style="@style/Widget.Shrine.Backdrop"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingTop="100dp"
-            android:paddingBottom="100dp">
 
 
-        </LinearLayout>
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="0dp">
-
-
-            <com.google.android.material.tabs.TabLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/product_tabLayout"
-                android:minHeight="?actionBarSize"
-                app:tabGravity="fill"
-                app:tabTextColor="@color/buttonNormalColor"
-                style="@style/Widget.Shrine.Toolbar"
-                app:tabIndicatorColor="@color/buttonNormalColor"
-                app:tabIndicatorHeight="6dp"
-                app:tabIndicatorFullWidth="false"
-
-                app:tabMode="fixed"
-                />
-        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/product_appbar_layout"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/store_item_background">
+
+         >
 
 
+            <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/product_tabLayout"
+                android:minHeight="?actionBarSize"
+                app:tabGravity="fill"
+                android:background="@color/white"
+                app:tabTextColor="@color/buttonNormalColor"
+
+                app:tabIndicatorColor="@color/buttonNormalColor"
+                app:tabIndicatorHeight="6dp"
+
+
+                app:tabMode="fixed"
+                />
 
             <androidx.viewpager.widget.ViewPager
                 android:layout_width="match_parent"
                 android:id="@+id/product_viewPager"
-                android:background="@drawable/store_item_background"
+android:layout_marginTop="?actionBarSize"
                 android:layout_height="match_parent"/>
-
-
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -90,6 +64,6 @@
 
 
 
-    </RelativeLayout>
+
 </layout>
 

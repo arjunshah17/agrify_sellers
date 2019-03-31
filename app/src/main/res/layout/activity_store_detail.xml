@@ -114,7 +114,7 @@
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:layout_height="wrap_content"
-               />
+                />
 
         </LinearLayout>
     </RelativeLayout>

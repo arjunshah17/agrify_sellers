@@ -37,7 +37,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import ernestoyaquello.com.verticalstepperform.listener.StepperFormListener;
 import es.dmoral.toasty.Toasty;
@@ -54,7 +53,7 @@ private  ProductImageAdapter productImageAdapter;
     ProductListAdapter.OnProductSelectedListener listener;
     Category cat = new Category("select Category");
     ProductbottomsheetFragment productBottomSheetFragment;
-    ProductDetails productDetails = new ProductDetails("enter product details ");
+    ProductDetails productDetails = new ProductDetails("enter Product details ");
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth Auth;
     DocumentReference documentReference;
@@ -78,7 +77,7 @@ seller=new Seller();
     }
 
     void INIT() {
-        productName = new ProductName("select product name", getSupportFragmentManager());
+        productName = new ProductName("select Product name", getSupportFragmentManager());
         bind = DataBindingUtil.setContentView(this, R.layout.activity_product);
         listener = this;
         imageUrl=new ArrayList<Uri>();
@@ -134,9 +133,10 @@ seller=new Seller();
                seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
                seller.setMaxQuantity(Integer.valueOf(productDetails.binding.maxQuantityEditText.getText().toString().trim()));
                seller.setMinQuantity(Integer.valueOf(productDetails.binding.minQuantityEditText.getText().toString().trim()));
-             seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
+               seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
                userRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("productList").document(product_id);
                seller.setUserId(userRef);
+
                StoreData();
            }
        });
@@ -153,17 +153,20 @@ seller=new Seller();
 
         prodRef = firebaseFirestore.collection("store").document(product_id).collection("sellerList").document(Auth.getCurrentUser().getUid());
 
-        batch.set(prodRef, seller);
-        final Map<String, DocumentReference> user_product_info = new HashMap<>();
-        user_product_info.put("id", prodRef);
 
-        batch.set(userRef, user_product_info);
+
+        seller.setId(prodRef);
+        batch.set(prodRef, seller);
+        batch.set(userRef, seller);
 
         DocumentReference storeProduct=firebaseFirestore.collection("store").document(product_id);
         storeProduct.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 sellerCount= documentSnapshot.getDouble("sellerCount").intValue();
+
+
+
                 if(imageUploaded)
                 {
                     uploadImage();
@@ -203,7 +206,7 @@ seller=new Seller();
     public void onProductSelected(DocumentSnapshot store) {
         Store mStore = store.toObject(Store.class);
         product_id = store.getId();
-productDetails.binding.priceTextField.setHint("enter product ₹ for per "+mStore.getUnit());
+productDetails.binding.priceTextField.setHint("enter Product ₹ for per "+mStore.getUnit());
 productDetails.binding.stockTextField.setHint("how many "+mStore.getUnit()+" of "+mStore.getName()+" you want to sell ?");
 productDetails.binding.minQuantityTextField.setHint("set minimum "+mStore.getUnit()+" of "+mStore.getName()+ " that user can buy");
         productDetails.binding.maxQuantityTextField.setHint("set maximum "+mStore.getUnit()+" of "+mStore.getName()+ " that user can buy");
@@ -265,8 +268,9 @@ productDetails.binding.minQuantityTextField.setHint("set minimum "+mStore.getUni
 int count=0;
 for(Uri result:imageUrl)
 {
-count=count+1;
+
     final StorageReference ref=storageRef.child("storeProductImage").child(productName.getStepData()).child(Auth.getCurrentUser().getUid()).child(productName.getStepData()).child(productName.getStepData()+count);
+    count=count+1;
     UploadTask image_path = (UploadTask) ref.putFile(result);//uploaded image in cloud
     Task<Uri> urlTask=image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
         @Override

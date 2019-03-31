@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -24,17 +25,30 @@ public class productTab extends Fragment {
     }
     private TabAdapter adapter;
 FragmentProductTabBinding binding;
+orderFragment order;
+productListFragment product;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        order=new orderFragment();
+        product=new productListFragment();
+        adapter = new TabAdapter(getChildFragmentManager());
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding= DataBindingUtil.inflate(inflater,R.layout.fragment_product_tab, container, false);
 
-        adapter = new TabAdapter(getChildFragmentManager());
-        adapter.addFragment(new productListFragment(), "products");
-        adapter.addFragment(new orderFragment(), "orders");
+
+        adapter.addFragment(product, "products");
+        adapter.addFragment(order, "orders");
         binding.productViewPager.setAdapter(adapter);
         binding.productTabLayout.setupWithViewPager(binding.productViewPager);
+
 
         return binding.getRoot();
     }

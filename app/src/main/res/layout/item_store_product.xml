@@ -40,7 +40,13 @@ android:background="@color/productGridBackgroundColor"
                 android:textColor="#0a3142"
                 android:textSize="25sp"
                 android:textStyle="bold" />
-
+<com.github.florent37.shapeofview.shapes.RoundRectView
+    android:layout_width="match_parent"
+    app:shape_roundRect_topRightRadius="@dimen/dp_12"
+    app:shape_roundRect_topLeftRadius="@dimen/dp_12"
+    app:shape_roundRect_bottomRightRadius="@dimen/dp_12"
+    app:shape_roundRect_bottomLeftRadius="@dimen/dp_12"
+    android:layout_height="200dp">
             <ImageView
                 android:layout_marginTop="12dp"
                 android:id="@+id/product_image"
@@ -49,7 +55,7 @@ android:background="@color/productGridBackgroundColor"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
                 android:transitionName="@string/store_product_transition" />
-
+</com.github.florent37.shapeofview.shapes.RoundRectView>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

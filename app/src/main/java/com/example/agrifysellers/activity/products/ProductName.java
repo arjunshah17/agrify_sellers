@@ -42,7 +42,7 @@ public class ProductName extends Step<String> {
     protected IsDataValid isStepDataValid(String stepData) {
         boolean isProdValid = true;
         String errorMessage;
-        if (stepData.equals("select product")) {
+        if (stepData.equals("select Product")) {
             isProdValid = false;
         }
         errorMessage = !isProdValid ? "select correct ProductName" : "";

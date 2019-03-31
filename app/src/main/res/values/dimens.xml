@@ -27,6 +27,7 @@
     <dimen name="bottom_sheet_corner_radius">15dp</dimen>
     <dimen name="bottom_sheet_top_padding">15dp</dimen>
     <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
 
 
 </resources>

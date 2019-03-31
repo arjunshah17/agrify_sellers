@@ -8,7 +8,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.adapter.SellerAdapter;
@@ -24,6 +23,8 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
 import es.dmoral.toasty.Toasty;
+
+import static com.example.agrifysellers.activity.GlideApp.with;
 
 public class StoreDetailActivity extends AppCompatActivity implements EventListener<DocumentSnapshot> {
     private static final String TAG = "StoreDetail";
@@ -108,7 +109,7 @@ public class StoreDetailActivity extends AppCompatActivity implements EventListe
         else {
             bind.sellerlistButton.setText(store.getSellerCount()+" farmers are selling");
         }
-        GlideApp.with(this)
+        with(this)
                 .load(store.getProductImageUrl())
                 .into(bind.productImageUrl);
         bind.appBar.setTitle(store.getName());

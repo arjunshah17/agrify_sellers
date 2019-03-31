@@ -1,15 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:folding-cell="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
 
+        <variable
+            name="product"
+            type="com.example.agrifysellers.activity.products.model.Product" />
     </data>
 
-<com.ramotion.foldingcell.FoldingCell xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/productGridBackgroundColor"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp"
+  >
 
 
+
+<com.ramotion.foldingcell.FoldingCell
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+bind:backSideColor="@color/productGridBackgroundColor"
+    folding-cell:additionalFlipsCount="2"
+    folding-cell:cameraHeight="40"
     
-    
+    folding-cell:animationDuration="1000"
+    android:id="@+id/product_folding_cell">
+  <include
+      android:id="@+id/product_content_layout"
+      layout="@layout/product_list_item_content"
+     />
+    <include
+        android:id="@+id/product_title_layout"
+        layout="@layout/product_list_item_title"
+        />
+
+
 </com.ramotion.foldingcell.FoldingCell>
+</com.google.android.material.card.MaterialCardView>
 </layout>

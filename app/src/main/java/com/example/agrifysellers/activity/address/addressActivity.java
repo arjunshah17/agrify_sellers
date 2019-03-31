@@ -1,18 +1,15 @@
 package com.example.agrifysellers.activity.address;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.databinding.ActivityAddressBinding;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.material.button.MaterialButton;
 
 public class addressActivity extends AppCompatActivity {
 
@@ -28,7 +25,7 @@ public class addressActivity extends AppCompatActivity {
         bind.addressButton.setOnClickListener(v -> {
             try {
                 PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                startActivityForResult(builder.build(addressActivity.this), PLACE_PICKER_REQUEST);
+                startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
             } catch (Exception e) {
                 e.printStackTrace();
             }

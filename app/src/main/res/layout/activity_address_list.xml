@@ -53,8 +53,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:id="@+id/address_List_rv"
-                android:layout_marginRight="@dimen/dp_12"
-                android:layout_marginLeft="@dimen/dp_12"
+
                 android:layout_height="wrap_content"/>
 <com.google.android.material.button.MaterialButton
     android:layout_width="match_parent"

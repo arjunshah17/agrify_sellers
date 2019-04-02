@@ -34,7 +34,7 @@
         <item name="android:padding">6dp</item>
         <item name="android:layout_margin">6dp</item>
         <item name="strokeColor">@color/buttonNormalColor</item>
-        <item name="rippleColor">@color/buttonNormalColor</item>
+        <item name="rippleColor">@color/primary_color_ripple</item>
 
     </style>
     <style name="AppTheme.OutLineTextField" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -50,7 +50,7 @@
         <item name="android:padding">6dp</item>
         <item name="android:layout_margin">6dp</item>
         <item name="strokeColor">@color/deleteButtonColor</item>
-        <item name="rippleColor">@color/deleteButtonColor</item>
+        <item name="rippleColor">@color/deleteButtonColor_ripple</item>
 
     </style>
     <style name="AppTheme.Launcher" parent="Theme.AppCompat.NoActionBar">
@@ -74,7 +74,7 @@
         </item>
     </style>
 
-    <style name="Widget.Shrine.Button.TextButton" parent="Widget.MaterialComponents.Chip.Action">
+    <style name="Widget.Shrine.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
 
 
@@ -128,6 +128,7 @@
     <color name="buttonNormalColor">#8e24aa</color>
     <color name="buttonControlHighlight">#c158dc</color>
     <color name="deleteButtonColor">#f44336</color>
+    <color name="deleteButtonColor_ripple">#ef9a9a</color>
 </resources>
 
 

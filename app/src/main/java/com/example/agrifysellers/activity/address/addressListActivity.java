@@ -2,6 +2,7 @@ package com.example.agrifysellers.activity.address;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -10,16 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.databinding.ActivityAddressListBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class addressListActivity extends AppCompatActivity {
+public class addressListActivity extends AppCompatActivity implements AddressAdapter.OnAddressSelectedListener {
     ActivityAddressListBinding binding;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth auth;
     Query query;
+    static final String TAG="addressListActivity";
     AddressAdapter addressAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +35,30 @@ public class addressListActivity extends AppCompatActivity {
 
     private void FireStoreInit() {
         query = firebaseFirestore.collection("Sellers").document(auth.getCurrentUser().getUid()).collection("addressList");
-        addressAdapter = new AddressAdapter(query, this) {
+        addressAdapter = new AddressAdapter(query, this,TAG,this) {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 super.onEvent(documentSnapshots, e);
+
+
+                if (getItemCount() == 0) {
+
+                } else {
+
+                }
             }
 
             @Override
             protected void onDataChanged() {
-                super.onDataChanged();
+                // Show/hide content if the query returns empty.
+                if (getItemCount() == 0) {
+                    noProductFound(true);
+
+
+                } else {
+                    noProductFound(false);
+                }
+
             }
         };
         binding.addressListRv.setLayoutManager(new LinearLayoutManager(this));
@@ -79,7 +97,26 @@ public class addressListActivity extends AppCompatActivity {
         });
         firebaseFirestore=FirebaseFirestore.getInstance();
         auth=FirebaseAuth.getInstance();
+
+
     }
 
 
+    @Override
+    public void OnAddressSelected(DocumentSnapshot snapshot) {
+
+    }
+    private void noProductFound(boolean state) {
+        if (state) {
+            binding.addressListRv.setVisibility(View.GONE);
+
+
+            binding.animationView.playAnimation();
+            binding.animationLayout.setVisibility(View.VISIBLE);
+        } else {
+            binding.animationLayout.setVisibility(View.GONE);
+            binding.addressListRv.setVisibility(View.VISIBLE);
+            binding.animationView.cancelAnimation();
+        }
+    }
 }

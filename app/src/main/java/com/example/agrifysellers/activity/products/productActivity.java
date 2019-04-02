@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.MainActivity;
 import com.example.agrifysellers.activity.adapter.ProductListAdapter;
+import com.example.agrifysellers.activity.address.AddressAdapter;
+import com.example.agrifysellers.activity.address.AddressListFragment;
+import com.example.agrifysellers.activity.address.model.Address;
 import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.activity.model.Store;
 import com.example.agrifysellers.databinding.ActivityProductBinding;
@@ -41,8 +44,9 @@ import java.util.HashMap;
 import ernestoyaquello.com.verticalstepperform.listener.StepperFormListener;
 import es.dmoral.toasty.Toasty;
 
-public class productActivity extends AppCompatActivity implements StepperFormListener, ProductListAdapter.OnProductSelectedListener  {
+public class productActivity extends AppCompatActivity implements StepperFormListener, ProductListAdapter.OnProductSelectedListener, AddressAdapter.OnAddressSelectedListener {
     public ProductName productName;
+    ProductAddress productAddress=new ProductAddress("select address");
     ActivityProductBinding bind;
     Boolean imageUploaded=false;
 private  ProductImageAdapter productImageAdapter;
@@ -53,6 +57,7 @@ private  ProductImageAdapter productImageAdapter;
     ProductListAdapter.OnProductSelectedListener listener;
     Category cat = new Category("select Category");
     ProductbottomsheetFragment productBottomSheetFragment;
+    AddressListFragment addressListFragment;
     ProductDetails productDetails = new ProductDetails("enter Product details ");
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth Auth;
@@ -61,6 +66,7 @@ private  ProductImageAdapter productImageAdapter;
     WriteBatch batch;
     DocumentReference prodRef;
     String product_id;
+    DocumentReference addressRef;
     Seller seller;
     @Override
 
@@ -83,12 +89,13 @@ seller=new Seller();
         imageUrl=new ArrayList<Uri>();
         productImageAdapter =new ProductImageAdapter(imageUrl);
         productBottomSheetFragment = new ProductbottomsheetFragment(listener);
+        addressListFragment=new AddressListFragment(this::OnAddressSelected);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             bind.productLinearLayout.setBackground(this.getDrawable(R.drawable.store_item_background));//set curve background
         }
 
-        bind.stepperForm.setup(this, cat, productName, productDetails).displayBottomNavigation(false)
+        bind.stepperForm.setup(this, cat, productName, productDetails,productAddress).displayBottomNavigation(false)
                 .lastStepNextButtonText("start selling").init();
 
         productName.binding.productName.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +118,10 @@ seller=new Seller();
              loadImages();
             }
         });
+        productAddress.binding.productAddress.setOnClickListener(v->{
+            addressListFragment.show(getSupportFragmentManager(), "productlist");
+        });
+
     }
 
     private void loadImages() {
@@ -318,4 +329,16 @@ int count=item.getGroupId();
         return true;
     }
 
+    @Override
+    public void OnAddressSelected(DocumentSnapshot snapshot) {
+        addressRef=snapshot.getReference();
+        Address address=snapshot.toObject(Address.class);
+        productAddress.binding.addressLayout.setVisibility(View.VISIBLE);
+        productAddress.binding.addressNameTv.setText(address.getName());
+        productAddress.binding.addressLocation.setText(address.getHouseNum()+address.getLocation());
+        productAddress.binding.productAddress.setText("chanege address");
+        addressListFragment.dismiss();
+
+
+    }
 }

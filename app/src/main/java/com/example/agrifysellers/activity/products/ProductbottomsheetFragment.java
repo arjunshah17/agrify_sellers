@@ -147,6 +147,14 @@ public class ProductbottomsheetFragment extends BottomSheetDialogFragment {
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAdapter != null) {
+            mAdapter.stopListening();
+        }
+    }
+
     void noProductFound(boolean state) {
         if (state) {
             binding.storeRecycleView.setVisibility(View.GONE);

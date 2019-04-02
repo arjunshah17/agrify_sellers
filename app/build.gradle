@@ -12,6 +12,8 @@ android {
         dataBinding {
             enabled = true
         }
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
@@ -76,6 +78,9 @@ dependencies {
     implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
     implementation 'com.google.android.gms:play-services-places:16.0.0'
     implementation 'android.arch.paging:runtime:1.0.1'
+    implementation 'com.vincent.blurdialog:BlurDialog:1.0.1'
+    implementation 'io.alterac.blurkit:blurkit:1.1.0'
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

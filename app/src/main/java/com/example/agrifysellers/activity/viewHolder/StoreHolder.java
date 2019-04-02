@@ -119,6 +119,7 @@ public class StoreHolder extends RecyclerView.ViewHolder {
                 if (listener != null) {
                     View SharedView = binding.productImage;
 
+
                     listener.onStoreSelected(snapshot, SharedView);
                 }
             }

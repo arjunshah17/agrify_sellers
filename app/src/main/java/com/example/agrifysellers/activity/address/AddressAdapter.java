@@ -10,13 +10,21 @@ import androidx.databinding.DataBindingUtil;
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.adapter.FirestoreAdapter;
 import com.example.agrifysellers.databinding.AddressItemBinding;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
 public class AddressAdapter extends FirestoreAdapter<AddressViewHolder> {
+   public interface OnAddressSelectedListener{
+        void OnAddressSelected(DocumentSnapshot snapshot);
+    }
     Activity activity;
-    public AddressAdapter(Query query,Activity activity) {
+    String TAG;
+    public OnAddressSelectedListener onAddressSelectedListener;
+    public AddressAdapter(Query query, Activity activity, String TAG,OnAddressSelectedListener listener) {
         super(query);
         this.activity=activity;
+        this.TAG=TAG;
+        onAddressSelectedListener=listener;
     }
 
     @NonNull
@@ -28,6 +36,6 @@ public class AddressAdapter extends FirestoreAdapter<AddressViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull AddressViewHolder holder, int position) {
-     holder.bind(getSnapshot(position),activity);
+     holder.bind(getSnapshot(position),activity,TAG,onAddressSelectedListener);
     }
 }

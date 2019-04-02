@@ -15,8 +15,9 @@
         android:background="@color/productGridBackgroundColor"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
+        app:rippleColor="@color/primary_color_ripple"
         app:cardUseCompatPadding="true"
-        android:foreground="@drawable/item_ripple_effect"
+
         >
 
     <LinearLayout
@@ -24,7 +25,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
 
+
         >
+     
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,6 +50,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:id="@+id/button_layout"
     android:layout_marginLeft="@dimen/dp_12"
    >
     <com.google.android.material.button.MaterialButton

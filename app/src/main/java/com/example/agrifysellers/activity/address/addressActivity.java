@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.agrifysellers.R;
-import com.example.agrifysellers.activity.MainActivity;
 import com.example.agrifysellers.activity.address.model.Address;
 import com.example.agrifysellers.databinding.ActivityAddressBinding;
 import com.google.android.gms.location.places.Place;
@@ -76,7 +75,7 @@ address=new Address();
                         if(task.isSuccessful())
                         {
                             Toasty.info(getApplicationContext(),"uploaded address in server").show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            onBackPressed();
 
                         }
                         else

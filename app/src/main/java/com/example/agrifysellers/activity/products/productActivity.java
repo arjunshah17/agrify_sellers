@@ -66,6 +66,7 @@ private  ProductImageAdapter productImageAdapter;
     WriteBatch batch;
     DocumentReference prodRef;
     String product_id;
+    String address_id;
     DocumentReference addressRef;
     Seller seller;
     @Override
@@ -140,14 +141,16 @@ seller=new Seller();
 
                seller=task.getResult().toObject(Seller.class);
                seller.setImageCount(productImageAdapter.getItemCount());
+
                seller.setPrice(Float.valueOf(productDetails.binding.priceEditText.getText().toString().trim()));
                seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
                seller.setMaxQuantity(Integer.valueOf(productDetails.binding.maxQuantityEditText.getText().toString().trim()));
                seller.setMinQuantity(Integer.valueOf(productDetails.binding.minQuantityEditText.getText().toString().trim()));
                seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
                userRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("productList").document(product_id);
-               seller.setUserId(userRef);
-
+               seller.setSellerProductRef(userRef);
+               DocumentReference addressRef=firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("addressList").document(address_id);
+               seller.setAddressRef(addressRef);
                StoreData();
            }
        });
@@ -166,7 +169,7 @@ seller=new Seller();
 
 
 
-        seller.setId(prodRef);
+        seller.setStoreProductRef(prodRef);
         batch.set(prodRef, seller);
         batch.set(userRef, seller);
 
@@ -336,7 +339,13 @@ int count=item.getGroupId();
         productAddress.binding.addressLayout.setVisibility(View.VISIBLE);
         productAddress.binding.addressNameTv.setText(address.getName());
         productAddress.binding.addressLocation.setText(address.getHouseNum()+address.getLocation());
-        productAddress.binding.productAddress.setText("chanege address");
+
+        productAddress.binding.productAddress.setText("change address");
+        productAddress.markAsCompletedOrUncompleted(true);
+        Toasty.info(getApplicationContext(),snapshot.getReference().toString(),Toasty.LENGTH_SHORT).show();
+
+
+       address_id=snapshot.getId();
         addressListFragment.dismiss();
 
 

@@ -42,7 +42,7 @@ public class ProductName extends Step<String> {
     protected IsDataValid isStepDataValid(String stepData) {
         boolean isProdValid = true;
         String errorMessage;
-        if (stepData.equals("select Product")) {
+        if (stepData.equals("select product")) {
             isProdValid = false;
         }
         errorMessage = !isProdValid ? "select correct ProductName" : "";
@@ -59,8 +59,9 @@ public class ProductName extends Step<String> {
 binding= DataBindingUtil.inflate(LayoutInflater.from(getContext()),R.layout.product_name_stepper,null,false);
 
 
-        return binding.getRoot();
 
+
+        return binding.getRoot();
     }
 
     @Override

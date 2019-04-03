@@ -82,7 +82,7 @@ public class ProductListAdapter extends FirestoreAdapter<ProductListViewHolder> 
     String productName;
     public void delete(int pos)
     {
-        DocumentReference id=getSnapshot(pos).getDocumentReference("id");
+        DocumentReference id=getSnapshot(pos).getDocumentReference("storeProductRef");
         int imageCount=getSnapshot(pos).getDouble("imageCount").intValue();
         String counterId =getSnapshot(pos).getId();
         firebaseFirestore.collection("store").document(getSnapshot(pos).getReference().getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -140,6 +140,7 @@ public class ProductListAdapter extends FirestoreAdapter<ProductListViewHolder> 
        DocumentReference reference=firebaseFirestore.collection("store").document(id);
           @Nullable
           @Override
+
           public Integer apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
               DocumentSnapshot doc=transaction.get(reference);
 

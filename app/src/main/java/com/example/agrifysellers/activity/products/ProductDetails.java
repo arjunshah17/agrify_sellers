@@ -83,10 +83,11 @@ ProductDetailsStepperBinding binding;
     @Override
     protected IsDataValid isStepDataValid(Boolean stepData) {
         String message="enter correct data";
-        if(stepData)
+        if(stepData )
         {
             message="";
         }
+
         return new IsDataValid(stepData,message);
 
     }

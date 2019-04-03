@@ -43,6 +43,7 @@ public class AddressViewHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onClick() {
                         delete(snapshot);
+                        blurDialog.dismiss();
                     }
                 }) .negativeClick(() -> {
                     blurDialog.dismiss();

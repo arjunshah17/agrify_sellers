@@ -2,7 +2,9 @@ package com.example.agrifysellers.activity.model;
 
 import com.google.firebase.firestore.DocumentReference;
 
-public class Seller {
+import java.io.Serializable;
+
+public class Seller implements Serializable {
     private String name, profilePhotoUrl, phone,email;
     private DocumentReference StoreProductRef,SellerProductRef,AddressRef;
 

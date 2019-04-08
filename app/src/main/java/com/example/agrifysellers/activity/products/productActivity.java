@@ -82,34 +82,41 @@ Boolean isEdited=false;
         batch = firebaseFirestore.batch();
         seller = new Seller();
         if (getIntent().getStringExtra("path") != null) {
+            isEdited = true;
+
+            prodRef=firebaseFirestore.document(getIntent().getStringExtra("path"));
             SellerProductRef = firebaseFirestore.document(getIntent().getStringExtra("path")).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
-                    seller = doc.toObject(Seller.class);
+
+
                     productDetails.binding.priceEditText.setText(String.valueOf(seller.getPrice()));
                     productDetails.binding.maxQuantityEditText.setText(String.valueOf(seller.getMaxQuantity()));
                     productDetails.binding.stockEditText.setText(String.valueOf(seller.getStock()));
                     productDetails.binding.minQuantityEditText.setText(String.valueOf(seller.getMinQuantity()));
                     DocumentReference addressRef = seller.getAddressRef();
-                    addressRef.get().addOnCompleteListener(task1 -> {
-                        if (task1.isSuccessful()) {
-                            DocumentSnapshot snapshot = task1.getResult();
-                           if( snapshot.exists()) {
-                               Address address = snapshot.toObject(Address.class);
+                    if(seller.getAddressRef()!=null) {
+                        addressRef.get().addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                DocumentSnapshot snapshot = task1.getResult();
+                                if (snapshot.exists()) {
+                                    Address address = snapshot.toObject(Address.class);
 
-                               productAddress.binding.addressNameTv.setText(address.getName());
-                               productAddress.binding.addressLocation.setText(address.getHouseNum() + address.getLocation());
-                           }
-                        } else {
-                            Toasty.error(getApplicationContext(), task1.getException().getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
-                        }
-                    });
+                                    productAddress.binding.addressNameTv.setText(address.getName());
+                                    productAddress.binding.addressLocation.setText(address.getHouseNum() + address.getLocation());
+                                }
+                            } else {
+                                Toasty.error(getApplicationContext(), task1.getException().getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    
+
                 } else {
                     Toasty.error(getApplicationContext(), task.getException().getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
                 }
 
             });
-            isEdited = true;
 
 
         }
@@ -209,8 +216,9 @@ else {
     void StoreData()
     {      stateLoading(true);
 
+    if(!isEdited) {
         prodRef = firebaseFirestore.collection("store").document(product_id).collection("sellerList").document(Auth.getCurrentUser().getUid());
-
+    }
 
 
         seller.setStoreProductRef(prodRef);

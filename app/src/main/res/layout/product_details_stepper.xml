@@ -64,6 +64,24 @@
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/productDes_textField"
+        android:layout_marginBottom="@dimen/dp_12"
+        android:hint="enter description"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/product_des_editText"
+            android:inputType="textMultiLine"
+            android:layout_width="match_parent"
+
+
+
+            android:layout_height="wrap_content" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
 

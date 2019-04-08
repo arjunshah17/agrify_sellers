@@ -2,10 +2,8 @@ package com.example.agrifysellers.activity.model;
 
 import com.google.firebase.firestore.DocumentReference;
 
-import java.io.Serializable;
-
-public class Seller implements Serializable {
-    private String name, profilePhotoUrl, phone,email;
+public class Seller {
+    private String name, profilePhotoUrl, phone,email,info;
     private DocumentReference StoreProductRef,SellerProductRef,AddressRef;
 
     private float price;
@@ -113,7 +111,7 @@ public class Seller implements Serializable {
         this.imageCount = imageCount;
     }
 
-    public Seller(String name, String profilePhotoUrl, String phone, String email, DocumentReference storeProductRef, DocumentReference sellerProductRef, DocumentReference addressRef,  float price, int stock, int minQuantity, int maxQuantity, int imageCount) {
+    public Seller(String name, String profilePhotoUrl, String phone, String email, DocumentReference storeProductRef, DocumentReference sellerProductRef, DocumentReference addressRef,  float price, int stock, int minQuantity, int maxQuantity, int imageCount,String info) {
         this.name = name;
         this.profilePhotoUrl = profilePhotoUrl;
         this.phone = phone;
@@ -121,11 +119,22 @@ public class Seller implements Serializable {
         StoreProductRef = storeProductRef;
         SellerProductRef = sellerProductRef;
         AddressRef = addressRef;
-
+this.info=info;
         this.price = price;
         this.stock = stock;
         this.minQuantity = minQuantity;
         this.maxQuantity = maxQuantity;
         this.imageCount = imageCount;
+
+
     }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
 }

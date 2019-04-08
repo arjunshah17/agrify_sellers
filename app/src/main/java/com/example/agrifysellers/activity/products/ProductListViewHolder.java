@@ -109,9 +109,9 @@ public class ProductListViewHolder extends RecyclerView.ViewHolder implements Vi
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         menu.setHeaderTitle("select an option");
-
         menu.add(getAdapterPosition(),1,1,"edit");
         menu.add(getAdapterPosition(),2,2,"remove");
+        menu.add(getAdapterPosition(),3,3,"update stock");
 
 
     }

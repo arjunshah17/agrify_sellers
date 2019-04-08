@@ -35,7 +35,7 @@ public class ProductImageAdapter extends RecyclerView.Adapter<ProductImageAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Uri uri=urlList.get(position);
-productImage.setImageURI(uri);
+        productImage.setImageURI(uri);
     }
 
 
@@ -49,7 +49,7 @@ productImage.setImageURI(uri);
             super(itemView);
             productImage=(ImageView) itemView.findViewById(R.id.product_imageView);
 
-                itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnCreateContextMenuListener(this);
 
 
 
@@ -67,7 +67,8 @@ productImage.setImageURI(uri);
 
     void removeImage(int pos)
     {
-
+       urlList.remove(pos);
+       notifyDataSetChanged();
     }
 
 }

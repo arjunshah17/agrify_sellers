@@ -237,9 +237,8 @@ public class editProfile extends AppCompatActivity {
               {
 
                   for (QueryDocumentSnapshot document : task.getResult()) {
-                  DocumentReference ref=document.getDocumentReference("id");
+                  DocumentReference ref=document.getDocumentReference("storeProductRef");
                    Log.i("docRef",ref.toString());
-                      batch.update(ref,"name",user.getName());
                       batch.update(ref,"name",user.getName());
                       batch.update(ref,"phone",user.getPhone());
                       batch.update(ref,"profilePhotoUrl",user.getProfilePhotoUrl());

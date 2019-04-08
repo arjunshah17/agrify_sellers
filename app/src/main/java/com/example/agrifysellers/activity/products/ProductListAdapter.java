@@ -178,7 +178,9 @@ public class ProductListAdapter extends FirestoreAdapter<ProductListViewHolder> 
     {
 
         Intent intent=new Intent(activity,productActivity.class);
-        DocumentReference reference=getSnapshot(pos).getReference();
+
+        String path=getSnapshot(pos).getReference().getPath();
+        intent.putExtra("path",path);
         activity.startActivity(intent);
 
     }

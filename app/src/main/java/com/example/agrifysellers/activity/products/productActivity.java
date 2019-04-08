@@ -53,7 +53,7 @@ private  ProductImageAdapter productImageAdapter;
     private static final int REQUEST_CODE = 123;
     ArrayList<Uri> imageUrl;
     StorageReference storageRef;
-
+Boolean isEdited=false;
     ProductListAdapter.OnProductSelectedListener listener;
     Category cat = new Category("select Category");
     ProductbottomsheetFragment productBottomSheetFragment;
@@ -69,23 +69,61 @@ private  ProductImageAdapter productImageAdapter;
     String address_id;
     DocumentReference addressRef;
     Seller seller;
+    Task<DocumentSnapshot> SellerProductRef;
     @Override
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        INIT();
+
 
         Auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         batch = firebaseFirestore.batch();
-seller=new Seller();
+        seller = new Seller();
+        if (getIntent().getStringExtra("path") != null) {
+            SellerProductRef = firebaseFirestore.document(getIntent().getStringExtra("path")).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    seller = doc.toObject(Seller.class);
+                    productDetails.binding.priceEditText.setText(String.valueOf(seller.getPrice()));
+                    productDetails.binding.maxQuantityEditText.setText(String.valueOf(seller.getMaxQuantity()));
+                    productDetails.binding.stockEditText.setText(String.valueOf(seller.getStock()));
+                    productDetails.binding.minQuantityEditText.setText(String.valueOf(seller.getMinQuantity()));
+                    DocumentReference addressRef = seller.getAddressRef();
+                    addressRef.get().addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            DocumentSnapshot snapshot = task1.getResult();
+                           if( snapshot.exists()) {
+                               Address address = snapshot.toObject(Address.class);
+
+                               productAddress.binding.addressNameTv.setText(address.getName());
+                               productAddress.binding.addressLocation.setText(address.getHouseNum() + address.getLocation());
+                           }
+                        } else {
+                            Toasty.error(getApplicationContext(), task1.getException().getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toasty.error(getApplicationContext(), task.getException().getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
+                }
+
+            });
+            isEdited = true;
+
+
+        }
+        INIT();
+
 
     }
 
     void INIT() {
         productName = new ProductName("select Product name", getSupportFragmentManager());
         bind = DataBindingUtil.setContentView(this, R.layout.activity_product);
+        bind.appBar.setNavigationOnClickListener(v->{
+            onBackPressed();
+        });
         listener = this;
         imageUrl=new ArrayList<Uri>();
         productImageAdapter =new ProductImageAdapter(imageUrl);
@@ -95,21 +133,27 @@ seller=new Seller();
 
             bind.productLinearLayout.setBackground(this.getDrawable(R.drawable.store_item_background));//set curve background
         }
+        if(isEdited)
+        {
+            bind.stepperForm.setup(this, productDetails,productAddress).displayBottomNavigation(false)
+                    .lastStepNextButtonText("update").init();
+        }
+else {
+            bind.stepperForm.setup(this, cat, productName, productDetails, productAddress).displayBottomNavigation(false)
+                    .lastStepNextButtonText("start selling").init();
 
-        bind.stepperForm.setup(this, cat, productName, productDetails,productAddress).displayBottomNavigation(false)
-                .lastStepNextButtonText("start selling").init();
-
-        productName.binding.productName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("category", cat.getStepData());
-                productBottomSheetFragment.setArguments(bundle);
-                productBottomSheetFragment.show(getSupportFragmentManager(), "productlist");
+            productName.binding.productName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", cat.getStepData());
+                    productBottomSheetFragment.setArguments(bundle);
+                    productBottomSheetFragment.show(getSupportFragmentManager(), "productlist");
 
 
-            }
-        });
+                }
+            });
+        }
         storageRef= FirebaseStorage.getInstance().getReference();
       productDetails.binding.imageRecycleView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2,RecyclerView.HORIZONTAL,false));
       productDetails.binding.imageRecycleView.setAdapter(productImageAdapter);

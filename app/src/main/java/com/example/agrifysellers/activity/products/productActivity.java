@@ -43,6 +43,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 import ernestoyaquello.com.verticalstepperform.listener.StepperFormListener;
 import es.dmoral.toasty.Toasty;
@@ -73,13 +74,14 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
     DocumentReference addressRef;
     ProductImageAdapter productImageAdapter;
     Seller seller;
-    Task<DocumentSnapshot> SellerProductRef;
+    DocumentReference SellerProductRef;
+    DocumentReference storeProductRef;
 
     Query imageQuery;
     int sellerCount;
     Float Price;
     private ProductImageFireStoreAdapter productImageFireStoreAdapter;
-
+//danger zone do not touch here,otherwise phone will blast
     @Override
 
 
@@ -112,6 +114,9 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
         });
         listener = this;
         imageUrl = new ArrayList<Uri>();
+        productImageAdapter=new ProductImageAdapter(imageUrl);
+
+
 
         productBottomSheetFragment = new ProductbottomsheetFragment(listener);
         addressListFragment = new AddressListFragment(this::OnAddressSelected);
@@ -139,10 +144,7 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
 
                 }
             });
-            productImageAdapter =new ProductImageAdapter(imageUrl);
 
-            productDetails.binding.imageRecycleView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2,RecyclerView.HORIZONTAL,false));
-            productDetails.binding.imageRecycleView.setAdapter(productImageAdapter);
         }
         storageRef = FirebaseStorage.getInstance().getReference();
 
@@ -156,13 +158,19 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
             addressListFragment.show(getSupportFragmentManager(), "productlist");
         });
 
+        productDetails.binding.imageLocalRecycleView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2,RecyclerView.HORIZONTAL,false));
+
+        productDetails.binding.imageLocalRecycleView.setAdapter(productImageAdapter);
+
+
     }
-    void getProductImages(DocumentReference storeRef)
+    void getProductImages()
     {
 
-        imageQuery=firebaseFirestore.collection(storeRef+"productImage");
-        productImageFireStoreAdapter=new ProductImageFireStoreAdapter(imageQuery,isEdited,this,imageUrl)
+        imageQuery=firebaseFirestore.collection("store").document(product_id).collection("sellerList").document(Auth.getCurrentUser().getUid()).collection("productImage");
+        productImageFireStoreAdapter=new ProductImageFireStoreAdapter(imageQuery,this)
         {
+
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 super.onEvent(documentSnapshots, e);
@@ -171,12 +179,16 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
             @Override
             protected void onDataChanged() {
                 super.onDataChanged();
+                if (getItemCount() == 0) {
+                   Toasty.error(getApplicationContext(),"zero images",Toasty.LENGTH_SHORT).show();
+                }
             }
         };
 
-        productDetails.binding.imageRecycleView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2,RecyclerView.HORIZONTAL,false));
+        productDetails.binding.imageFirebaseRecycleView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2,RecyclerView.HORIZONTAL,false));
 
-        productDetails.binding.imageRecycleView.setAdapter(productImageFireStoreAdapter);
+        productDetails.binding.imageFirebaseRecycleView.setAdapter(productImageFireStoreAdapter);
+productImageFireStoreAdapter.startListening();
 
     }
 
@@ -194,10 +206,13 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                 seller = task.getResult().toObject(Seller.class);
-                if(isEdited)
-                seller.setImageCount(productImageFireStoreAdapter.getItemCount());
-                else
+                if(isEdited) {
+                    seller.setImageCount(productImageFireStoreAdapter.getItemCount() + productImageAdapter.getItemCount());
+                }
+                else {
+
                     seller.setImageCount(productImageAdapter.getItemCount());
+                }
 
                 seller.setPrice(Float.valueOf(productDetails.binding.priceEditText.getText().toString().trim()));
                 seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
@@ -205,14 +220,17 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
                 seller.setMinQuantity(Integer.valueOf(productDetails.binding.minQuantityEditText.getText().toString().trim()));
                 seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
                 seller.setInfo(productDetails.binding.productDesEditText.getText().toString());
-                if(!isEdited) {
-                    userRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("productList").document(product_id);
-                    seller.setSellerProductRef(userRef);
+                seller.setProductId(product_id);
+
+              if(!isEdited) {
+                    SellerProductRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("productList").document(seller.getProductId());
+                    storeProductRef =  firebaseFirestore.collection("store").document(seller.getProductId()).collection("sellerList").document(Auth.getCurrentUser().getUid());
+                     addressRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("addressList").document(address_id);
                 }
-                if(isAddressChanged) {
-                    DocumentReference addressRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("addressList").document(address_id);
-                    seller.setAddressRef(addressRef);
-                }
+                seller.setSellerProductRef(SellerProductRef);
+                seller.setStoreProductRef(storeProductRef);
+                seller.setAddressRef(addressRef);
+
                 StoreData();
             }
         });
@@ -223,18 +241,10 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
     void StoreData() {
         stateLoading(true);
 
-        if (!isEdited) {
-            prodRef = firebaseFirestore.collection("store").document(product_id).collection("sellerList").document(Auth.getCurrentUser().getUid());
-        }
+        batch.set(seller.getSellerProductRef(), seller);
+        batch.set(seller.getStoreProductRef(), seller);
 
-
-
-
-        seller.setStoreProductRef(prodRef);
-        batch.set(prodRef, seller);
-        batch.set(userRef, seller);
-
-        DocumentReference storeProduct = firebaseFirestore.collection("store").document(product_id);
+        DocumentReference storeProduct = firebaseFirestore.collection("store").document(seller.getProductId());
         storeProduct.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -275,7 +285,7 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
     public void onProductSelected(DocumentSnapshot store) {
         Store mStore = store.toObject(Store.class);
         product_id = store.getId();
-
+      seller.setProductId(product_id);
 
 
         firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("productList").document(product_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -316,14 +326,8 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
                 case Activity.RESULT_OK:
                     imageUploaded = true;
                     imageUrl.add(CutOut.getUri(data));
-                    if(isEdited) {
-
-                        productImageFireStoreAdapter.notifyDataSetChanged();
-                    }
-                    else
-                    {
                         productImageAdapter.notifyDataSetChanged();
-                    }
+
 
 
 
@@ -337,14 +341,20 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
             }
         }
     }
-
+int count;
     private void uploadImage() {
 
-
-        int count = 0;
+if(isEdited)
+{
+    count=productImageFireStoreAdapter.getItemCount();
+}
+else {
+    int count = 0;
+}
         for (Uri result : imageUrl) {
+            UUID unique_id=UUID.randomUUID();
 
-            final StorageReference ref = storageRef.child("storeProductImage").child(productName.getStepData()).child(Auth.getCurrentUser().getUid()).child(productName.getStepData()).child(productName.getStepData() + count);
+            final StorageReference ref = storageRef.child("storeProductImage").child(seller.getProductId()).child(Auth.getCurrentUser().getUid()).child(seller.getProductId()).child(unique_id.toString());
             count = count + 1;
             UploadTask image_path = ref.putFile(result);//uploaded image in cloud
             Task<Uri> urlTask = image_path.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -366,7 +376,8 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
                         Uri downloadUri = task.getResult();
                         HashMap<String, String> imageHash = new HashMap<>();
                         imageHash.put("url", downloadUri.toString());
-                        firebaseFirestore.collection("store").document(product_id).collection("sellerList").document(Auth.getCurrentUser().getUid()).collection("productImage").document().set(imageHash).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        imageHash.put("imagePath",unique_id.toString());
+                        firebaseFirestore.collection("store").document(seller.getProductId()).collection("sellerList").document(Auth.getCurrentUser().getUid()).collection("productImage").document().set(imageHash).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
@@ -407,6 +418,7 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
 
 
         address_id = snapshot.getId();
+        isAddressChanged=true;
         addressListFragment.dismiss();
 
 
@@ -417,16 +429,19 @@ DocumentReference storeRef;
     void InitProductFromIntent() {
 
 
-        SellerProductRef = firebaseFirestore.document(getIntent().getStringExtra("path")).get().addOnCompleteListener(task -> {
+        firebaseFirestore.document(getIntent().getStringExtra("path")).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot doc = task.getResult();
 
                 seller = doc.toObject(Seller.class);
+               product_id=seller.getProductId();
 
-                if (seller != null) {
-                    storeRef=seller.getStoreProductRef();
-                    prodRef=seller.getStoreProductRef();
-                }
+               addressRef=seller.getAddressRef();
+              storeProductRef=seller.getStoreProductRef();
+
+              SellerProductRef=seller.getSellerProductRef();
+              getProductImages();
+
                 productDetails.binding.priceEditText.setText(String.valueOf(seller.getPrice()));
                 productDetails.binding.maxQuantityEditText.setText(String.valueOf(seller.getMaxQuantity()));
                 productDetails.binding.stockEditText.setText(String.valueOf(seller.getStock()));
@@ -458,7 +473,7 @@ DocumentReference storeRef;
 
         });
 
-getProductImages(storeRef);
+
     }
 
     @Override

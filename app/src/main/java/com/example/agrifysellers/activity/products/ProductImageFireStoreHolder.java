@@ -14,9 +14,8 @@ public class ProductImageFireStoreHolder extends RecyclerView.ViewHolder impleme
     ProductDetailImageItemBinding binding;
 
     boolean isEdited;
-    public ProductImageFireStoreHolder(ProductDetailImageItemBinding binding, boolean isEdited) {
+    public ProductImageFireStoreHolder(ProductDetailImageItemBinding binding) {
         super(binding.getRoot());
-        this.isEdited=isEdited;
         this.binding=binding;
 
     }

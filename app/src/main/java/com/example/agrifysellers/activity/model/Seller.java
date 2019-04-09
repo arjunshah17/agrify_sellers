@@ -3,7 +3,7 @@ package com.example.agrifysellers.activity.model;
 import com.google.firebase.firestore.DocumentReference;
 
 public class Seller {
-    private String name, profilePhotoUrl, phone,email,info;
+    private String name, profilePhotoUrl, phone,email,info,productId;
     private DocumentReference StoreProductRef,SellerProductRef,AddressRef;
 
     private float price;
@@ -111,7 +111,7 @@ public class Seller {
         this.imageCount = imageCount;
     }
 
-    public Seller(String name, String profilePhotoUrl, String phone, String email, DocumentReference storeProductRef, DocumentReference sellerProductRef, DocumentReference addressRef,  float price, int stock, int minQuantity, int maxQuantity, int imageCount,String info) {
+    public Seller(String name, String profilePhotoUrl, String phone, String email, DocumentReference storeProductRef, DocumentReference sellerProductRef, DocumentReference addressRef,  float price, int stock, int minQuantity, int maxQuantity, int imageCount,String info,String productId) {
         this.name = name;
         this.profilePhotoUrl = profilePhotoUrl;
         this.phone = phone;
@@ -125,8 +125,17 @@ this.info=info;
         this.minQuantity = minQuantity;
         this.maxQuantity = maxQuantity;
         this.imageCount = imageCount;
+        this.productId=productId;
 
 
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getInfo() {

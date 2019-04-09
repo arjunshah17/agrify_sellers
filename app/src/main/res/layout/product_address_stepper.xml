@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.github.florent37.shapeofview.shapes.CutCornerView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_6"
+        app:shape_cutCorner_topLeftSize="15dp"
+        app:shape_cutCorner_topRightSize="15dp"
+        app:shape_cutCorner_bottomLeftSize="15dp"
+        app:shape_cutCorner_bottomRightSize="15dp"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/productAddress"
+            style="@style/AppTheme.primaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="select address"/>
+
+    </com.github.florent37.shapeofview.shapes.CutCornerView>
+    />
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/productGridBackgroundColor"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
+        app:rippleColor="@color/colorPrimary"
+        app:cardUseCompatPadding="true"
+android:id="@+id/address_layout"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_6"
+                android:id="@+id/address_name_tv"
+                tools:text="home"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+
+                />
+            <TextView
+                android:id="@+id/address_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_6"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                tools:text="102,h,browun avenue maple county 2, thaltej ahmedabad,-380058"/>
+
+
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
+</layout>

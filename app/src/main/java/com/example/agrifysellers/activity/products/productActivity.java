@@ -284,6 +284,10 @@ productImageFireStoreAdapter.startListening();
     @Override
     public void onProductSelected(DocumentSnapshot store) {
         Store mStore = store.toObject(Store.class);
+        productDetails.binding.priceTextField.setHint("enter Product ₹ for per "+mStore.getUnit());
+        productDetails.binding.stockTextField.setHint("how many "+mStore.getUnit()+" of "+mStore.getName()+" you want to sell ?");
+        productDetails.binding.minQuantityTextField.setHint("set minimum "+mStore.getUnit()+" of "+mStore.getName()+ " that user can buy");
+        productDetails.binding.maxQuantityTextField.setHint("set maximum "+mStore.getUnit()+" of "+mStore.getName()+ " that user can buy");
         product_id = store.getId();
       seller.setProductId(product_id);
 
@@ -425,7 +429,7 @@ else {
     }
 
 
-DocumentReference storeRef;
+
     void InitProductFromIntent() {
 
 

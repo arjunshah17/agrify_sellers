@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <FrameLayout
@@ -34,10 +35,10 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="120dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="24dp"
-                    android:src="@drawable/logo" />
+                    android:src="@drawable/logo_head" />
 
                 <!-- Name Label -->
 
@@ -47,32 +48,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginBottom="8dp"
+                    android:textColorHint="@color/white"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email"
+                        android:textColor="@color/white"
                         android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-
-                <!-- mobile number -->
-
-
                 <!-- Password Label -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginBottom="8dp"
+                    android:textColorHint="@color/white"
+                    app:passwordToggleEnabled="true"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Password"
+                        android:textColor="@color/white"
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,13 +84,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginBottom="8dp"
+                    android:textColorHint="@color/white"
+                    app:passwordToggleEnabled="true"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_reEnterPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Re-enter Password"
+                        android:textColor="@color/white"
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,6 +116,7 @@
                     android:foreground="?attr/selectableItemBackground"
                     android:gravity="center"
                     android:text="Already a member? Login"
+                    android:textColor="@color/white"
                     android:textSize="16dip" />
 
             </LinearLayout>

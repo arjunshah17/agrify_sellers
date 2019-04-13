@@ -2,7 +2,6 @@
     <string name="app_name">Agrify Seller</string>
     <string name="store">Store</string>
     <string name="wiselist">wiselist</string>
-    <string name="chat">Chat</string>
     <string name="notification">Notification</string>
     <string name="about">Profile</string>
     <string name="username">user name</string>
@@ -75,6 +74,7 @@
     <string name="place_name">Place Name</string>
     <string name="place_address">Place Address</string>
     <string name="save_address">Save Address</string>
+    <string name="chat">Chat</string>
 
 
 </resources>

@@ -2,10 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_activity"
@@ -23,16 +20,13 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="center"
                 app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-                app:title="email verification"
-
-                />
+                app:title="email verification"/>
 
             <ProgressBar
                 android:id="@+id/progressLoading"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-
                 android:layout_gravity="top"
                 android:fadeScrollbars="true"
                 android:indeterminate="true"
@@ -42,11 +36,10 @@
         <ImageView
             android:id="@+id/ivLogLogo"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-
+            android:layout_height="120dp"
             android:layout_marginTop="150dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_head" />
 
         <TextView
             android:id="@+id/tvPWinfo"
@@ -57,15 +50,16 @@
             android:text="@string/email_verification"
             android:textAlignment="center"
             tools:layout_editor_absoluteX="0dp"
+            android:textColor="@color/white"
             tools:layout_editor_absoluteY="356dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/send_ver_Button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="send " />
+            android:layout_margin="20dp"
+            android:text="Send Email " />
 
     </LinearLayout>
 </layout>

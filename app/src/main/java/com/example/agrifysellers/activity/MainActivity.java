@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.agrifysellers.R;
+import com.example.agrifysellers.activity.ChatBot.ChatFragment;
 import com.example.agrifysellers.activity.fragments.StoreFragment;
 import com.example.agrifysellers.activity.fragments.profileFragment;
 import com.example.agrifysellers.activity.products.productTab;
@@ -21,8 +22,10 @@ public class MainActivity extends AppCompatActivity {
     StoreFragment store;
     ActivityMainBinding bind;
     profileFragment profile;
+    ChatFragment chat;
     Fragment LoadedFragment;
     productTab productTab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         store = new StoreFragment();
         profile = new profileFragment();
-       productTab=new productTab();
+        productTab = new productTab();
+        chat = new ChatFragment();
         //default load Store fragment
         LoadedFragment = store;
         loadFragment(store);
@@ -44,20 +48,17 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
 
-
                 switch (menuItem.getItemId()) {
                     case R.id.storeItem:
                         LoadedFragment = store;
                         break;
-
-                    case R.id.wishlistItem:
-
-                        break;
-
                     case R.id.productItem:
-                       LoadedFragment=productTab;
+                        LoadedFragment = productTab;
                         break;
 
+                    case R.id.chatItem:
+                        LoadedFragment = chat;
+                        break;
                     case R.id.notificationItem:
 
                         break;
@@ -65,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                         LoadedFragment = profile;
                         break;
                 }
-
                 return loadFragment(LoadedFragment);
             }
         });

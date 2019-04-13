@@ -5,16 +5,15 @@
         android:icon="@drawable/ic_store_black_24dp"
         android:title="@string/store">
     </item>
-    <item
-        android:id="@+id/wishlistItem"
-        android:icon="@drawable/ic_wiselist_black_24dp"
-        android:title="@string/wiselist">
 
-    </item>
     <item
         android:id="@+id/productItem"
         android:icon="@drawable/ic_order_24dp"
         android:title="@string/products" />
+    <item
+        android:id="@+id/chatItem"
+        android:icon="@drawable/ic_chat_black_24dp"
+        android:title="@string/chat"/>
     <item
         android:id="@+id/notificationItem"
         android:icon="@drawable/ic_notifications_black_24dp"

@@ -76,6 +76,15 @@
     <string name="save_address">Save Address</string>
     <string name="chat">Chat</string>
 
-
+    <!--onBording-->
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="opening">opening</string>
+    <string name="slide_1_title">Products</string>
+    <string name="slide_1_desc">Get various crop on our app !</string>
+    <string name="slide_2_title">Compare Rates</string>
+    <string name="slide_2_desc">Easily Compare rates of your product !</string>
+    <string name="slide_3_title">Hassle Free Payments</string>
+    <string name="slide_3_desc">You can easily pay in a minute !</string>
 </resources>
 

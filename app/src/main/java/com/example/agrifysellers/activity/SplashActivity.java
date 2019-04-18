@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.agrifysellers.activity.auth.LoginActivity;
+import com.example.agrifysellers.activity.onBordingScreen.WelcomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
@@ -17,20 +18,14 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseAuth auth = FirebaseAuth.getInstance();
-
         if (auth.getCurrentUser() == null) {
             signIn();
         } else {
-
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, WelcomeActivity.class));
             finish();
         }
-
     }
-
     private void signIn() {
         startActivity(new Intent(this, LoginActivity.class));
     }
-
-
 }

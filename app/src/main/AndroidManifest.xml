@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".activity.ChatBot.ChatBotActivity"></activity>
+        <activity android:name=".activity.onBordingScreen.WelcomeActivity"></activity>
+        <activity android:name=".activity.ChatBot.ChatBotActivity" />
         <activity android:name=".activity.address.addressListActivity" />
         <activity android:name=".activity.address.addressActivity" />
         <activity android:name=".activity.sellerProduct.SellerProductActivity" />

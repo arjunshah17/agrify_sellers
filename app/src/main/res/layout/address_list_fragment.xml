@@ -32,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_weight="1"
                 android:visibility="gone"
                 android:layout_centerInParent="true"
                 >
@@ -45,7 +46,6 @@
                     />
 
                 <com.airbnb.lottie.LottieAnimationView
-
                     android:id="@+id/animation_view"
                     android:layout_width="match_parent"
 
@@ -58,14 +58,14 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:id="@+id/address_List_rv"
-                android:layout_weight="15"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"/>
 
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:id="@+id/address_button"
                 android:padding="@dimen/dp_12"
                 android:layout_margin="@dimen/dp_12"

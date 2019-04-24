@@ -137,26 +137,34 @@
                                         </TableRow>
 
                                         <TableRow>
-
-                                            <Spinner
-                                                android:id="@+id/order_status"
-                                                style="@style/Widget.AppCompat.Light.DropDownItem.Spinner"
-
-                                               android:layout_width="match_parent"
-                                                android:layout_height="wrap_content" />
-
                                             <TextView
                                                 style="@style/TextAppearance.AppCompat.Subhead"
                                                 android:layout_margin="@dimen/dp_3"
                                                 android:text="status"
                                                 android:textAllCaps="true" />
+                                            <Spinner
+                                                android:id="@+id/order_status"
+                                                style="@style/Widget.AppCompat.Light.DropDownItem.Spinner"
+
+
+                                               android:layout_width="match_parent"
+                                                android:layout_height="wrap_content" />
+
+
                                         </TableRow>
 
                                         <TableRow>
+
+
+                                            <TextView
+                                                style="@style/TextAppearance.AppCompat.Subhead"
+                                                android:layout_margin="@dimen/dp_3"
+                                                android:text="payment mode"
+                                                android:textAllCaps="true" />
                                             <LinearLayout
                                                 android:layout_width="match_parent"
 
-                                              android:layout_height="wrap_content"
+                                                android:layout_height="wrap_content"
                                                 android:layout_margin="@dimen/dp_3">
 
                                                 <ImageView
@@ -175,12 +183,6 @@
 
 
                                             </LinearLayout>
-
-                                            <TextView
-                                                style="@style/TextAppearance.AppCompat.Subhead"
-                                                android:layout_margin="@dimen/dp_3"
-                                                android:text="payment mode"
-                                                android:textAllCaps="true" />
 
                                         </TableRow>
 

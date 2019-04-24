@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_background"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".activity.order.OrderListFragment">
+
+        <LinearLayout
+            android:id="@+id/animation_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="you have not ordered any thing"
+                android:textAllCaps="true"
+                android:textColor="@color/secondaryColor"
+                android:textStyle="bold"
+                android:typeface="monospace" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/dp_12"
+                android:text="load up with fresh vegitables and friuts"
+                android:textColor="@color/secondaryColor" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_view"
+                android:layout_width="400dp"
+                android:layout_height="350dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dp_6"
+                android:layout_marginTop="200dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/no_order" />
+
+
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+
+            >
+
+            <LinearLayout
+                style="@style/Widget.Shrine.Backdrop"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="100dp"
+                android:paddingBottom="100dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/grey_background">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/order_recycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp_6"
+
+                    android:nestedScrollingEnabled="true"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+                    android:id="@+id/shimmerRecyclerView"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp_6"
+                    app:shimmer_demo_angle="20"
+                    app:shimmer_demo_child_count="10"
+
+                    app:shimmer_demo_grid_child_count="10"
+                    app:shimmer_demo_layout="@layout/cart_item_loading" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

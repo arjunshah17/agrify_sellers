@@ -73,7 +73,7 @@
                             android:textStyle="bold"
                             app:backgroundTint="@color/white"
                             app:cornerRadius="25dp"
-                            app:strokeColor="@color/borderBottomColor"
+                            app:strokeColor="@color/colorPrimary"
                             app:strokeWidth="1dp" />
                     </LinearLayout>
 

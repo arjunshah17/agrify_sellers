@@ -6,8 +6,8 @@ public class Seller {
     private String name, profilePhotoUrl, phone,email,info,productId;
     private DocumentReference StoreProductRef,SellerProductRef,AddressRef;
 
-    private float price;
-    private int stock,minQuantity,maxQuantity,imageCount;
+    private float price,ratingCount;
+    private int stock,minQuantity,maxQuantity,imageCount,orderCount;
 
 
 
@@ -111,7 +111,7 @@ public class Seller {
         this.imageCount = imageCount;
     }
 
-    public Seller(String name, String profilePhotoUrl, String phone, String email, DocumentReference storeProductRef, DocumentReference sellerProductRef, DocumentReference addressRef,  float price, int stock, int minQuantity, int maxQuantity, int imageCount,String info,String productId) {
+    public Seller(String name, String profilePhotoUrl, String phone, String email, DocumentReference storeProductRef, DocumentReference sellerProductRef, DocumentReference addressRef,  float price, int stock, int minQuantity, int maxQuantity, int imageCount,String info,String productId,float ratingCount,int orderCount) {
         this.name = name;
         this.profilePhotoUrl = profilePhotoUrl;
         this.phone = phone;
@@ -126,8 +126,26 @@ this.info=info;
         this.maxQuantity = maxQuantity;
         this.imageCount = imageCount;
         this.productId=productId;
+        this.ratingCount=ratingCount;
+        this.orderCount=orderCount;
 
 
+    }
+
+    public int getOrderCount() {
+        return orderCount;
+    }
+
+    public void setOrderCount(int orderCount) {
+        this.orderCount = orderCount;
+    }
+
+    public float getRatingCount() {
+        return ratingCount;
+    }
+
+    public void setRatingCount(float ratingCount) {
+        this.ratingCount = ratingCount;
     }
 
     public String getProductId() {

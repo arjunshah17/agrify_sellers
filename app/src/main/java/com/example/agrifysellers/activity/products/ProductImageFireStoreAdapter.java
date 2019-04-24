@@ -10,7 +10,12 @@ import androidx.databinding.DataBindingUtil;
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.adapter.FirestoreAdapter;
 import com.example.agrifysellers.databinding.ProductDetailImageItemBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ProductImageFireStoreAdapter extends FirestoreAdapter<ProductImageFireStoreHolder> {
 
@@ -31,9 +36,22 @@ Activity activity;
         return super.getItemCount();
     }
 
-    void removeImage(int pos)
+    void removeImage(int pos,String productId)
     {
+        FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+      String url=getSnapshot(pos).getString("imagePath");
 
+        StorageReference storageRef =  storageRef = FirebaseStorage.getInstance().getReference();
+
+
+        final StorageReference ref = storageRef.child("storeProductImage").child(productId).child(auth.getCurrentUser().getUid()).child(productId).child(url);
+        ref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                getSnapshot(pos).getReference().delete();
+            }
+        });
     }
 
 

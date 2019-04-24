@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.adapter.TabAdapter;
+import com.example.agrifysellers.activity.order.OrderListFragment;
 import com.example.agrifysellers.databinding.FragmentProductTabBinding;
 
 /**
@@ -25,13 +26,13 @@ public class productTab extends Fragment {
     }
     private TabAdapter adapter;
 FragmentProductTabBinding binding;
-orderFragment order;
+OrderListFragment order;
 productListFragment product;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        order=new orderFragment();
+        order=new OrderListFragment();
         product=new productListFragment();
         adapter = new TabAdapter(getChildFragmentManager());
 

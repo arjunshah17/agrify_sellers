@@ -12,7 +12,12 @@
     <string name="phone_hint">Phone Number</string>
 
     <string name="changeProfile">Change Profile</string>
-
+    <string-array name="orderStatus_spinner">
+        <item>pending</item>
+        <item>conform</item>
+        <item>Completed</item>
+<item>Refunded</item>
+    </string-array>
     <string-array name="categories_spinner">
         <item>select category</item>
         <item>fruits</item>

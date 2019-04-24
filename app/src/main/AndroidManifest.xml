@@ -28,6 +28,8 @@
         <activity android:name=".activity.products.productActivity" />
         <activity android:name=".activity.auth.authVerification" />
         <activity android:name=".activity.StoreDetailActivity" />
+        <activity android:name=".activity.order.OrderDetailActivity" />
+
         <activity
             android:name=".activity.editProfile"
             android:label="@string/title_activity_edit_profile" />
@@ -47,9 +49,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.zfdang.multiple_images_selector.ImagesSelectorActivity"
-            android:configChanges="orientation|screenSize" />
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

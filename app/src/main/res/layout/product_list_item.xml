@@ -13,36 +13,138 @@
     </data>
 
 <com.google.android.material.card.MaterialCardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/productGridBackgroundColor"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="2dp"
+  style="@style/materialCard"
+
   >
 
 
 
-<com.ramotion.foldingcell.FoldingCell
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-bind:backSideColor="@color/productGridBackgroundColor"
-    folding-cell:additionalFlipsCount="2"
-    folding-cell:cameraHeight="40"
-    
-    folding-cell:animationDuration="1000"
-    android:id="@+id/product_folding_cell">
-  <include
-      android:id="@+id/product_content_layout"
-      layout="@layout/product_list_item_content"
-     />
-    <include
-        android:id="@+id/product_title_layout"
-        layout="@layout/product_list_item_title"
-        />
 
 
-</com.ramotion.foldingcell.FoldingCell>
+    <LinearLayout android:id="@+id/product_tile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="@drawable/item_ripple_effect"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/product_name"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/dp_6"
+                android:text="@{product.name}"
+
+                tools:text="wheat"/>
+            <com.github.florent37.shapeofview.shapes.RoundRectView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+
+                android:layout_gravity="center_horizontal"
+
+                app:shape_roundRect_bottomLeftRadius="@dimen/dp_12"
+                app:shape_roundRect_bottomRightRadius="@dimen/dp_12"
+                app:shape_roundRect_topLeftRadius="@dimen/dp_12"
+                app:shape_roundRect_topRightRadius="@dimen/dp_12">
+                <ImageView
+                    android:id="@+id/product_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/add_photo"/>
+            </com.github.florent37.shapeofview.shapes.RoundRectView>
+
+        </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/product_price"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/dp_6"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="₹ 200 " />
+
+            <TextView
+
+                android:id="@+id/textView4"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="27dp"
+                android:text="STOCK"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/product_quantity"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="9dp"
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                tools:text="9000 kg" />
+
+            <TextView
+
+                android:id="@+id/textView2"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="9dp"
+                android:text="ORDERS"
+                app:layout_constraintBottom_toTopOf="@+id/product_order"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.869"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+
+                android:id="@+id/product_order"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+
+               android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                tools:text="2000000" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
 </com.google.android.material.card.MaterialCardView>
 </layout>

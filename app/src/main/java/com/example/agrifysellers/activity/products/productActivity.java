@@ -1,12 +1,13 @@
 package com.example.agrifysellers.activity.products;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +25,9 @@ import com.example.agrifysellers.activity.address.model.Address;
 import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.activity.model.Store;
 import com.example.agrifysellers.databinding.ActivityProductBinding;
-import com.github.gabrielbb.cutout.CutOut;
+import com.fxn.pix.Options;
+import com.fxn.pix.Pix;
+import com.fxn.utility.PermUtil;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,6 +44,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -193,7 +197,8 @@ productImageFireStoreAdapter.startListening();
     }
 
     private void loadImages() {
-        CutOut.activity().start(this);
+      //  CutOut.activity().start(this);
+        Pix.start(productActivity.this, Options.init().setCount(5) .setFrontfacing(false) .setRequestCode(REQUEST_CODE));
     }
 
     @Override
@@ -207,10 +212,12 @@ productImageFireStoreAdapter.startListening();
 
                 seller = task.getResult().toObject(Seller.class);
                 if(isEdited) {
+                    assert seller != null;
                     seller.setImageCount(productImageFireStoreAdapter.getItemCount() + productImageAdapter.getItemCount());
                 }
                 else {
 
+                    assert seller != null;
                     seller.setImageCount(productImageAdapter.getItemCount());
                 }
 
@@ -253,13 +260,19 @@ productImageFireStoreAdapter.startListening();
 
                 if (imageUploaded) {
                     uploadImage();
+
                 }
-                sellerCount = sellerCount + 1;
+                if(!isEdited) {
+
+                    sellerCount = sellerCount + 1;
+
+                    batch.update(storeProduct, "sellerCount", sellerCount);
+                }
                 Price = documentSnapshot.getDouble("price").floatValue();
                 if (seller.getPrice() < Price || Price == 0) {
                     batch.update(storeProduct, "price", seller.getPrice());
                 }
-                batch.update(storeProduct, "sellerCount", sellerCount);
+
                 batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -322,27 +335,31 @@ productImageFireStoreAdapter.startListening();
 
     }
 
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == CutOut.CUTOUT_ACTIVITY_REQUEST_CODE) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
 
-            switch (resultCode) {
-                case Activity.RESULT_OK:
-                    imageUploaded = true;
-                    imageUrl.add(CutOut.getUri(data));
-                        productImageAdapter.notifyDataSetChanged();
-
+          if(resultCode==RESULT_OK)
+            {
+                ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
 
 
+                for(String result : returnValue) {
+                    imageUrl.add(Uri.fromFile(new File(result)));
+                }
+                imageUploaded = true;
 
-                    // Save the image using the returned Uri here
-                    break;
-                case CutOut.CUTOUT_ACTIVITY_RESULT_ERROR_CODE:
-                    Exception ex = CutOut.getError(data);
-                    break;
-                default:
-                    System.out.print("User cancelled the CutOut screen");
+                productImageAdapter.notifyDataSetChanged();
+
+
+                // Save the image using the returned Uri here
             }
+
+
         }
     }
 int count;
@@ -403,7 +420,17 @@ else {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        int count = item.getGroupId();
+        int pos = item.getGroupId();
+        if(item.getItemId()==1)
+        {
+            imageUrl.remove(pos);
+            productImageAdapter.notifyDataSetChanged();
+        }
+        if(item.getItemId()==2)
+        {
+            productImageFireStoreAdapter.removeImage(pos,product_id);
+
+        }
 
         return true;
     }
@@ -497,6 +524,20 @@ else {
             productImageFireStoreAdapter.stopListening();
         }
 
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Pix.start(productActivity.this, Options.init().setRequestCode(REQUEST_CODE));
+                } else {
+                    Toast.makeText(getApplicationContext(), "Approve permissions to open Pix ImagePicker", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
     }
 
 }

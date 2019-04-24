@@ -67,8 +67,7 @@ public class ProductImageAdapter extends RecyclerView.Adapter<ProductImageAdapte
 
     void removeImage(int pos)
     {
-       urlList.remove(pos);
-       notifyDataSetChanged();
+
     }
 
 }

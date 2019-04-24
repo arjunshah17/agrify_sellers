@@ -24,11 +24,12 @@ public class ProductImageFireStoreHolder extends RecyclerView.ViewHolder impleme
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.add(getAdapterPosition(),1,1,"remove");
+        menu.add(getAdapterPosition(),2,1,"remove");
     }
 
     public void bind(DocumentSnapshot snapshot, Activity activity) {
         String url=snapshot.getString("url");
+
 
         if (activity != null && url!=null) {
             GlideApp.with(activity)
@@ -36,6 +37,7 @@ public class ProductImageFireStoreHolder extends RecyclerView.ViewHolder impleme
                     .into(binding.productImageView);
 
         }
+        itemView.setOnCreateContextMenuListener(this);
 
     }
 }

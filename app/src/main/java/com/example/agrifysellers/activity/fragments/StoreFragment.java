@@ -221,7 +221,7 @@ public class StoreFragment extends Fragment implements StoreAdapter.OnStoreSelec
 
         ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), SharedView, transitionName);
         startActivity(intent, transitionActivityOptions.toBundle());
-        Bungee.inAndOut(getActivity());
+
     }
 
     @Override

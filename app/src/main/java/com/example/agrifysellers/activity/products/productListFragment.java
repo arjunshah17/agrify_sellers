@@ -1,6 +1,7 @@
 package com.example.agrifysellers.activity.products;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.agrifysellers.R;
+import com.example.agrifysellers.activity.model.Seller;
+import com.example.agrifysellers.activity.sellerProduct.SellerProductActivity;
 import com.example.agrifysellers.databinding.FragmentProductListBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -83,7 +87,21 @@ String TAG="productListFragment()";
     }
 
     @Override
-    public void onProductSelected(DocumentSnapshot store, View SharedView) {
+    public void onProductSelected(DocumentSnapshot doc, View SharedView) {
+        Seller seller=doc.toObject(Seller.class);
+
+        //  product_ref=firebaseFirestore.collection("store").document(product_id).collection("sellerList").document( seller.getId());
+        Intent intent=new Intent(getContext(), SellerProductActivity.class);
+
+        intent.putExtra("seller_id",seller.getSellerId());
+        intent.putExtra("product_id",seller.getProductId());
+        String transitionName = getString(R.string.store_product_transition);
+
+        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), SharedView, transitionName);
+        startActivity(intent, transitionActivityOptions.toBundle());
+
+
+
 
     }
     @Override
@@ -113,8 +131,8 @@ String TAG="productListFragment()";
                productListAdapter.edit(item.getGroupId());
                 return true;
             case 2:
+productListAdapter.manage(item.getGroupId());
 
-               productListAdapter.delete(item.getGroupId());
                 return true;
             default:
                 return super.onContextItemSelected(item);

@@ -59,7 +59,7 @@ public class ProductListViewHolder extends RecyclerView.ViewHolder implements Vi
                             .load(store.getProductImageUrl())
                             .into(binding.productImage);
                 }
-
+binding.productOrder.setText(String.valueOf(seller.getOrderCount()));
                         binding.productQuantity.setText(String.valueOf(seller.getStock()));
 
                     binding.productPrice.setText("₹" + NumberFormat.getInstance().format(seller.getPrice()) + "/" + store.getUnit());
@@ -68,7 +68,13 @@ public class ProductListViewHolder extends RecyclerView.ViewHolder implements Vi
 
         });
 
-
+itemView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        View SharedView = binding.productImage;
+        listener.onProductSelected(snapshot,SharedView);
+    }
+});
 
 
 
@@ -80,8 +86,7 @@ public class ProductListViewHolder extends RecyclerView.ViewHolder implements Vi
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         menu.setHeaderTitle("select an option");
         menu.add(getAdapterPosition(),1,1,"edit");
-        menu.add(getAdapterPosition(),2,2,"remove");
-        menu.add(getAdapterPosition(),3,3,"update stock");
+        menu.add(getAdapterPosition(),2,2,"manage");
 
 
     }

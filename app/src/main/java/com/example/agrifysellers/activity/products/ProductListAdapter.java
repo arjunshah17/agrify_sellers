@@ -200,4 +200,12 @@ firebaseFirestore.collection("store").document(productId).collection("sellerList
         activity.startActivity(intent);
 
     }
+    public void manage (int pos)
+    {
+        Intent intent=new Intent(activity,productManage.class);
+        String sellerId=getSnapshot(pos).getString("sellerId");
+        intent.putExtra("seller_id",sellerId);
+        intent.putExtra("product_id",getSnapshot(pos).getString("productId"));
+        activity.startActivity(intent);
+    }
 }

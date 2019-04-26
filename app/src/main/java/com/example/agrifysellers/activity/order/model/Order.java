@@ -1,5 +1,8 @@
 package com.example.agrifysellers.activity.order.model;
 
+import android.content.Context;
+
+import com.example.agrifysellers.R;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -120,5 +123,14 @@ public class Order {
 
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
+    }
+    public int getValFromOrderStatus(Context context) {
+        String[] arr = context.getResources().getStringArray(R.array.orderStatus_spinner);
+        for (int i = 0; i < arr.length; i++) {
+            if (orderStatus.equals(arr[i])) {
+                return i;
+            }
+        }
+        return 0;
     }
 }

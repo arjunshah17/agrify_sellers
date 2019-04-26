@@ -216,7 +216,7 @@ productImageFireStoreAdapter.startListening();
                     seller.setImageCount(productImageFireStoreAdapter.getItemCount() + productImageAdapter.getItemCount());
                 }
                 else {
-
+                    seller.setAvalibity(true);
                     assert seller != null;
                     seller.setImageCount(productImageAdapter.getItemCount());
                 }
@@ -229,6 +229,7 @@ productImageFireStoreAdapter.startListening();
                 seller.setInfo(productDetails.binding.productDesEditText.getText().toString());
                 seller.setProductId(product_id);
 
+
               if(!isEdited) {
                     SellerProductRef = firebaseFirestore.collection("Sellers").document(Auth.getCurrentUser().getUid()).collection("productList").document(seller.getProductId());
                     storeProductRef =  firebaseFirestore.collection("store").document(seller.getProductId()).collection("sellerList").document(Auth.getCurrentUser().getUid());
@@ -237,6 +238,7 @@ productImageFireStoreAdapter.startListening();
                 seller.setSellerProductRef(SellerProductRef);
                 seller.setStoreProductRef(storeProductRef);
                 seller.setAddressRef(addressRef);
+                seller.setSellerId(Auth.getUid());
 
                 StoreData();
             }

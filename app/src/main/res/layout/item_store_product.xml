@@ -34,6 +34,7 @@
                 app:shape_roundRect_bottomLeftRadius="@dimen/dp_12"
                 app:shape_roundRect_bottomRightRadius="@dimen/dp_12"
                 app:shape_roundRect_topLeftRadius="@dimen/dp_12"
+                android:transitionName="@string/store_product_transition"
                 app:shape_roundRect_topRightRadius="@dimen/dp_12">
                 <ImageView
                     android:id="@+id/product_image"
@@ -41,7 +42,7 @@
                     android:layout_height="200dp"
                     android:layout_gravity="center"
                     android:scaleType="fitCenter"
-                    android:transitionName="@string/store_product_transition" />
+                    />
             </com.github.florent37.shapeofview.shapes.RoundRectView>
 
             <RelativeLayout

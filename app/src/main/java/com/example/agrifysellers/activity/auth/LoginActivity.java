@@ -191,11 +191,11 @@ public class LoginActivity extends AppCompatActivity {
     private void showProgressDialog(Boolean state) {
 
 
-        if (state) {
-            binding.progressLoading.setVisibility(View.VISIBLE);
-        } else {
-            binding.progressLoading.setVisibility(View.INVISIBLE);
-        }
+//        if (state) {
+//            binding.progressLoading.setVisibility(View.VISIBLE);
+//        } else {
+//            binding.progressLoading.setVisibility(View.INVISIBLE);
+//        }
     }
 
 

@@ -3,9 +3,9 @@ package com.example.agrifysellers.activity.model;
 import com.google.firebase.firestore.DocumentReference;
 
 public class Seller {
-    private String name, profilePhotoUrl, phone,email,info,productId;
+    private String name, profilePhotoUrl, phone,email,info,productId,sellerId;
     private DocumentReference StoreProductRef,SellerProductRef,AddressRef;
-
+boolean avalibity;
     private float price,ratingCount;
     private int stock,minQuantity,maxQuantity,imageCount,orderCount;
 
@@ -111,7 +111,15 @@ public class Seller {
         this.imageCount = imageCount;
     }
 
-    public Seller(String name, String profilePhotoUrl, String phone, String email, DocumentReference storeProductRef, DocumentReference sellerProductRef, DocumentReference addressRef,  float price, int stock, int minQuantity, int maxQuantity, int imageCount,String info,String productId,float ratingCount,int orderCount) {
+    public boolean isAvalibity() {
+        return avalibity;
+    }
+
+    public void setAvalibity(boolean avalibity) {
+        this.avalibity = avalibity;
+    }
+
+    public Seller(String name, String profilePhotoUrl, String phone, String email, DocumentReference storeProductRef, DocumentReference sellerProductRef, DocumentReference addressRef, float price, int stock, int minQuantity, int maxQuantity, int imageCount, String info, String productId, float ratingCount, int orderCount, String sellerId, boolean avalibity) {
         this.name = name;
         this.profilePhotoUrl = profilePhotoUrl;
         this.phone = phone;
@@ -123,11 +131,13 @@ this.info=info;
         this.price = price;
         this.stock = stock;
         this.minQuantity = minQuantity;
+        this.avalibity=avalibity;
         this.maxQuantity = maxQuantity;
         this.imageCount = imageCount;
         this.productId=productId;
         this.ratingCount=ratingCount;
         this.orderCount=orderCount;
+        this.sellerId=sellerId;
 
 
     }
@@ -164,4 +174,11 @@ this.info=info;
         this.info = info;
     }
 
+    public String getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
+    }
 }

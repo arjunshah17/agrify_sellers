@@ -7,6 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey_background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.products.productListFragment">
 
@@ -14,8 +15,7 @@
 <androidx.recyclerview.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginRight="@dimen/dp_12"
-    android:layout_marginLeft="@dimen/dp_12"
+
     android:id="@+id/product_list_rv"/>
 
 

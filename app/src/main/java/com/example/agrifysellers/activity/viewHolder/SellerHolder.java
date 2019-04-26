@@ -2,23 +2,28 @@ package com.example.agrifysellers.activity.viewHolder;
 
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agrifysellers.activity.GlideApp;
+import com.example.agrifysellers.activity.Utils.RatingUtils;
 import com.example.agrifysellers.activity.adapter.SellerAdapter;
 import com.example.agrifysellers.activity.model.Seller;
+import com.example.agrifysellers.activity.order.model.Rating;
 import com.example.agrifysellers.databinding.ItemSellerBinding;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
 
 public class SellerHolder extends RecyclerView.ViewHolder {
     public FirebaseFirestore db;
@@ -33,19 +38,38 @@ public class SellerHolder extends RecyclerView.ViewHolder {
     }
     public void bind(final DocumentSnapshot snapshot, final Activity activity, SellerAdapter.OnSellerSelectedListener listener) {
         auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        seller = snapshot.toObject(Seller.class);
+        binding.setSeller(seller);
+        binding.price.setText("₹" + NumberFormat.getInstance().format(seller.getPrice()));
+        phoneNumber = seller.getPhone();
+        // Load image
+        if (activity != null) {
+            GlideApp.with(activity)
+                    .load(seller.getProfilePhotoUrl())
+                    .into(binding.profilePhoto);
+        }
 
-                seller = snapshot.toObject(Seller.class);
-                binding.setSeller(seller);
-                binding.price.setText("₹"  + String.valueOf(seller.getPrice()));
-                phoneNumber = seller.getPhone();
-                // Load image
-                if (activity != null) {
-                    GlideApp.with(activity)
-                            .load(seller.getProfilePhotoUrl())
-                            .into(binding.profilePhoto);
+        db.document(seller.getSellerProductRef().getPath()).collection("ratingList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    try {
+                        ArrayList<Rating> ratings = new ArrayList<>();
+                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+
+                            ratings.add(documentSnapshot.toObject(Rating.class));
+                        }
+                        binding.Rating.setRating((float) RatingUtils.getAverageRating(ratings));
+                        binding.NumRatings.setText("(" + ratings.size() + ")");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
 
-
+            }
+        });
         Resources resources = itemView.getResources();
 
 

@@ -133,10 +133,11 @@ public class OrderDetailActivity extends AppCompatActivity{
                         binding.orderId.setText(order.getOrderId());
                         binding.orderDate.setText(simpleDateFormat.format(order.getTimestamp().toDate()));
 //                        binding.orderStatus.setText(order.getOrderStatus());
+                        binding.orderStatus.setSelection(order.getValFromOrderStatus(getApplicationContext()));
                         binding.addressNameTv.setText(order.getUserAddressname());
                         binding.addressLocation.setText(order.getUserHouseNum() + order.getUserLocation());
                         binding.totalAmount.setText("₹"+NumberFormat.getInstance().format(order.getTotalAmount()));
-                        initSellerDetails();
+                        initUsersDetails();
 
                     }
                 } catch (Exception ex) {
@@ -166,12 +167,12 @@ public class OrderDetailActivity extends AppCompatActivity{
         }
     }
 
-    void initSellerDetails() {
-       firebaseFirestore.collection("Sellers").document( order.getSellerId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+    void initUsersDetails() {
+       firebaseFirestore.collection("Users").document( order.getUserId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
            @Override
            public void onSuccess(DocumentSnapshot snapshot) {
-                seller=snapshot.toObject(Seller.class);
-               binding.userName.setText(seller.getName());
+                User user=snapshot.toObject(User.class);
+               binding.userName.setText(user.getName());
                binding.downloadInvoice.setOnClickListener(v -> {
                    DownloadInvoice();
                });
@@ -179,7 +180,7 @@ public class OrderDetailActivity extends AppCompatActivity{
 
 
                    GlideApp.with(getApplicationContext())
-                           .load(seller.getProfilePhotoUrl())
+                           .load(user.getProfilePhotoUrl())
                            .into(binding.profilePhoto);
                } catch (Exception ex) {
 
@@ -187,7 +188,7 @@ public class OrderDetailActivity extends AppCompatActivity{
 
                binding.call.setOnClickListener(v -> {
                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                   callIntent.setData(Uri.parse("tel:" + seller.getPhone()));
+                   callIntent.setData(Uri.parse("tel:" + user.getPhone()));
                    try {
 
 
@@ -199,7 +200,7 @@ public class OrderDetailActivity extends AppCompatActivity{
                });
                binding.email.setOnClickListener(v -> {
                    Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                   emailIntent.setData(Uri.parse("mailto:" + seller.getEmail()));
+                   emailIntent.setData(Uri.parse("mailto:" + user.getEmail()));
                    try {
 
 

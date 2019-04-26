@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<include android:id="@+id/progress_bar_layout"
+    layout="@layout/circle_progressbar"/>
+        <RelativeLayout
+            android:id="@+id/main_layout"
+            style="@style/Platform.MaterialComponents.Light"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/curve_background_secondary_color"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                style="@style/Widget.Shrine.Backdrop"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="100dp"
+                android:paddingBottom="100dp" />
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/appbarlayout"
+                android:background="@drawable/store_item_background"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+
+                    android:orientation="vertical">
+
+                    <androidx.core.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+   android:orientation="vertical"
+    android:layout_height="match_parent"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:id="@+id/stock_head_textview"
+     android:text="current stock"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        style="@style/TextAppearance.MaterialComponents.Headline3"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/stock_textview"
+        tools:text="122324/kg"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        style="@style/TextAppearance.MaterialComponents.Headline4"
+        />
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    android:layout_margin="@dimen/dp_12"
+        >
+<TableRow
+    android:layout_width="match_parent"
+    >
+
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="update stock"
+
+        android:layout_marginRight="@dimen/dp_12"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        />
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:padding="0dp"
+
+            android:id="@+id/decrement"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:textStyle="bold"
+            android:text="—"/>
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/stock_editText"
+            android:inputType="numberSigned"
+
+            />
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:padding="0dp"
+            android:id="@+id/increment"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:textStyle="bold"
+            android:text="+"/>
+</TableRow>
+
+    <TableRow>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="availability"
+            android:layout_marginRight="@dimen/dp_12"
+            style="@style/TextAppearance.MaterialComponents.Headline6"/>
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/avalibity_switch"
+
+            />
+    </TableRow>
+    </TableLayout>
+
+</LinearLayout>
+
+
+                    </androidx.core.widget.NestedScrollView>
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbarlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+
+                app:elevation="0dp">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/app_bar"
+                    style="@style/Widget.Shrine.Toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="center"
+                    android:tooltipText="back"
+                    app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+                    app:title="product details" />
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

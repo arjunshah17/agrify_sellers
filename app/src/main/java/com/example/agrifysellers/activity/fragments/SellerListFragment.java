@@ -1,14 +1,13 @@
 package com.example.agrifysellers.activity.fragments;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -18,12 +17,9 @@ import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.activity.sellerProduct.SellerProductActivity;
 import com.example.agrifysellers.databinding.SellerlistfragmentBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import java.io.Serializable;
 
 public class SellerListFragment extends BottomSheetDialogFragment implements SellerAdapter.OnSellerSelectedListener {
     String product_id;
@@ -57,7 +53,32 @@ public class SellerListFragment extends BottomSheetDialogFragment implements Sel
 
         binding = DataBindingUtil.inflate(inflater, R.layout.sellerlistfragment, container,
                 false);
-getSellerList();
+        getSellerList();
+        binding.serachView.setQueryHint("Search");
+        binding.serachView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                Query queryName;
+                if (query != null) {
+                    queryName = firebaseFirestore.collection("store").document(product_id).collection("sellerList").orderBy("name").startAt(query.toLowerCase()).endAt(query.toLowerCase() + "\uf8ff");
+                    mAdapter.setQuery(queryName);
+
+                }
+                return false;
+            }
+        });
+        binding.serachView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                mAdapter.setQuery(mQuery);
+                return false;
+            }
+        });
         return binding.getRoot();
 
     }
@@ -94,11 +115,13 @@ getSellerList();
     public void onSellerSelected(DocumentSnapshot seller, View SharedView) {
         Seller selectedSeller=seller.toObject(Seller.class);
 
-      //  product_ref=firebaseFirestore.collection("store").document(product_id).collection("sellerList").document( seller.getId());
+        //  product_ref=firebaseFirestore.collection("store").document(product_id).collection("sellerList").document( seller.getId());
         Intent intent=new Intent(getContext(), SellerProductActivity.class);
 
-          intent.putExtra("seller_id",seller.getId());
-          intent.putExtra("product_id",product_id);
-          startActivity(intent);
+        intent.putExtra("seller_id",seller.getId());
+        intent.putExtra("product_id",product_id);
+        dismiss();
+        startActivity(intent);
     }
+
 }

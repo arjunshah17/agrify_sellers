@@ -18,7 +18,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/bgHeader"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/header_login"
             android:elevation="5dp" />
 
@@ -29,7 +29,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="40dp"
             android:elevation="5dp"
-            android:text="Welcome to apps"
+            android:text="Welcome to agrify sellers"
             android:textColor="@color/colorWhite"
             android:textSize="17sp" />
 
@@ -227,8 +227,9 @@ app:buttonGradientEndColor="#A5CC82"
 
                 <life.sabujak.roundedbutton.RoundedButton
                     android:id="@+id/signin_google"
-                    android:layout_width="match_parent"
-                    android:layout_margin="@dimen/dp_20"
+                    android:layout_width="wrap_content"
+            android:gravity="center_horizontal"
+                    android:layout_centerHorizontal="true"
                     android:layout_height="wrap_content"
 android:drawableLeft="@drawable/googleg_standard_color_18"
 app:buttonGradientStartColor="#9796f0"

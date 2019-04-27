@@ -17,6 +17,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.text.NumberFormat;
 
@@ -34,6 +35,8 @@ public class productManage extends AppCompatActivity {
     FirebaseAuth auth;
     int stock;
     DocumentReference sellerRef;
+    DocumentReference storeSellerRef;
+    WriteBatch batch;
     Seller seller;
     ActivityProductManageBinding binding;
     @Override
@@ -46,9 +49,12 @@ public class productManage extends AppCompatActivity {
             seller_id = getIntent().getStringExtra("seller_id");
             Log.i("product_id", product_id);
             Log.i("seller_id", seller_id);
-            firebaseFirestore = FirebaseFirestore.getInstance();
-            auth = FirebaseAuth.getInstance();
+
         }
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        batch=firebaseFirestore.batch();
+        storeSellerRef=firebaseFirestore.collection("store").document(product_id).collection("sellerList").document(auth.getUid());
         sellerRef = firebaseFirestore.collection("Sellers").document(auth.getUid()).collection("productList").document(product_id);
         sellerRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -62,10 +68,12 @@ public class productManage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-if(isInternetConnected(getApplicationContext()))
-
-                    sellerRef.update("stock", FieldValue.increment(Integer.parseInt(binding.stockEditText.getText().toString())));
-
+if(isInternetConnected(getApplicationContext())) {
+    batch=firebaseFirestore.batch();
+    batch.update(sellerRef, "stock", FieldValue.increment(Integer.parseInt(binding.stockEditText.getText().toString())));
+  batch.update(storeSellerRef,"stock", FieldValue.increment(Integer.parseInt(binding.stockEditText.getText().toString())));
+  batch.commit();
+}
                 }
                 catch (Exception e)
                 {
@@ -81,7 +89,11 @@ if(isInternetConnected(getApplicationContext()))
 if(isInternetConnected(getApplicationContext()))
                     {
                         if (Integer.parseInt(binding.stockEditText.getText().toString()) < seller.getStock())
-                            sellerRef.update("stock", FieldValue.increment(-Integer.parseInt(binding.stockEditText.getText().toString())));
+                        {batch=firebaseFirestore.batch();
+                            batch.update(sellerRef, "stock", FieldValue.increment(- Integer.parseInt(binding.stockEditText.getText().toString())));
+                            batch.update(storeSellerRef,"stock", FieldValue.increment(- Integer.parseInt(binding.stockEditText.getText().toString())));
+                            batch.commit();
+                        }
                         else Toasty.error(getApplicationContext(),"decremented value must be less stock");
                     }
 
@@ -98,10 +110,13 @@ if(isInternetConnected(getApplicationContext()))
             public void onClick(View v) {
 
                 try {
-if(isInternetConnected(getApplicationContext()))
+if(isInternetConnected(getApplicationContext())) {
+    batch=firebaseFirestore.batch();
+    batch.update(storeSellerRef,"avalibity", binding.avalibitySwitch.isChecked());
+    batch.update(sellerRef,"avalibity", binding.avalibitySwitch.isChecked());
+    batch.commit();
 
-
-                    sellerRef.update("avalibity", binding.avalibitySwitch.isChecked());
+}
 else binding.avalibitySwitch.setChecked(!binding.avalibitySwitch.isChecked());
 
                 }

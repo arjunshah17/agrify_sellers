@@ -39,34 +39,41 @@ public class ProductListViewHolder extends RecyclerView.ViewHolder implements Vi
     public void bind(final DocumentSnapshot snapshot,
                      final ProductListAdapter.OnProductSelectedListner listener, final Activity activity, String TAG)
     {
-
-          Seller seller=snapshot.toObject(Seller.class);
-
-
+try {
+    Seller seller = snapshot.toObject(Seller.class);
 
 
-        auth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+    auth = FirebaseAuth.getInstance();
+    db = FirebaseFirestore.getInstance();
 
-        DocumentReference docRef = db.collection("store").document(snapshot.getId());
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snap, @Nullable FirebaseFirestoreException e) {
-                Store store = snap.toObject(Store.class);
-                binding.productName.setText(store.getName());
-                if (activity != null && store.getProductImageUrl() != null) {
-                    GlideApp.with(activity)
-                            .load(store.getProductImageUrl())
-                            .into(binding.productImage);
-                }
-binding.productOrder.setText(String.valueOf(seller.getOrderCount()));
-                        binding.productQuantity.setText(String.valueOf(seller.getStock()));
+    DocumentReference docRef = db.collection("store").document(snapshot.getId());
+    docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        @Override
+        public void onEvent(@Nullable DocumentSnapshot snap, @Nullable FirebaseFirestoreException e) {
+            Store store = snap.toObject(Store.class);
+            binding.productName.setText(store.getName());
+            if (activity != null && store.getProductImageUrl() != null) {
+                GlideApp.with(activity)
+                        .load(store.getProductImageUrl())
+                        .into(binding.productImage);
+            }
+            binding.productOrder.setText(String.valueOf(seller.getOrderCount()));
+            binding.productQuantity.setText(String.valueOf(seller.getStock()));
 
-                    binding.productPrice.setText("₹" + NumberFormat.getInstance().format(seller.getPrice()) + "/" + store.getUnit());
+            binding.productPrice.setText("₹" + NumberFormat.getInstance().format(seller.getPrice()) + "/" + store.getUnit());
+            if (seller.isAvalibity()) {
+                binding.avalibityTextview.setVisibility(View.GONE);
+            } else {
+                binding.avalibityTextview.setVisibility(View.VISIBLE);
+            }
+        }
 
-                }
-
-        });
+    });
+}
+catch (Exception ex)
+{
+    ex.printStackTrace();
+}
 
 itemView.setOnClickListener(new View.OnClickListener() {
     @Override

@@ -5,7 +5,7 @@ import com.google.firebase.firestore.DocumentReference;
 public class Seller {
     private String name, profilePhotoUrl, phone,email,info,productId,sellerId;
     private DocumentReference StoreProductRef,SellerProductRef,AddressRef;
-boolean avalibity;
+private boolean avalibity;
     private float price,ratingCount;
     private int stock,minQuantity,maxQuantity,imageCount,orderCount;
 

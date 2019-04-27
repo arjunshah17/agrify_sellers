@@ -14,6 +14,7 @@ import com.example.agrifysellers.databinding.ProductDetailsStepperBinding;
 
 import ernestoyaquello.com.verticalstepperform.Step;
 
+
 public class ProductDetails extends Step<Boolean> implements TextWatcher {
 ProductDetailsStepperBinding binding;
 
@@ -26,16 +27,28 @@ ProductDetailsStepperBinding binding;
         boolean flag=true;
         float price=0;
         int stock=0,minQuantity=0,maxQuantiy=0;
+        String des;
         try
         {
             price=Float.valueOf(binding.priceEditText.getText().toString());
             stock=Integer.valueOf(binding.stockEditText.getText().toString());
             minQuantity=Integer.valueOf(binding.minQuantityEditText.getText().toString());
             maxQuantiy=Integer.valueOf(binding.maxQuantityEditText.getText().toString());
+            des=binding.productDesEditText.getText().toString();
         }
         catch (NumberFormatException e)
         {
             Log.e("e",e.toString());
+        }
+        if(!binding.productImageButton.getText().toString().equals("image uploaded"))
+        {
+            flag=false;
+            binding.productImageButton.setError("upload image");
+        }
+        if(TextUtils.isEmpty(binding.productDesEditText.getText().toString().trim()))
+        {
+            binding.productDesEditText.setError("description cannot be empty or zero");
+            flag=false;
         }
         if(TextUtils.isEmpty(binding.priceEditText.getText().toString().trim()) || price<=0)
         {
@@ -63,6 +76,9 @@ ProductDetailsStepperBinding binding;
             binding.stockEditText.setError(null);
             binding.minQuantityEditText.setError(null);
             binding.maxQuantityEditText.setError(null);
+            binding.productDesEditText.setError(null);
+            binding.productImageButton.setError(null);
+
 
         }
 
@@ -99,6 +115,8 @@ binding.priceEditText.addTextChangedListener(this);
 binding.stockEditText.addTextChangedListener(this);
 binding.minQuantityEditText.addTextChangedListener(this);
 binding.maxQuantityEditText.addTextChangedListener(this);
+binding.productDesEditText.addTextChangedListener(this);
+binding.productImageButton.addTextChangedListener(this);
 
         return binding.getRoot();
     }
@@ -115,12 +133,12 @@ binding.maxQuantityEditText.addTextChangedListener(this);
 
     @Override
     protected void onStepMarkedAsCompleted(boolean animated) {
-
+        markAsCompletedOrUncompleted(true);
     }
 
     @Override
     protected void onStepMarkedAsUncompleted(boolean animated) {
-
+        markAsCompletedOrUncompleted(true);
     }
 
     @Override

@@ -40,7 +40,7 @@ public class ProductAddress extends Step<String> {
         if (stepData.equals("select address")) {
             isProdValid = false;
         }
-        errorMessage = !isProdValid ? "select correct ProductName" : "";
+        errorMessage = !isProdValid ? "select correct address" : "";
 
 
         return new IsDataValid(isProdValid, errorMessage);

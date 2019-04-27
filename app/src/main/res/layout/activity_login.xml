@@ -227,13 +227,14 @@ app:buttonGradientEndColor="#A5CC82"
 
                 <life.sabujak.roundedbutton.RoundedButton
                     android:id="@+id/signin_google"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
             android:gravity="center_horizontal"
                     android:layout_centerHorizontal="true"
                     android:layout_height="wrap_content"
 android:drawableLeft="@drawable/googleg_standard_color_18"
 app:buttonGradientStartColor="#9796f0"
-                    android:padding="@dimen/dp_12"
+                 android:textAlignment="center"
+
                     app:buttonCornerRadius="25dp"
                     app:buttonGradientEndColor="#800080"
 

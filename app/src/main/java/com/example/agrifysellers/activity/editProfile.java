@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -405,9 +404,9 @@ public class editProfile extends AppCompatActivity {
     }
 
     private void initializeValidators() {
-
+        String phone="((\\+*)((0[ -]+)*|(91 )*)(\\d{12}+|\\d{10}+))|\\d{5}([- ]*)\\d{6}";
         validator.addValidation(this, bind.name.getId(), RegexTemplate.NOT_EMPTY, R.string.username_empty);
-        validator.addValidation(this, bind.phone.getId(), Patterns.PHONE, R.string.phone_error);
+        validator.addValidation(this, bind.phone.getId(),phone, R.string.phone_error);
 
 
     }

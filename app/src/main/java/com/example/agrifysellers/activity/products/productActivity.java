@@ -178,6 +178,13 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 super.onEvent(documentSnapshots, e);
+
+                if(productImageFireStoreAdapter.getItemCount()+productImageAdapter.getItemCount()!=0)
+                {
+                    productDetails.binding.productImageButton.setText("image uploaded");
+
+                }
+                productDetails.onStepMarkedAsCompleted(true);
             }
 
             @Override
@@ -185,6 +192,11 @@ public class productActivity extends AppCompatActivity implements StepperFormLis
                 super.onDataChanged();
                 if (getItemCount() == 0) {
                    Toasty.error(getApplicationContext(),"zero images",Toasty.LENGTH_SHORT).show();
+                }
+
+                if(productImageFireStoreAdapter.getItemCount()+productImageAdapter.getItemCount()!=0)
+                {
+                    productDetails.binding.productImageButton.setText("image uploaded");
                 }
             }
         };
@@ -216,11 +228,11 @@ productImageFireStoreAdapter.startListening();
                     seller.setImageCount(productImageFireStoreAdapter.getItemCount() + productImageAdapter.getItemCount());
                 }
                 else {
-                    seller.setAvalibity(true);
                     assert seller != null;
                     seller.setImageCount(productImageAdapter.getItemCount());
-                }
 
+                }
+                seller.setAvalibity(true);
                 seller.setPrice(Float.valueOf(productDetails.binding.priceEditText.getText().toString().trim()));
                 seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));
                 seller.setMaxQuantity(Integer.valueOf(productDetails.binding.maxQuantityEditText.getText().toString().trim()));
@@ -280,7 +292,7 @@ productImageFireStoreAdapter.startListening();
                     public void onComplete(@NonNull Task<Void> task) {
                         stateLoading(false);
                         if (task.isSuccessful()) {
-                            Toasty.success(getApplicationContext(), "productName added", Toasty.LENGTH_SHORT).show();
+                            Toasty.success(getApplicationContext(), "product added", Toasty.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         }
                     }
@@ -314,10 +326,12 @@ productImageFireStoreAdapter.startListening();
                     if (!task.getResult().exists()) {               //productName is not there
                         productBottomSheetFragment.dismiss();
                         productName.binding.productName.setText(mStore.getName());
+
                     } else {
                         Toasty.error(getApplicationContext(), store.getString("name") + " already you are selling", Toasty.LENGTH_SHORT).show();
                     }
                     productName.markAsCompletedOrUncompleted(true);
+                    productDetails.markAsCompletedOrUncompleted(true);
                 }
             }
         });
@@ -354,7 +368,7 @@ productImageFireStoreAdapter.startListening();
                     imageUrl.add(Uri.fromFile(new File(result)));
                 }
                 imageUploaded = true;
-
+                   productDetails.binding.productImageButton.setText("image uploaded");
                 productImageAdapter.notifyDataSetChanged();
 
 
@@ -426,6 +440,7 @@ else {
         if(item.getItemId()==1)
         {
             imageUrl.remove(pos);
+
             productImageAdapter.notifyDataSetChanged();
         }
         if(item.getItemId()==2)
@@ -434,6 +449,10 @@ else {
 
         }
 
+        if(productImageFireStoreAdapter.getItemCount()+productImageAdapter.getItemCount()==0)
+        {
+            productDetails.binding.productImageButton.setText("upload image");
+        }
         return true;
     }
 
@@ -480,6 +499,7 @@ else {
                 productDetails.binding.stockEditText.setText(String.valueOf(seller.getStock()));
                 productDetails.binding.minQuantityEditText.setText(String.valueOf(seller.getMinQuantity()));
                 productDetails.binding.productDesEditText.setText(seller.getInfo());
+                productDetails.markAsCompletedOrUncompleted(true);
                 DocumentReference addressRef = seller.getAddressRef();
                 if (seller.getAddressRef() != null) {
                     addressRef.get().addOnCompleteListener(task1 -> {
@@ -535,11 +555,12 @@ else {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Pix.start(productActivity.this, Options.init().setRequestCode(REQUEST_CODE));
                 } else {
-                    Toast.makeText(getApplicationContext(), "Approve permissions to open Pix ImagePicker", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Approve permissions to open ImagePicker", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
         }
     }
+
 
 }

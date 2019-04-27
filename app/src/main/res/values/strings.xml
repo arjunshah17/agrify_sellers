@@ -64,6 +64,7 @@
     <string name="slide_2_desc">Easily Compare rates of your product !</string>
     <string name="slide_3_title">Hassle Free Payments</string>
     <string name="slide_3_desc">You can easily pay in a minute !</string>
+    <string name="empty">this field cannot be empty</string>
     <string-array name="orderStatus_spinner">
         <item>pending</item>
         <item>conform</item>

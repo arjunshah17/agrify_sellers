@@ -63,8 +63,6 @@ public class AddressListFragment extends BottomSheetDialogFragment {
     }
 
     private void initFirestore() {
-        // TODO(developer): Implement
-
 
         mQuery = mFirestore.collection("Sellers").document(auth.getCurrentUser().getUid()).collection("addressList");
 
@@ -77,7 +75,7 @@ public class AddressListFragment extends BottomSheetDialogFragment {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 super.onEvent(documentSnapshots, e);
-
+                productLoadingState(false);
 
                 if (getItemCount() == 0) {
 
@@ -135,6 +133,8 @@ public class AddressListFragment extends BottomSheetDialogFragment {
 
         // Start listening for Firestore updates
         if (addressAdapter != null) {
+
+            productLoadingState(true);
             addressAdapter.startListening();
         }
     }
@@ -146,4 +146,17 @@ public class AddressListFragment extends BottomSheetDialogFragment {
             addressAdapter.stopListening();
         }
     }
+
+    void productLoadingState(boolean state) {
+        if (state) {
+            binding.addressListRv.setVisibility(View.GONE);
+            binding.shimmerRecyclerView.showShimmerAdapter();
+            binding.shimmerRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            binding.addressListRv.setVisibility(View.VISIBLE);
+            binding.shimmerRecyclerView.hideShimmerAdapter();
+            binding.shimmerRecyclerView.setVisibility(View.GONE);
+        }
+    }
+
 }

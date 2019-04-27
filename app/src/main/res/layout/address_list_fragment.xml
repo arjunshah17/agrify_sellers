@@ -13,12 +13,12 @@
         style="@style/Platform.MaterialComponents.Light">
 
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="select address"
-    android:layout_centerHorizontal="true"
-    style="@style/TextAppearance.MaterialComponents.Headline4"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="select address"
+            android:layout_centerHorizontal="true"
+            style="@style/TextAppearance.MaterialComponents.Headline4"/>
 
         <LinearLayout
             android:background="@drawable/store_item_background"
@@ -29,37 +29,58 @@
             tools:context=".activity.address.address">
             <LinearLayout
                 android:id="@+id/animation_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:visibility="gone"
-                android:layout_centerInParent="true"
-                >
-                <TextView
-                    android:id="@+id/animation_view_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    style="@style/TextAppearance.MaterialComponents.Headline4"
-                    android:text="no address is saved"
+                android:layout_width="500dp"
 
-                    />
+
+
+                android:layout_height="500dp"
+                android:orientation="vertical"
+android:visibility="gone"
+                android:layout_gravity="center"
+                >
+
 
                 <com.airbnb.lottie.LottieAnimationView
+
                     android:id="@+id/animation_view"
-                    android:layout_width="match_parent"
 
-                    android:layout_height="wrap_content"
+                    android:layout_width="400dp"
+                    android:layout_height="300dp"
+
                     app:lottie_rawRes="@raw/animation_noaddress"
-
+                    android:layout_gravity="center"
                     app:lottie_loop="true"
                     app:lottie_autoPlay="true" />
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="no address are saved"
+                    android:textAllCaps="true"
+                    android:textColor="@color/secondaryColor"
+                    android:textStyle="bold"
+                    android:typeface="monospace" />
             </LinearLayout>
+
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+                android:id="@+id/shimmerRecyclerView"
+                android:layout_width="match_parent"
+
+                android:layout_height="match_parent"
+
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                app:shimmer_demo_angle="20"
+                android:visibility="gone"
+                app:shimmer_demo_child_count="10"
+                app:shimmer_demo_grid_child_count="10"
+                app:shimmer_demo_layout="@layout/address_list_loading" />
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:id="@+id/address_List_rv"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
 
 
             <com.google.android.material.button.MaterialButton

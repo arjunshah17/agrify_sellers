@@ -27,9 +27,9 @@ public class addressListActivity extends AppCompatActivity implements AddressAda
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     binding= DataBindingUtil. setContentView(this,R.layout.activity_address_list);
-     INIT();
-     FireStoreInit();
+        binding= DataBindingUtil. setContentView(this, R.layout.activity_address_list);
+        INIT();
+        FireStoreInit();
 
     }
 
@@ -40,7 +40,7 @@ public class addressListActivity extends AppCompatActivity implements AddressAda
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 super.onEvent(documentSnapshots, e);
 
-
+                productLoadingState(false);
                 if (getItemCount() == 0) {
 
                 } else {
@@ -83,9 +83,24 @@ public class addressListActivity extends AppCompatActivity implements AddressAda
         // Start listening for Firestore updates
         if (addressAdapter!= null) {
             addressAdapter.startListening();
+            productLoadingState(true);
         }
     }
 
+
+    private void productLoadingState(boolean state) {
+        if (state) {
+            binding.addressListRv.setVisibility(View.GONE);
+            binding.shimmerRecyclerView.showShimmerAdapter();
+
+            binding.shimmerRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            binding.addressListRv.setVisibility(View.VISIBLE);
+            binding.shimmerRecyclerView.hideShimmerAdapter();
+            binding.shimmerRecyclerView.setVisibility(View.GONE);
+        }
+
+    }
 
 
     private void INIT() {
@@ -95,7 +110,7 @@ public class addressListActivity extends AppCompatActivity implements AddressAda
         binding.appBar.setNavigationOnClickListener(v -> {
             onBackPressed();
         });
-        firebaseFirestore=FirebaseFirestore.getInstance();
+        firebaseFirestore= FirebaseFirestore.getInstance();
         auth=FirebaseAuth.getInstance();
 
 
@@ -109,14 +124,16 @@ public class addressListActivity extends AppCompatActivity implements AddressAda
     private void noProductFound(boolean state) {
         if (state) {
             binding.addressListRv.setVisibility(View.GONE);
-
+            binding.shimmerRecyclerView.setVisibility(View.GONE);
 
             binding.animationView.playAnimation();
             binding.animationLayout.setVisibility(View.VISIBLE);
         } else {
+
             binding.animationLayout.setVisibility(View.GONE);
             binding.addressListRv.setVisibility(View.VISIBLE);
             binding.animationView.cancelAnimation();
+
         }
     }
 }

@@ -38,6 +38,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
@@ -212,7 +213,7 @@ productImageFireStoreAdapter.startListening();
       //  CutOut.activity().start(this);
         Pix.start(productActivity.this, Options.init().setCount(5) .setFrontfacing(false) .setRequestCode(REQUEST_CODE));
     }
-
+    WriteBatch updateBatch;
     @Override
     public void onCompletedForm() {
 
@@ -251,8 +252,45 @@ productImageFireStoreAdapter.startListening();
                 seller.setStoreProductRef(storeProductRef);
                 seller.setAddressRef(addressRef);
                 seller.setSellerId(Auth.getUid());
+                batch.set(seller.getSellerProductRef(), seller);
+                batch.set(seller.getStoreProductRef(), seller);
+               updateBatch=firebaseFirestore.batch();
 
-                StoreData();
+                firebaseFirestore.collection("Sellers").document(Auth.getUid()).collection("productList").document(product_id).collection("tempOrderCart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful())
+                        {
+                            for(QueryDocumentSnapshot doc:task.getResult())
+                            {
+                                DocumentReference reference=doc.getDocumentReference("tempOrderCartId");
+                                updateBatch.update(reference,"price",seller.getPrice());
+                                updateBatch.update(reference,"minQuantity",seller.getMinQuantity());
+                                updateBatch.update(reference,"maxQuantity",seller.getMaxQuantity());
+                            }
+                        }
+                        firebaseFirestore.collection("Sellers").document(Auth.getUid()).collection("productList").document(product_id).collection("cartItemUser").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful())
+                                {
+                                    for(QueryDocumentSnapshot doc:task.getResult())
+                                    {
+                                        DocumentReference reference=doc.getDocumentReference("userCartRef");
+                                        updateBatch.update(reference,"price",seller.getPrice());
+                                        updateBatch.update(reference,"minQuantity",seller.getMinQuantity());
+                                        updateBatch.update(reference,"maxQuantity",seller.getMaxQuantity());
+                                    }
+                                }
+                                //call function
+                                StoreData();
+                            }
+                        });
+
+                    }
+                });
+
+
             }
         });
 
@@ -262,8 +300,7 @@ productImageFireStoreAdapter.startListening();
     void StoreData() {
         stateLoading(true);
 
-        batch.set(seller.getSellerProductRef(), seller);
-        batch.set(seller.getStoreProductRef(), seller);
+
 
         DocumentReference storeProduct = firebaseFirestore.collection("store").document(seller.getProductId());
         storeProduct.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -292,8 +329,14 @@ productImageFireStoreAdapter.startListening();
                     public void onComplete(@NonNull Task<Void> task) {
                         stateLoading(false);
                         if (task.isSuccessful()) {
-                            Toasty.success(getApplicationContext(), "product added", Toasty.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            updateBatch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toasty.success(getApplicationContext(), "product added", Toasty.LENGTH_SHORT).show();
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                }
+                            });
+
                         }
                     }
                 });

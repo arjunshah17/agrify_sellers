@@ -183,8 +183,8 @@ android:layout_margin="@dimen/dp_12"
                         app:buttonCornerRadius="25dp"
                         android:text="Login"
                         android:layout_margin="@dimen/dp_20"
-                        app:buttonGradientStartColor="#00467F"
-app:buttonGradientEndColor="#A5CC82"
+                        app:buttonGradientStartColor="@color/colorPurple"
+app:buttonGradientEndColor="#6dd5ed"
                         android:textAllCaps="false"
                         android:textColor="@color/colorWhite" />
                 </RelativeLayout>
@@ -225,22 +225,29 @@ app:buttonGradientEndColor="#A5CC82"
                     android:textStyle="bold" />
 
 
-                <life.sabujak.roundedbutton.RoundedButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/signin_google"
-                    android:layout_width="match_parent"
-            android:gravity="center_horizontal"
-                    android:layout_centerHorizontal="true"
-                    android:layout_height="wrap_content"
-android:drawableLeft="@drawable/googleg_standard_color_18"
-app:buttonGradientStartColor="#9796f0"
-                 android:textAlignment="center"
 
-                    app:buttonCornerRadius="25dp"
-                    app:buttonGradientEndColor="#800080"
+style="@style/AppTheme.outLineButton"
 
-                  style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_below="@id/link_signup"
                     android:text="@string/fui_sign_in_with_google"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignLeft="@+id/cv"
+                    android:layout_alignRight="@+id/cv"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    app:cornerRadius="@dimen/dp_12"
+                   app:buttonCornerRadius="25dp"
+                    app:icon="@drawable/googleg_standard_color_18"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                     app:buttonGradientStartColor="#FFEFBA"
+                    app:buttonGradientEndColor="#FFFFFF"
+                    android:textColor="@color/colorPurple"
              />
             </RelativeLayout>
 

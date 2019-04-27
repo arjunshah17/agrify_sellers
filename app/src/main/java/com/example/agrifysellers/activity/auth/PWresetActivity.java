@@ -1,8 +1,12 @@
 package com.example.agrifysellers.activity.auth;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,13 +28,20 @@ public class PWresetActivity extends AppCompatActivity {
     AwesomeValidation validator;
     ActivityPwresetBinding binding;
     private FirebaseAuth firebaseAuth;
-
+Animation animation;
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_pwreset);
         validator = new AwesomeValidation(BASIC);
         firebaseAuth = FirebaseAuth.getInstance();
+        setSupportActionBar(binding.bgHeader);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        animation = AnimationUtils.loadAnimation(this,R.animator.uptodowndiagonal);
+        binding.rlayout.setAnimation(animation);
+
         initializeValidators();
         initializeGUI();
 
@@ -46,8 +57,7 @@ public class PWresetActivity extends AppCompatActivity {
         binding.tvGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PWresetActivity.this, LoginActivity.class));
-                Bungee.inAndOut(PWresetActivity.this);
+                onBackPressed();
             }
         });
         binding.btnReset.setOnClickListener(new View.OnClickListener() {
@@ -55,19 +65,27 @@ public class PWresetActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validator.validate()) {
                     showProgressDialog(true);
-                    firebaseAuth.sendPasswordResetEmail(binding.emailEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            showProgressDialog(false);
-                            if (task.isSuccessful()) {
-                                Toasty.success(PWresetActivity.this, "password reset send to" + task.getResult().toString(), Toasty.LENGTH_SHORT).show();
-                                startActivity(new Intent(PWresetActivity.this, LoginActivity.class));
-                                Bungee.inAndOut(PWresetActivity.this);
-                            } else {
-                                Toasty.error(PWresetActivity.this, task.getException().getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
+                    try {
+
+
+                        firebaseAuth.sendPasswordResetEmail(binding.emailEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                showProgressDialog(false);
+                                if (task.isSuccessful()) {
+                                    Toasty.success(PWresetActivity.this, "password reset send to" + task.getResult().toString(), Toasty.LENGTH_SHORT).show();
+                                    startActivity(new Intent(PWresetActivity.this, LoginActivity.class));
+                                    Bungee.inAndOut(PWresetActivity.this);
+                                } else {
+                                    Toasty.error(PWresetActivity.this, task.getException().getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.printStackTrace();
+                    }
                 }
             }
         });
@@ -86,9 +104,12 @@ public class PWresetActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        startActivity(new Intent(PWresetActivity.this, LoginActivity.class));
-        Bungee.inAndOut(PWresetActivity.this);
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home :
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

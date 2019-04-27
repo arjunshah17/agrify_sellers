@@ -70,11 +70,27 @@ String TAG="productListFragment()";
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 super.onEvent(documentSnapshots, e);
+
+
+                if (getItemCount() == 0) {
+
+                } else {
+
+                }
             }
 
             @Override
             protected void onDataChanged() {
+
                 super.onDataChanged();
+                productLoadingState(false);
+                if (getItemCount() == 0) {
+                    noProductFound(true);
+
+
+                } else {
+                    noProductFound(false);
+                }
             }
         };
         binding.productListRv.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -84,6 +100,22 @@ String TAG="productListFragment()";
         binding.productListRv.setAdapter(productListAdapter);
 
 
+    }
+
+    private void noProductFound(boolean state) {
+        if (state) {
+            binding.productListRv.setVisibility(View.GONE);
+            binding.shimmerRecyclerView.setVisibility(View.GONE);
+
+            binding.animationView.playAnimation();
+            binding.animationLayout.setVisibility(View.VISIBLE);
+        } else {
+
+            binding.animationLayout.setVisibility(View.GONE);
+            binding.productListRv.setVisibility(View.VISIBLE);
+            binding.animationView.cancelAnimation();
+
+        }
     }
 
     @Override
@@ -120,6 +152,7 @@ String TAG="productListFragment()";
 
         // Start listening for Firestore updates
         if (productListAdapter != null) {
+            productLoadingState(true);
             productListAdapter.startListening();
         }
     }
@@ -137,5 +170,19 @@ productListAdapter.manage(item.getGroupId());
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    private void productLoadingState(boolean state) {
+        if (state) {
+            binding.productListRv.setVisibility(View.GONE);
+            binding.shimmerRecyclerView.showShimmerAdapter();
+
+            binding.shimmerRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            binding.productListRv.setVisibility(View.VISIBLE);
+            binding.shimmerRecyclerView.hideShimmerAdapter();
+            binding.shimmerRecyclerView.setVisibility(View.GONE);
+        }
+
     }
 }

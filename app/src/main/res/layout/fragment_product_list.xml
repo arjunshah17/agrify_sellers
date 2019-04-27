@@ -17,9 +17,47 @@
     android:layout_height="match_parent"
 
     android:id="@+id/product_list_rv"/>
+    <LinearLayout
+        android:id="@+id/animation_layout"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_gravity="center"
 
 
 
+        android:orientation="vertical"
+        >
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="true"
+            android:layout_gravity="center"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/no_product" />
+        <TextView
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="you are not selling any thing"
+            android:textAllCaps="true"
+            android:textColor="@color/secondaryColor"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        android:id="@+id/shimmerRecyclerView"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+
+        app:shimmer_demo_angle="20"
+        app:shimmer_demo_child_count="10"
+
+        app:shimmer_demo_layout="@layout/address_list_loading" />
 
 
 </FrameLayout>

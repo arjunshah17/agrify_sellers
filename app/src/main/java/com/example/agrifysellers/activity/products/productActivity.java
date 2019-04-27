@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agrifysellers.R;
 import com.example.agrifysellers.activity.MainActivity;
+import com.example.agrifysellers.activity.Utils.internetConnectionUtils;
 import com.example.agrifysellers.activity.adapter.ProductListAdapter;
 import com.example.agrifysellers.activity.address.AddressAdapter;
 import com.example.agrifysellers.activity.address.AddressListFragment;
@@ -255,41 +256,37 @@ productImageFireStoreAdapter.startListening();
                 batch.set(seller.getSellerProductRef(), seller);
                 batch.set(seller.getStoreProductRef(), seller);
                updateBatch=firebaseFirestore.batch();
+              if  (internetConnectionUtils.isInternetConnected(getApplicationContext())) {
+                  firebaseFirestore.collection("Sellers").document(Auth.getUid()).collection("productList").document(product_id).collection("tempOrderCart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                      @Override
+                      public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                          if (task.isSuccessful()) {
+                              for (QueryDocumentSnapshot doc : task.getResult()) {
+                                  DocumentReference reference = doc.getDocumentReference("tempOrderCartId");
+                                  updateBatch.update(reference, "price", seller.getPrice());
+                                  updateBatch.update(reference, "minQuantity", seller.getMinQuantity());
+                                  updateBatch.update(reference, "maxQuantity", seller.getMaxQuantity());
+                              }
+                          }
+                          firebaseFirestore.collection("Sellers").document(Auth.getUid()).collection("productList").document(product_id).collection("cartItemUser").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                              @Override
+                              public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                  if (task.isSuccessful()) {
+                                      for (QueryDocumentSnapshot doc : task.getResult()) {
+                                          DocumentReference reference = doc.getDocumentReference("userCartRef");
+                                          updateBatch.update(reference, "price", seller.getPrice());
+                                          updateBatch.update(reference, "minQuantity", seller.getMinQuantity());
+                                          updateBatch.update(reference, "maxQuantity", seller.getMaxQuantity());
+                                      }
+                                  }
+                                  //call function
+                                  StoreData();
+                              }
+                          });
 
-                firebaseFirestore.collection("Sellers").document(Auth.getUid()).collection("productList").document(product_id).collection("tempOrderCart").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful())
-                        {
-                            for(QueryDocumentSnapshot doc:task.getResult())
-                            {
-                                DocumentReference reference=doc.getDocumentReference("tempOrderCartId");
-                                updateBatch.update(reference,"price",seller.getPrice());
-                                updateBatch.update(reference,"minQuantity",seller.getMinQuantity());
-                                updateBatch.update(reference,"maxQuantity",seller.getMaxQuantity());
-                            }
-                        }
-                        firebaseFirestore.collection("Sellers").document(Auth.getUid()).collection("productList").document(product_id).collection("cartItemUser").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful())
-                                {
-                                    for(QueryDocumentSnapshot doc:task.getResult())
-                                    {
-                                        DocumentReference reference=doc.getDocumentReference("userCartRef");
-                                        updateBatch.update(reference,"price",seller.getPrice());
-                                        updateBatch.update(reference,"minQuantity",seller.getMinQuantity());
-                                        updateBatch.update(reference,"maxQuantity",seller.getMaxQuantity());
-                                    }
-                                }
-                                //call function
-                                StoreData();
-                            }
-                        });
-
-                    }
-                });
-
+                      }
+                  });
+              }
 
             }
         });

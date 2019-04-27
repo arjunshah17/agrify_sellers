@@ -18,7 +18,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="seller details"
+                    android:textAllCaps="true" />
 
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="?attr/dividerHorizontal" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -35,15 +46,6 @@
 
 
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/userName"
-                        style="@style/TextAppearance.MaterialComponents.Headline6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_gravity="center"
-                        tools:text="arjun shah" />
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profilePhoto"
                         android:layout_width="40dp"
@@ -52,6 +54,15 @@
                         android:layout_margin="10dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/add_photo" />
+                    <TextView
+                        android:id="@+id/userName"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_gravity="center"
+                        tools:text="arjun shah" />
+
 
 
                 </LinearLayout>
@@ -98,18 +109,7 @@
 
 
                 </LinearLayout>
-                <TextView
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="seller details"
-                    android:textAllCaps="true" />
 
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="?attr/dividerHorizontal" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -122,7 +122,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Headline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rating and Reviews" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="?attr/dividerHorizontal" />
 
 
                 <RelativeLayout
@@ -151,15 +159,7 @@
                         tools:text="(10)" />
                 </RelativeLayout>
 
-                <TextView
-                    style="@style/TextAppearance.MaterialComponents.Headline4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rating and Reviews" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="?attr/dividerHorizontal" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ratingList_rv"
 

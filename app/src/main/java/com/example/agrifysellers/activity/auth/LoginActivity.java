@@ -1,9 +1,11 @@
 package com.example.agrifysellers.activity.auth;
 
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -79,15 +81,20 @@ public class LoginActivity extends AppCompatActivity {
         binding.linkSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
-                Bungee.inAndOut(LoginActivity.this);
+                Pair[] pairs    = new Pair[1];
+                pairs[0] = new Pair<View,String>(binding.tvLogin,"tvLogin");
+                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this,pairs);
+                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class),activityOptions.toBundle());
             }
         });
         binding.forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, PWresetActivity.class));
-                Bungee.inAndOut(LoginActivity.this);
+                Pair[] pairs    = new Pair[1];
+                pairs[0] = new Pair<View,String>(binding.tvLogin,"tvLogin");
+                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this,pairs);
+                startActivity(new Intent(LoginActivity.this, PWresetActivity.class),activityOptions.toBundle());
+
             }
         });
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -191,11 +198,11 @@ public class LoginActivity extends AppCompatActivity {
     private void showProgressDialog(Boolean state) {
 
 
-//        if (state) {
-//            binding.progressLoading.setVisibility(View.VISIBLE);
-//        } else {
-//            binding.progressLoading.setVisibility(View.INVISIBLE);
-//        }
+       if (state) {
+           binding.progressLoading.setVisibility(View.VISIBLE);
+       } else {
+          binding.progressLoading.setVisibility(View.GONE);
+       }
     }
 
 

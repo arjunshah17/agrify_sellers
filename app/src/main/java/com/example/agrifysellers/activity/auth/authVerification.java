@@ -2,6 +2,7 @@ package com.example.agrifysellers.activity.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -28,7 +29,9 @@ public class authVerification extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         initializeGUI();
-
+        setSupportActionBar(binding.bgHeader);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -64,15 +67,7 @@ public class authVerification extends AppCompatActivity {
             }
         });
 
-        binding.appBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent intent = new Intent(authVerification.this, LoginActivity.class);
-                startActivity(intent);
-                Bungee.inAndOut(authVerification.this);
-            }
-        });
 
     }
 
@@ -92,5 +87,14 @@ public class authVerification extends AppCompatActivity {
         startActivity(new Intent(authVerification.this, LoginActivity.class));
         Bungee.inAndOut(authVerification.this);
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home :
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

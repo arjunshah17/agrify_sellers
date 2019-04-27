@@ -137,6 +137,9 @@
         <item name="cardElevation">10dp</item>
         <item name="android:layout_margin">@dimen/dp_3</item>
     </style>
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/colorWhite</item>
+    </style>
 
 <color name="secondaryColor">#8e24aa</color>
     <color name="buttonNormalColor">#8e24aa</color>

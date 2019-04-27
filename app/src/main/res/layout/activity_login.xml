@@ -14,9 +14,19 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity"
         tools:ignore="VectorDrawableCompat">
-
+        <ProgressBar
+            android:id="@+id/progressLoading"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_gravity="top"
+            android:fadeScrollbars="true"
+            android:layout_alignParentTop="true"
+            android:indeterminate="true"
+            android:visibility="gone" />
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/bgHeader"
+            android:layout_below="@id/progressLoading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/header_login"
@@ -86,10 +96,14 @@
             android:src="@drawable/circletransparant" />
 
 
-            <RelativeLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/bgHeader">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv"
@@ -154,7 +168,7 @@ android:layout_margin="@dimen/dp_12"
                                 android:id="@+id/input_password"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Password"
+
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
                                 android:inputType="textPassword"
@@ -249,7 +263,8 @@ style="@style/AppTheme.outLineButton"
                     app:buttonGradientEndColor="#FFFFFF"
                     android:textColor="@color/colorPurple"
              />
-            </RelativeLayout>
+</RelativeLayout>
+            </ScrollView>
 
 
     </RelativeLayout>

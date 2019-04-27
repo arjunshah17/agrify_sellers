@@ -22,6 +22,7 @@ import androidx.databinding.DataBindingUtil;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.agrifysellers.R;
+import com.example.agrifysellers.activity.Utils.internetConnectionUtils;
 import com.example.agrifysellers.activity.address.addressListActivity;
 import com.example.agrifysellers.activity.model.User;
 import com.example.agrifysellers.databinding.ActivityEditProfileBinding;
@@ -321,8 +322,10 @@ public class editProfile extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //add the function to perform here
-        if (validator.validate()) {
-            saveProfile();
+        if  (internetConnectionUtils.isInternetConnected(getApplicationContext())) {
+            if (validator.validate()) {
+                saveProfile();
+            }
         }
         return (true);
 

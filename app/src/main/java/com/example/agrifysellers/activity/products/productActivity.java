@@ -224,7 +224,7 @@ productImageFireStoreAdapter.startListening();
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                seller = task.getResult().toObject(Seller.class);
+             Seller   sellerRef= task.getResult().toObject(Seller.class);
                 if(isEdited) {
                     assert seller != null;
                     seller.setImageCount(productImageFireStoreAdapter.getItemCount() + productImageAdapter.getItemCount());
@@ -234,6 +234,9 @@ productImageFireStoreAdapter.startListening();
                     seller.setImageCount(productImageAdapter.getItemCount());
 
                 }
+                seller.setName(sellerRef.getName());
+                seller.setPhone(seller.getPhone());
+                seller.setProfilePhotoUrl(sellerRef.getProfilePhotoUrl());
                 seller.setAvalibity(true);
                 seller.setPrice(Float.valueOf(productDetails.binding.priceEditText.getText().toString().trim()));
                 seller.setStock(Integer.valueOf(productDetails.binding.stockEditText.getText().toString().trim()));

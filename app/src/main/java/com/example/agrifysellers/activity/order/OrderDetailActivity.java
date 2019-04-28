@@ -124,7 +124,7 @@ progressLoading(false);
 
     private void InitUi() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-M-yyyy");
-        firebaseFirestore.collection("Users").document(auth.getUid()).collection("orderList").document(orderId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("Sellers").document(auth.getUid()).collection("orderList").document(orderId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
                 try {

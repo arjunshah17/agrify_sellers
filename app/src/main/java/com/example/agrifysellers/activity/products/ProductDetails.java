@@ -132,7 +132,8 @@ binding.productImageButton.addTextChangedListener(this);
     }
 
     @Override
-    protected void onStepMarkedAsCompleted(boolean animated) {
+    protected void onStepMarkedAsCompleted(boolean animated)
+    {
         markAsCompletedOrUncompleted(true);
     }
 

@@ -68,12 +68,13 @@ Animation animation;
                     try {
 
 
+
                         firebaseAuth.sendPasswordResetEmail(binding.emailEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 showProgressDialog(false);
                                 if (task.isSuccessful()) {
-                                    Toasty.success(PWresetActivity.this, "password reset send to" + task.getResult().toString(), Toasty.LENGTH_SHORT).show();
+                                    Toasty.success(PWresetActivity.this, "password reset send to" + binding.emailEditText.toString(), Toasty.LENGTH_SHORT).show();
                                     startActivity(new Intent(PWresetActivity.this, LoginActivity.class));
                                     Bungee.inAndOut(PWresetActivity.this);
                                 } else {

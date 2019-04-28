@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="you have not ordered any thing"
+                android:text="you have not got any order"
                 android:textAllCaps="true"
                 android:textColor="@color/secondaryColor"
                 android:textStyle="bold"
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/dp_12"
-                android:text="load up with fresh vegitables and friuts"
+                android:text="share this app to your friend and family"
                 android:textColor="@color/secondaryColor" />
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animation_view"

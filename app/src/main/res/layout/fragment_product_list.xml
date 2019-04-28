@@ -23,7 +23,7 @@
         android:layout_height="500dp"
         android:layout_gravity="center"
 
-
+android:visibility="gone"
 
         android:orientation="vertical"
         >

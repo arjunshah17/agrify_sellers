@@ -37,7 +37,7 @@ import java.text.SimpleDateFormat;
 
 import javax.annotation.Nullable;
 
-public class OrderDetailActivity extends AppCompatActivity{
+public class OrderDetailActivity extends AppCompatActivity {
     Query query;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth auth;
@@ -58,6 +58,7 @@ public class OrderDetailActivity extends AppCompatActivity{
         binding.orderStatus.setAdapter(adapter);
         firebaseFirestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        progressLoading(true);
         binding.appBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +109,7 @@ public class OrderDetailActivity extends AppCompatActivity{
         firebaseFirestore.collection("Users").document(order.getUserId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot snapshot) {
-                User user=snapshot.toObject(User.class);
+                User user = snapshot.toObject(User.class);
                 //objects are arlready created,no need to create new object
                 //TODO use user,seller and order object to initilize invoice header
             }
@@ -136,7 +137,7 @@ public class OrderDetailActivity extends AppCompatActivity{
                         binding.orderStatus.setSelection(order.getValFromOrderStatus(getApplicationContext()));
                         binding.addressNameTv.setText(order.getUserAddressname());
                         binding.addressLocation.setText(order.getUserHouseNum() + order.getUserLocation());
-                        binding.totalAmount.setText("₹"+NumberFormat.getInstance().format(order.getTotalAmount()));
+                        binding.totalAmount.setText("₹" + NumberFormat.getInstance().format(order.getTotalAmount()));
                         initUsersDetails();
 
                     }
@@ -168,50 +169,51 @@ public class OrderDetailActivity extends AppCompatActivity{
     }
 
     void initUsersDetails() {
-       firebaseFirestore.collection("Users").document( order.getUserId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-           @Override
-           public void onSuccess(DocumentSnapshot snapshot) {
-                User user=snapshot.toObject(User.class);
-               binding.userName.setText(user.getName());
-               binding.downloadInvoice.setOnClickListener(v -> {
-                   DownloadInvoice();
-               });
-               try {
+        firebaseFirestore.collection("Users").document(order.getUserId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot snapshot) {
+                User user = snapshot.toObject(User.class);
+                binding.userName.setText(user.getName());
+                progressLoading(false);
+                binding.downloadInvoice.setOnClickListener(v -> {
+                    DownloadInvoice();
+                });
+                try {
 
 
-                   GlideApp.with(getApplicationContext())
-                           .load(user.getProfilePhotoUrl())
-                           .into(binding.profilePhoto);
-               } catch (Exception ex) {
+                    GlideApp.with(getApplicationContext())
+                            .load(user.getProfilePhotoUrl())
+                            .into(binding.profilePhoto);
+                } catch (Exception ex) {
 
-               }
+                }
 
-               binding.call.setOnClickListener(v -> {
-                   Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                   callIntent.setData(Uri.parse("tel:" + user.getPhone()));
-                   try {
-
-
-                       startActivity(callIntent);
-                   } catch (Exception ex) {
-                       ex.printStackTrace();
-                   }
-
-               });
-               binding.email.setOnClickListener(v -> {
-                   Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                   emailIntent.setData(Uri.parse("mailto:" + user.getEmail()));
-                   try {
+                binding.call.setOnClickListener(v -> {
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:" + user.getPhone()));
+                    try {
 
 
-                       startActivity(emailIntent);
-                   } catch (Exception ex) {
-                       ex.printStackTrace();
-                   }
+                        startActivity(callIntent);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
 
-               });
-           }
-       });
+                });
+                binding.email.setOnClickListener(v -> {
+                    Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                    emailIntent.setData(Uri.parse("mailto:" + user.getEmail()));
+                    try {
+
+
+                        startActivity(emailIntent);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
+                });
+            }
+        });
 
     }
 
@@ -224,18 +226,30 @@ public class OrderDetailActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //add the function to perform here
-        WriteBatch batch=firebaseFirestore.batch();
-        DocumentReference sellerRef=firebaseFirestore.collection("Sellers").document(order.getSellerId()).collection("orderList").document(orderId);
-        DocumentReference userRef=firebaseFirestore.collection("Users").document(order.getUserId()).collection("orderList").document(orderId);
-        batch.update(sellerRef,"orderStatus",binding.orderStatus.getSelectedItem().toString());
-        batch.update(userRef,"orderStatus",binding.orderStatus.getSelectedItem().toString());
+        progressLoading(true);
+        WriteBatch batch = firebaseFirestore.batch();
+        DocumentReference sellerRef = firebaseFirestore.collection("Sellers").document(order.getSellerId()).collection("orderList").document(orderId);
+        DocumentReference userRef = firebaseFirestore.collection("Users").document(order.getUserId()).collection("orderList").document(orderId);
+        batch.update(sellerRef, "orderStatus", binding.orderStatus.getSelectedItem().toString());
+        batch.update(userRef, "orderStatus", binding.orderStatus.getSelectedItem().toString());
         batch.commit().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                progressLoading(false);
                 onBackPressed();
             }
         });
-      return true;
+        return true;
 
+    }
+
+    void progressLoading(boolean state) {
+        if (state) {
+            binding.progressBarLayout.progressBarLoader.setVisibility(View.VISIBLE);
+            binding.mainLayout.setVisibility(View.GONE);
+        } else {
+            binding.progressBarLayout.progressBarLoader.setVisibility(View.GONE);
+            binding.mainLayout.setVisibility(View.VISIBLE);
+        }
     }
 }

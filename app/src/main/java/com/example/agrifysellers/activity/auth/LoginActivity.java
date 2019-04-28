@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         if (firebaseAuth.getCurrentUser().isEmailVerified()) {
 
-                                            Task<DocumentSnapshot> defRef = firebaseFirestore.collection("Seller").document(firebaseAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            Task<DocumentSnapshot> defRef = firebaseFirestore.collection("Sellers").document(firebaseAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                     if (task.isSuccessful()) {
@@ -249,6 +249,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
 
 
 }

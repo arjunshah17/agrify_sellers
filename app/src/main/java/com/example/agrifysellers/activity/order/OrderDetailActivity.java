@@ -214,6 +214,22 @@ progressLoading(false);
                 });
             }
         });
+        binding.addressLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("geo:" + order.getUserGeoLocation().getLatitude() + "," + order.getUserGeoLocation().getLongitude()));
+                try {
+               
+                    startActivity(intent);
+                } catch (Exception ex)
+                 {
+                    ex.printStackTrace();
+                }
+
+
+            }
+        });
 
     }
 

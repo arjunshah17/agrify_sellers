@@ -88,7 +88,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                 } else {
                     noProductFound(false);
                 }
-
+progressLoading(false);
 
             }
 
@@ -174,7 +174,7 @@ public class OrderDetailActivity extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot snapshot) {
                 User user = snapshot.toObject(User.class);
                 binding.userName.setText(user.getName());
-                progressLoading(false);
+
                 binding.downloadInvoice.setOnClickListener(v -> {
                     DownloadInvoice();
                 });

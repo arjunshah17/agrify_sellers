@@ -14,14 +14,16 @@
           />
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
+            style="@style/Widget.Design.BottomNavigationView"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/white"
+            app:menu="@menu/bottom_navigation_menu"
+            android:background="@drawable/curve_background_secondary_color"
+            android:elevation="@dimen/dp_24"
             app:itemIconTint="@drawable/bottom_navigation_colors"
             app:itemTextColor="@drawable/bottom_navigation_colors"
-            app:menu="@menu/bottom_navigation_menu"
-            style="@style/Widget.Design.BottomNavigationView"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             />
 

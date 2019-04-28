@@ -220,7 +220,7 @@ progressLoading(false);
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                         Uri.parse("geo:" + order.getUserGeoLocation().getLatitude() + "," + order.getUserGeoLocation().getLongitude()));
                 try {
-               
+
                     startActivity(intent);
                 } catch (Exception ex)
                  {

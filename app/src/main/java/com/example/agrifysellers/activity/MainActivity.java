@@ -59,9 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.chatItem:
                         LoadedFragment = chat;
                         break;
-                    case R.id.notificationItem:
 
-                        break;
                     case R.id.aboutItem:
                         LoadedFragment = profile;
                         break;

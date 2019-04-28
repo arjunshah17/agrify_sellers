@@ -419,6 +419,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="center"
+
                     android:tooltipText="back"
                     app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
                     app:title="order details" />

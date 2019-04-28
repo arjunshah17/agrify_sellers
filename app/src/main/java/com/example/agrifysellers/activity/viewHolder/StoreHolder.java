@@ -18,6 +18,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.text.NumberFormat;
+
 import javax.annotation.Nullable;
 
 
@@ -48,7 +50,7 @@ public class StoreHolder extends RecyclerView.ViewHolder {
                 binding.price.setText("no seller is selling");
             }
             else {
-                binding.price.setText("start from ₹" + String.valueOf(store.getPrice()) + "/" + store.getUnit());
+                binding.price.setText("start from ₹" + NumberFormat.getInstance().format(store.getPrice()) + "/" + store.getUnit());
             }
             // Load image
             if (activity != null) {

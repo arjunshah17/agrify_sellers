@@ -51,6 +51,12 @@ public class productManage extends AppCompatActivity {
             Log.i("seller_id", seller_id);
 
         }
+        binding.appBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         firebaseFirestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         batch=firebaseFirestore.batch();

@@ -24,24 +24,23 @@
     <LinearLayout android:id="@+id/product_tile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="@drawable/item_ripple_effect"
-        >
+        android:foreground="@drawable/item_ripple_effect">
+
+        <TextView
+            android:id="@+id/avalibity_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_12"
+            android:text="currently product is not avaliable"
+            android:textColor="@color/vw_dialog_red"
+            android:visibility="gone"
+            />
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/product_name"
-                style="@style/TextAppearance.MaterialComponents.Headline5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:padding="@dimen/dp_6"
-                android:text="@{product.name}"
 
-                tools:text="wheat"/>
             <com.github.florent37.shapeofview.shapes.RoundRectView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -59,101 +58,78 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/add_photo"/>
             </com.github.florent37.shapeofview.shapes.RoundRectView>
-
-        </LinearLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-
-
-            android:layout_weight="2">
-
             <TextView
-                android:id="@+id/product_price"
+                android:id="@+id/product_name"
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:padding="@dimen/dp_6"
-                app:layout_constraintStart_toStartOf="@+id/textView2"
+                android:text="@{product.name}"
+                android:textSize="20sp"
+                tools:text="wheat"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="₹ 200 " />
 
             <TextView
-
                 android:id="@+id/textView4"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="27dp"
-                android:text="STOCK"
-                app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView2" />
+                android:layout_centerHorizontal="true"
+                android:textSize="20sp"
+                android:text="STOCK" />
 
             <TextView
                 android:id="@+id/product_quantity"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="9dp"
-                app:layout_constraintStart_toStartOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                android:layout_below="@id/textView4"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
                 tools:text="9000 kg" />
+        </RelativeLayout>
 
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
             <TextView
-
                 android:id="@+id/textView2"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="9dp"
-                android:text="ORDERS"
-                app:layout_constraintBottom_toTopOf="@+id/product_order"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.869"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
-
+                android:layout_centerHorizontal="true"
+                android:textSize="20sp"
+                android:text="ORDERS" />
             <TextView
-
+                android:id="@+id/product_price"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textView2"
+                android:textSize="20sp"
+                tools:text="₹ 200 " />
+            <TextView
                 android:id="@+id/product_order"
                 style="@style/TextAppearance.MaterialComponents.Headline6"
-
-               android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
-                tools:text="2000000" />
-
-            <TextView
-                android:id="@+id/avalibity_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-android:visibility="gone"
-               android:layout_margin="@dimen/dp_12"
-                android:textColor="@color/vw_dialog_red"
-                android:text="currently product is not avaliable"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
+                android:layout_below="@id/product_price"
+                android:layout_centerHorizontal="true"
+                android:textSize="20sp"
+                tools:text="2000000" />
+        </LinearLayout>
     </LinearLayout>
 
 

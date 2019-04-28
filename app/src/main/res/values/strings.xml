@@ -4,7 +4,7 @@
     <string name="wiselist">wiselist</string>
     <string name="notification">Notification</string>
     <string name="about">Profile</string>
-    <string name="username">user name</string>
+    <string name="username">Username</string>
 
     <string name="title_activity_edit_profile">editProfile</string>
     <string name="title_activity_intro_slider">introSlider</string>
@@ -14,16 +14,16 @@
     <string name="changeProfile">Change Profile</string>
     <string name="shr_filter_title">Filter</string>
     <string name="shr_search_title">Search</string>
-    <string name="editProfileBtn">edit profile</string>
+    <string name="editProfileBtn">Edit Profile</string>
 
 
-    <string name="profile_menu_save">save</string>
+    <string name="profile_menu_save">Save</string>
     <string name="forgot_password">Forgot password?</string>
 
 
     <!-- Shrine backdrop menu labels -->
     <string name="password_error">password must be of 6 char or greater and no  space is allowed</string>
-    <string name="username_empty">user name cannot empty</string>
+    <string name="username_empty">Username cannot empty</string>
 
 
     //authentication
@@ -34,7 +34,7 @@
     <string name="password_match_error">both password must match</string>
     <string name="email_verification">You will receive an email with instructions of verification of email.</string>
     <string name="store_product_transition">store_product_transition</string>
-    <string name="no_products_found">no product found</string>
+    <string name="no_products_found">No Product Found</string>
     <string name="rating_bar_title">Rating</string>
 
 
@@ -73,23 +73,22 @@
     </string-array>
     <string-array name="categories_spinner">
         <item>select category</item>
-        <item>fruits</item>
-        <item>vegetables</item>
-        <item>seeds</item>
-        <item>grains</item>
-        <item>pulses</item>
-        <item>dairy products</item>
+        <item>Fruits</item>
+        <item>Vegetables</item>
+        <item>Seeds</item>
+        <item>Grains</item>
+        <item>Pulses</item>
+        <item>Dairy products</item>
     </string-array>
     <string-array name="categories_names">
 
-        <item>all</item>
-        <item>fruits</item>
-        <item>vegetables</item>
-        <item>seeds</item>
-        <item>grains</item>
-        <item>pulses</item>
-
-        <item>dairy products</item>
+        <item>All</item>
+        <item>Fruits</item>
+        <item>Vegetables</item>
+        <item>Seeds</item>
+        <item>Grains</item>
+        <item>Pulses</item>
+        <item>Dairy Products</item>
 
     </string-array>
 </resources>

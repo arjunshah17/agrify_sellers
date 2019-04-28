@@ -39,7 +39,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="address of seller" />
+            android:text="address of seller"
+            android:textAllCaps="true"
+            android:textSize="20sp"/>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/address_card"

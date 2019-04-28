@@ -36,7 +36,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_gravity="center_vertical">
 
                         <TextView
                             android:id="@+id/product_name"
@@ -89,7 +90,8 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical">
 
                         <TextView
                             android:id="@+id/quantity_textView"
@@ -111,7 +113,7 @@
                         style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="quantity" />
+                        android:text="Quantity" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -119,7 +121,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="@dimen/dp_6"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <RatingBar
                         android:id="@+id/ratingBar"

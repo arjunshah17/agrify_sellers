@@ -107,26 +107,23 @@
 
 
                                 <TextView
-                                    android:id="@+id/seller_price"
-                                    style="@style/TextAppearance.MaterialComponents.Headline4"
-                                    android:textStyle="bold"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="right"
-                                    tools:text="200/kg"
-                                    android:layout_weight="1"
-
-                                    />
-                                <TextView
                                     android:id="@+id/productName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
                                     tools:text="wheat"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold"
+                                    style="@style/TextAppearance.MaterialComponents.Headline4" />
+
+                                <TextView
+                                    android:id="@+id/seller_price"
                                     style="@style/TextAppearance.MaterialComponents.Headline4"
-
-
-                                    />
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    tools:text="200/kg"
+                                    android:textSize="20sp"
+                                    android:layout_weight="1" />
                             </LinearLayout>
 
 
@@ -187,7 +184,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_margin="5dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -195,9 +193,9 @@
                                 android:text="product description"
                                 android:textColor="@color/black"
                                 android:textAllCaps="true"
+                                android:textSize="20sp"
                                 style="@style/TextAppearance.MaterialComponents.Headline6"
-                                android:layout_margin="@dimen/dp_6"
-                                />
+                                android:layout_margin="@dimen/dp_6" />
 
                             <View
                                 android:layout_width="match_parent"

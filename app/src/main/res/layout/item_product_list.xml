@@ -18,12 +18,12 @@
             android:id="@+id/productImageUrl"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_more_vert_black_24dp" />
+            android:src="@drawable/add_photo" />
 
         <TextView
             android:id="@+id/productName"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_gravity="start"
             android:text="@{store.name}"
             android:textColor="#0a3142"

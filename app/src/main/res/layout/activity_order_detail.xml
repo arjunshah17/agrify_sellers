@@ -143,12 +143,11 @@
                                                 android:layout_margin="@dimen/dp_3"
                                                 android:text="status"
                                                 android:textAllCaps="true" />
+
                                             <Spinner
                                                 android:id="@+id/order_status"
                                                 style="@style/Widget.AppCompat.Light.DropDownItem.Spinner"
-
-
-                                               android:layout_width="match_parent"
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content" />
 
 
@@ -180,7 +179,8 @@
                                                     style="@style/TextAppearance.MaterialComponents.Body1"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
-                                                    android:text="cash on delivery" />
+                                                    android:paddingStart="10dp"
+                                                    android:text="COD (Cash On Delivery)" />
 
 
                                             </LinearLayout>

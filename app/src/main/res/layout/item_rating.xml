@@ -18,7 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,19 +59,17 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_6"
                     tools:text="12-26-2019"
-
+                    android:layout_gravity="center_vertical"
                     />
             </LinearLayout>
 
             <RatingBar
                 android:id="@+id/rating_bar"
-                style="?attr/ratingBarStyleSmall"
+                style="?android:attr/ratingBarStyleIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_3"
-                android:isIndicator="true"
-
-                />
+                android:isIndicator="true" />
 
             <TextView
                 android:id="@+id/review_text"

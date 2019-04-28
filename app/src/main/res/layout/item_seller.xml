@@ -73,10 +73,11 @@
 
                         <RatingBar
                             android:id="@+id/Rating"
-                           android:progressTint="@color/starColor"
+                            android:progressTint="@color/starColor"
                             style="?attr/ratingBarStyleIndicator"
                             android:layout_width="wrap_content"
-
+                            android:backgroundTint="@color/colorPrimary"
+                            android:progressBackgroundTint="@color/colorPrimary"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/dp_3"
                             android:isIndicator="true" />

@@ -18,6 +18,8 @@
             android:layout_height="wrap_content"
             android:text="select address"
             android:layout_centerHorizontal="true"
+            android:textAllCaps="true"
+            android:textSize="20sp"
             style="@style/TextAppearance.MaterialComponents.Headline4"/>
 
         <LinearLayout

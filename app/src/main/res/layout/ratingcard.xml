@@ -17,12 +17,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_margin="5dp">
                 <TextView
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="seller details"
+                    android:textSize="20sp"
                     android:textAllCaps="true" />
 
 
@@ -80,8 +82,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/dp_6"
-
-                        android:text="call"
+                        android:text="Call"
                         app:chipBackgroundColor="@color/secondaryColor"
                         app:chipIcon="@drawable/ic_call" />
 
@@ -92,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/dp_6"
-                        android:text="email"
+                        android:text="Email"
                         app:chipBackgroundColor="@color/secondaryColor"
                         app:chipIcon="@drawable/ic_email_black_24dp" />
 
@@ -103,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="@dimen/dp_6"
-                        android:text="location"
+                        android:text="Location"
                         app:chipBackgroundColor="@color/secondaryColor"
                         app:chipIcon="@drawable/ic_location" />
 
@@ -121,12 +122,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_margin="5dp">
                 <TextView
-                    style="@style/TextAppearance.MaterialComponents.Headline4"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rating and Reviews" />
+                    android:text="Rating and Reviews"
+                    android:textSize="20sp"
+                    android:textAllCaps="true"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
@@ -140,7 +144,7 @@
 
                     <RatingBar
                         android:id="@+id/Rating"
-
+                        style="?android:attr/ratingBarStyleIndicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:isIndicator="true" />

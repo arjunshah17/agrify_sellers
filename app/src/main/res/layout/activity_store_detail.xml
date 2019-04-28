@@ -120,14 +120,14 @@
                             android:textSize="30sp"
                             android:textStyle="bold"
                             tools:text="wheat" />
-                        <TextView
-                            android:id="@+id/productPrice"
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginBottom="1dp"
-                            android:text="start from ₹200/kg" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/productPrice"-->
+<!--                            style="@style/TextAppearance.AppCompat.Subhead"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="10dp"-->
+<!--                            android:layout_marginBottom="1dp"-->
+<!--                            android:text="start from ₹200/kg" />-->
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -147,8 +147,9 @@
                             style="@style/TextAppearance.MaterialComponents.Headline5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/dp_3"
-
+                            android:layout_margin="6dp"
+                            android:textAllCaps="true"
+                            android:textSize="20sp"
                             android:text="product description" />
                         <View
                             android:layout_width="match_parent"
@@ -158,10 +159,7 @@
                             android:id="@+id/productDes"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-
-                            android:inputType="textMultiLine"
                             style="@style/TextAppearance.MaterialComponents.Body1"
-
                             android:padding="10dp"
                             android:text="@{store.des}" />
 

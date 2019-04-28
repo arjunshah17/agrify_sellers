@@ -23,10 +23,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-
-
-        >
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,9 +31,7 @@
             android:padding="@dimen/dp_6"
             android:id="@+id/address_name_tv"
             tools:text="@{address.name}"
-            style="@style/TextAppearance.MaterialComponents.Headline5"
-
-            />
+            style="@style/TextAppearance.MaterialComponents.Headline5" />
         <TextView
             android:id="@+id/address_location"
             android:layout_width="match_parent"
@@ -46,28 +41,31 @@
             tools:text="102,h,browun avenue maple county 2, thaltej ahmedabad,-380058"/>
 
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:id="@+id/button_layout"
-    android:layout_marginLeft="@dimen/dp_12"
-   >
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:id="@+id/edit_button"
-        android:layout_height="wrap_content"
-        android:text="edit"
-        style="@style/AppTheme.outLineButton"/>
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-android:id="@+id/delete_button"
-        android:text="delete"
-        style="@style/AppTheme.outLineButton.delete"/>
+        <LinearLayout
+            android:id="@+id/button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="2">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/edit_button"
+                style="@style/AppTheme.outLineButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="edit"
+                android:layout_weight="1"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_button"
+                style="@style/AppTheme.outLineButton.delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="delete"
+                android:layout_weight="1"/>
 
 
-</LinearLayout>
+        </LinearLayout>
     </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

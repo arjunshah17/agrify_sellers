@@ -241,7 +241,7 @@ app:buttonGradientEndColor="#6dd5ed"
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/signin_google"
-
+android:visibility="gone"
 style="@style/AppTheme.outLineButton"
 
                     android:layout_below="@id/link_signup"

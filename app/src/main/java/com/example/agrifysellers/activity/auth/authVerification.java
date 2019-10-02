@@ -49,7 +49,7 @@ public class authVerification extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Toasty.success(authVerification.this, "verification email send to " + firebaseAuth.getCurrentUser().getEmail(), Toasty.LENGTH_SHORT).show();
                                 startActivity(new Intent(authVerification.this, LoginActivity.class));
-                                Bungee.inAndOut(authVerification.this);
+                                Bungee.slideUp(authVerification.this);
                             } else {
                                 Toasty.error(authVerification.this, task.getException().getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
 
@@ -61,7 +61,7 @@ public class authVerification extends AppCompatActivity {
                 } else {
                     Toasty.error(authVerification.this, "sign in first to verify", Toasty.LENGTH_SHORT).show();
                     startActivity(new Intent(authVerification.this, LoginActivity.class));
-                    Bungee.inAndOut(authVerification.this);
+                    Bungee.slideUp(authVerification.this);
                 }
 
             }
@@ -85,7 +85,7 @@ public class authVerification extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         startActivity(new Intent(authVerification.this, LoginActivity.class));
-        Bungee.inAndOut(authVerification.this);
+        Bungee.slideUp(authVerification.this);
 
     }
     @Override

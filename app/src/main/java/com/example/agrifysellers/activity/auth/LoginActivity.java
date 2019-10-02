@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         DocumentSnapshot documentReference = task.getResult();
                                                         if (documentReference.exists()) {
                                                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                                            Bungee.windmill(LoginActivity.this);
+                                                            Bungee.slideUp(LoginActivity.this);
                                                         } else {
                                                             Toasty.info(LoginActivity.this, "add your additional information", Toasty.LENGTH_SHORT).show();
                                                             signInFirstTime();
@@ -179,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
                                 signInFirstTime();
                             } else {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                Bungee.windmill(LoginActivity.this);
+                                Bungee.slideUp(LoginActivity.this);
 
                             }
                         } else {
@@ -231,7 +231,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, editProfile.class);
         intent.putExtra(TAG, "sign_in_for_first_time");
         startActivity(intent);
-        Bungee.windmill(LoginActivity.this);
+        Bungee.slideUp(LoginActivity.this);
     }
 
     @Override

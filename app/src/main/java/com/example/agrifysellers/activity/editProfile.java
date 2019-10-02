@@ -42,6 +42,7 @@ import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -175,7 +176,7 @@ public class editProfile extends AppCompatActivity {
                     if (firebaseUser.getPhotoUrl() != null) {
 
 
-                        GlideApp.with(editProfile.this).load(firebaseUser.getPhotoUrl()).placeholder(R.drawable.add_photo).
+                        Picasso.get().load(firebaseUser.getPhotoUrl()).placeholder(R.drawable.add_photo).
                                 into(bind.userProfilePhoto);
                     }
                     bind.setUser(user);

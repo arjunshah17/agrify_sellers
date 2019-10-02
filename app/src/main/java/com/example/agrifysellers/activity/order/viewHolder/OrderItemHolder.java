@@ -5,10 +5,11 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.agrifysellers.activity.GlideApp;
+
 import com.example.agrifysellers.activity.order.model.OrderItem;
 import com.example.agrifysellers.databinding.OrderItemBinding;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 
@@ -40,7 +41,7 @@ public class OrderItemHolder extends RecyclerView.ViewHolder {
             ex.printStackTrace();
         }
         if (activity != null) {
-            GlideApp.with(activity)
+            Picasso.get()
                     .load(orderItem.getProductImageUrl())
                     .into(binding.productImage);
         }

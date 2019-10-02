@@ -74,7 +74,7 @@ binding.rlayout.setAnimation(animation);
                             if (task.isSuccessful()) {
                                 Toasty.success(RegistrationActivity.this, "new account created", Toasty.LENGTH_SHORT).show();
                                 startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
-                                Bungee.inAndOut(RegistrationActivity.this);
+                                Bungee.slideUp(RegistrationActivity.this);
                             } else {
                                 Toasty.error(RegistrationActivity.this, task.getException().getLocalizedMessage()).show();
                             }

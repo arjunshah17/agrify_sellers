@@ -7,7 +7,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.agrifysellers.activity.GlideApp;
+
 import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.activity.model.Store;
 import com.example.agrifysellers.databinding.ProductListItemBinding;
@@ -17,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 
@@ -53,7 +54,7 @@ try {
             Store store = snap.toObject(Store.class);
             binding.productName.setText(store.getName());
             if (activity != null && store.getProductImageUrl() != null) {
-                GlideApp.with(activity)
+                Picasso.get()
                         .load(store.getProductImageUrl())
                         .into(binding.productImage);
             }

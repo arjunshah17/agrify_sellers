@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.agrifysellers.R;
-import com.example.agrifysellers.activity.GlideApp;
+
 import com.example.agrifysellers.activity.Utils.RatingUtils;
 import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.activity.model.Store;
@@ -35,6 +35,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.smarteist.autoimageslider.DefaultSliderView;
+import com.squareup.picasso.Picasso;
 import com.vincent.blurdialog.BlurDialog;
 
 import java.util.ArrayList;
@@ -256,7 +257,7 @@ public class SellerProductActivity extends AppCompatActivity implements EventLis
         try {
 
 
-            GlideApp.with(this)
+            Picasso.get()
                     .load(seller.getProfilePhotoUrl())
                     .into(binding.rattingCard.profilePhoto);
         } catch (Exception ex) {

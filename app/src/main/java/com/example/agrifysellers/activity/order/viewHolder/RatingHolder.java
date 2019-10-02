@@ -4,12 +4,13 @@ import android.app.Activity;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.agrifysellers.activity.GlideApp;
+
 import com.example.agrifysellers.activity.order.model.Rating;
 import com.example.agrifysellers.databinding.ItemRatingBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 
@@ -36,7 +37,7 @@ public class RatingHolder extends RecyclerView.ViewHolder {
                 @Override
                 public void onSuccess(DocumentSnapshot snapshot) {
                     binding.name.setText(snapshot.getString("name"));
-                    GlideApp.with(activity)
+                    Picasso.get()
                             .load(snapshot.getString("profilePhotoUrl"))
                             .into(binding.userImage);
                 }

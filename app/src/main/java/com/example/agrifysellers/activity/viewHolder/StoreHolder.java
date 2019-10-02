@@ -6,7 +6,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.agrifysellers.activity.GlideApp;
 import com.example.agrifysellers.activity.adapter.StoreAdapter;
 import com.example.agrifysellers.activity.model.Store;
 import com.example.agrifysellers.databinding.ItemStoreProductBinding;
@@ -17,6 +16,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 
@@ -54,8 +54,7 @@ public class StoreHolder extends RecyclerView.ViewHolder {
             }
             // Load image
             if (activity != null) {
-                GlideApp.with(activity)
-                        .load(store.getProductImageUrl())
+                Picasso.get().load(store.getProductImageUrl())
                         .into(binding.productImage);
             }
 
@@ -77,7 +76,7 @@ public class StoreHolder extends RecyclerView.ViewHolder {
                         binding.price.setText("start from ₹" + String.valueOf(store.getPrice()) + "/" + store.getUnit());
                     }
                     if (activity != null && store.getProductImageUrl()!=null) {
-                        GlideApp.with(activity)
+                        Picasso.get()
                                 .load(store.getProductImageUrl())
                                 .into(binding.productImage);
                     }
@@ -103,7 +102,7 @@ public class StoreHolder extends RecyclerView.ViewHolder {
                         // Load image
                         if (store.getProductImageUrl() != null) {
                             if (activity != null) {
-                                GlideApp.with(activity)
+                                Picasso.get()
                                         .load(store.getProductImageUrl())
                                         .into(binding.productImage);
                             }

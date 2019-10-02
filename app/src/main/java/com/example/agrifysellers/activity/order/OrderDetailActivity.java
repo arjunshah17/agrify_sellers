@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.agrifysellers.R;
-import com.example.agrifysellers.activity.GlideApp;
+
 import com.example.agrifysellers.activity.model.Seller;
 import com.example.agrifysellers.activity.model.User;
 import com.example.agrifysellers.activity.order.adapter.OrderItemAdapter;
@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -181,7 +182,7 @@ progressLoading(false);
                 try {
 
 
-                    GlideApp.with(getApplicationContext())
+                    Picasso.get()
                             .load(user.getProfilePhotoUrl())
                             .into(binding.profilePhoto);
                 } catch (Exception ex) {

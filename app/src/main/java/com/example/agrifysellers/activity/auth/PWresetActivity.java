@@ -76,7 +76,7 @@ Animation animation;
                                 if (task.isSuccessful()) {
                                     Toasty.success(PWresetActivity.this, "password reset send to" + binding.emailEditText.toString(), Toasty.LENGTH_SHORT).show();
                                     startActivity(new Intent(PWresetActivity.this, LoginActivity.class));
-                                    Bungee.inAndOut(PWresetActivity.this);
+                                    Bungee.slideUp(PWresetActivity.this);
                                 } else {
                                     Toasty.error(PWresetActivity.this, task.getException().getLocalizedMessage(), Toasty.LENGTH_SHORT).show();
                                 }

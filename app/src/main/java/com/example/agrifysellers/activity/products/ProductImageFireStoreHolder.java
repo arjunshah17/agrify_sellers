@@ -6,9 +6,10 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.agrifysellers.activity.GlideApp;
+
 import com.example.agrifysellers.databinding.ProductDetailImageItemBinding;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.squareup.picasso.Picasso;
 
 public class ProductImageFireStoreHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
     ProductDetailImageItemBinding binding;
@@ -32,7 +33,7 @@ public class ProductImageFireStoreHolder extends RecyclerView.ViewHolder impleme
 
 
         if (activity != null && url!=null) {
-            GlideApp.with(activity)
+            Picasso.get()
                     .load(url)
                     .into(binding.productImageView);
 

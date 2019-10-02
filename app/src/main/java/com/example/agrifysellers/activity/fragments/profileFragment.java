@@ -14,8 +14,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+
 import com.example.agrifysellers.R;
-import com.example.agrifysellers.activity.GlideApp;
+
 import com.example.agrifysellers.activity.adapter.StoreAdapter;
 import com.example.agrifysellers.activity.editProfile;
 import com.example.agrifysellers.activity.model.User;
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import es.dmoral.toasty.Toasty;
 
@@ -161,7 +163,7 @@ public class profileFragment extends Fragment implements StoreAdapter.OnStoreSel
                     }
                     if (firebaseUser.getPhotoUrl() != null) {
                         if (getActivity() != null) {
-                            GlideApp.with(getActivity()).load(firebaseUser.getPhotoUrl()).placeholder(R.drawable.add_photo).into(bind.userProfilePhoto);
+                         Picasso.get().load(firebaseUser.getPhotoUrl()).placeholder(R.drawable.add_photo).into(bind.userProfilePhoto);
                         }
                     }
 

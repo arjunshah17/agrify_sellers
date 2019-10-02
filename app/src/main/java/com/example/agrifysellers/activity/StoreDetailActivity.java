@@ -21,10 +21,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 
 import es.dmoral.toasty.Toasty;
 
-import static com.example.agrifysellers.activity.GlideApp.with;
+
 
 public class StoreDetailActivity extends AppCompatActivity implements EventListener<DocumentSnapshot> {
     private static final String TAG = "StoreDetail";
@@ -109,7 +110,7 @@ public class StoreDetailActivity extends AppCompatActivity implements EventListe
         else {
             bind.sellerlistButton.setText(store.getSellerCount()+" farmers are selling");
         }
-        with(this)
+        Picasso.get()
                 .load(store.getProductImageUrl())
                 .into(bind.productImageUrl);
         bind.appBar.setTitle(store.getName());

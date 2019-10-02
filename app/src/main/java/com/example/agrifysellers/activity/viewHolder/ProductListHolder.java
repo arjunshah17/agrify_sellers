@@ -6,11 +6,12 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.agrifysellers.activity.GlideApp;
+
 import com.example.agrifysellers.activity.adapter.ProductListAdapter;
 import com.example.agrifysellers.activity.model.Store;
 import com.example.agrifysellers.databinding.ItemProductListBinding;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.squareup.picasso.Picasso;
 
 public class ProductListHolder extends RecyclerView.ViewHolder {
     ItemProductListBinding binding;
@@ -27,7 +28,7 @@ public class ProductListHolder extends RecyclerView.ViewHolder {
         Store store = snapshot.toObject(Store.class);
         binding.setStore(store);
         if (store.getProductImageUrl() != null && activity != null) {
-            GlideApp.with(activity)
+            Picasso.get()
                     .load(store.getProductImageUrl())
                     .into(binding.productImageUrl);
 

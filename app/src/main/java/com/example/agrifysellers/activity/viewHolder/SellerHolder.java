@@ -8,7 +8,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.agrifysellers.activity.GlideApp;
+
 import com.example.agrifysellers.activity.Utils.RatingUtils;
 import com.example.agrifysellers.activity.adapter.SellerAdapter;
 import com.example.agrifysellers.activity.model.Seller;
@@ -21,6 +21,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class SellerHolder extends RecyclerView.ViewHolder {
         phoneNumber = seller.getPhone();
         // Load image
         if (activity != null) {
-            GlideApp.with(activity)
+            Picasso.get()
                     .load(seller.getProfilePhotoUrl())
                     .into(binding.profilePhoto);
         }
